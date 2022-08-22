@@ -1,0 +1,62 @@
+Airport Terminal 1:Terminal 2
+Airport Terminal 2:Stepford Airport Central;Airport Terminal 3
+Airport Terminal 3:Terminal 2
+Airport West:James Street;Cambridge Street Parkway
+Angel Pass:St. Helens Bridge;Bodin
+Ashlan Park:Connolly;Cambridge Street Parkway
+Beaulieu Park:East Berrily;Berrily;Morganstown
+Beechley:Hemdon Park;Willowfield;Financial Quarter;City Hospital;Stepford Central
+Benton:Port Benton;Coxly;Benton Bridge;Hampton Hargate
+Benton Bridge:Benton;Stepford Airport Parkway;Hampton Hargate
+Berrily:Elsemere Junction;St. Helens Bridge;East Berrily;Beaulieu Park;Stepford Airport Parkway
+Bodin:Angel Pass;St. Helens Bridge;Coxly
+Cambridge Street Parkway:Benton;Ashlan Park;Airport West
+City Hospital:Beechly;Financial Quarter;Stepford Central
+Connolly:Ashlan Park
+Coxly:Bodin;Benton
+East Berrily:Berrily;Beaulieu Park
+Eden Quay:Newry;Faraday Road;Benton
+Edgemead:Leighton West;Leighton City;Faymere;Westercoast;Westwyvern
+Elsemere Junction:Elsemere Pond;New Harrow;St. Helens Bridge;Stepford East;Stepford Central;Berrily;Morganstown
+Elsemere Pond:New Harrow;St. Helens Bridge;Elsemere Junction
+Faraday Road:Eden Quay;West Benton
+Faymere:Edgemead;Westercoast
+Financial Quarter:City Hospital;Stepford Central;Beechly;Stepford Victoria
+Greenslade:Whitney Green
+Hampton Hargate:Benton;Benton Bridge;Upper Staploe;Water Newton
+Hemdon Park:
+Houghton Rake:
+James Street:
+Leighton City:
+Leighton Stepford Road:
+Leighton West:
+Llyn-by-the-Sea:
+Millcastle:
+Millcastle Racecourse:
+Morganstown:
+Morganstown Docks:
+New Harrow:
+Newry:
+Newry Harbour:
+Northshore:
+Port Benton:
+Rocket Parade:
+St. Helens Bridge:
+Starryloch:
+Stepford Airport Central:
+Stepford Airport Parkway:
+Stepford Central:
+Stepford East:
+Stepford High Street:
+Stepford United Football Club:
+Stepford Victoria:
+Upper Staploe:
+Water Newton:
+West Benton:
+Westercoast:
+Westwyvern:
+Whitefield:
+Whitefield Lido:
+Whitney Green:
+Willowfield:
+Woodhead Lane:
