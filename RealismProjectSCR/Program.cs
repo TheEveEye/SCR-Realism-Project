@@ -8,29 +8,60 @@ using RealismProjectSCR.NetworkPlanner;
 
 class Program
 {
-    public static string StartupFilePath = Path.GetFullPath("RealismProjectSCR.startup");
-    public static string[] StartupFile = File.ReadAllLines(StartupFilePath);
-    public static Station[] Stations = new Station[Convert.ToInt32(StartupFile[0])]; // startupFile[0] = amount of stations
-    public static string[] StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
-    public static int StationInfoLength = Convert.ToInt32(StartupFile[2]);
+    public static string StartupFilePath;
+    public static string[] StartupFile;
+    public static Station[] Stations;
+    public static string[] StationNames;
+    public static int StationInfoLength;
 
     static void Main()
     {
-        
+        Console.Title = "Realism Project Network Planner v0.1 Beta";
+        string StartupFilePath = Path.GetFullPath("RealismProjectSCR.startup"); // This doesn't work yet
+        string[] StartupFile = File.ReadAllLines(StartupFilePath);
+        Station[] _Stations = new Station[Convert.ToInt32(StartupFile[0])]; // startupFile[0] = amount of stations
+        string[] StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
+
+
 
         Console.WriteLine("Importing Station Data...");
-        for (int i = 0; i < Stations.Length; i++) // This for-loop 
+        for (int i = 0; i < _Stations.Length; i++) // This for-loop 
         {
-            Stations[i].Name = StationNames[i]; // Fills in the name of the station
-            string[] StationInfo = File.ReadAllLines(Stations[i].stblPath); // Gets all information from the .stbl station file
+            _Stations[i] = new Station(StationNames[i], null, null, null); // Fills in the name of the station
+            string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file
         }
+        Stations = _Stations;
+        
+        // Temporary code to automatically enter adjacent stations
+        /*
+        string[] AdjacentStations = File.ReadAllLines(@"INSERT FILE PATH HERE IN CASE OF REUSE");
+        foreach (var station in AdjacentStations)
+        {
+            string[] temp = station.Split(':');
+            Console.WriteLine("Importing Adjacent Station for: " + temp[0]);
+            File.WriteAllLines(Station.NameToStation(temp[0]).stblPath, new string[] { temp[1] });
+        }
+        */
+
         for (int i = 0; i < Stations.Length; i++)
         {
-            string[] StationInfo = File.ReadAllLines(Stations[i].stblPath); // Gets all information from the .stbl station file
-            string[] AdjacentStationNames = StationInfo[0].Split(';');
-            Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStationNames);
+            try
+            {
+                string[] StationInfo = File.ReadAllLines(Stations[i].stblPath); // Gets all information from the .stbl station file
+                string[] AdjacentStationNames = StationInfo[0].Split(';');
+                Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStationNames);
 
-            Console.WriteLine("Imported " + Stations[i].Name + " Station Data");
+                Console.WriteLine("Imported " + Stations[i].Name + " Station Data");
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("Skipped Station " + Stations[i].Name);
+            }
+            //catch ()
+            //{
+            //
+            //}
+            
         }
 
         Console.WriteLine("----------------------------------------------------------------");
