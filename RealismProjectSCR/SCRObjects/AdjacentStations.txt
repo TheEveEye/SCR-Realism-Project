@@ -1,6 +1,6 @@
-Airport Terminal 1:Terminal 2
+Airport Terminal 1:Airport Terminal 2
 Airport Terminal 2:Stepford Airport Central;Airport Terminal 3
-Airport Terminal 3:Terminal 2
+Airport Terminal 3:Airport Terminal 2
 Airport West:James Street;Cambridge Street Parkway
 Angel Pass:St. Helens Bridge;Bodin
 Ashlan Park:Connolly;Cambridge Street Parkway
