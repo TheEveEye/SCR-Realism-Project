@@ -11,7 +11,7 @@ Benton Bridge:Benton;Stepford Airport Parkway;Hampton Hargate
 Berrily:Elsemere Junction;St. Helens Bridge;East Berrily;Beaulieu Park;Stepford Airport Parkway
 Bodin:Angel Pass;St. Helens Bridge;Coxly
 Cambridge Street Parkway:Benton;Ashlan Park;Airport West
-City Hospital:Beechly;Financial Quarter;Stepford Central
+City Hospital:Beechley;Financial Quarter;Stepford Central
 Connolly:Ashlan Park
 Coxly:Bodin;Benton
 East Berrily:Berrily;Beaulieu Park
