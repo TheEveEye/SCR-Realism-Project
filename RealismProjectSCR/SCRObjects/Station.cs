@@ -22,7 +22,7 @@ namespace RealismProjectSCR.SCRObjects
             this.AdjacentStations = AdjacentStations;
             this.Platforms = Platforms;
             this.Departures = Departures;
-            this.stblPath = @"\RealismProjectSCR\RealismProjectSCR\SCRObjects\TimeTables\StationTables\" + this.Name + ".stbl"; // This doesn't work. Research on Path.GetFullPath()
+            this.stblPath = Program.ProjectDirectoryPath + @"SCRObjects\TimeTables\StationTables\" + this.Name + ".stbl";
         }  
 
         public static Station[] NamesToStations(string[] Names)
