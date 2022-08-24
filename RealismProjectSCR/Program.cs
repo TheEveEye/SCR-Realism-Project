@@ -13,11 +13,25 @@ class Program
     public static Station[] Stations;
     public static string[] StationNames;
     public static int StationInfoLength;
+    public static string ProjectDirectoryPath;
 
     static void Main()
     {
         Console.Title = "Realism Project Network Planner v0.1 Beta";
-        string StartupFilePath = Path.GetFullPath("RealismProjectSCR.startup"); // This doesn't work yet
+        Console.WriteLine("Importing Program Data...");
+
+        
+        
+        string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
+        string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
+        string projectDirectoryPath = "";
+        for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
+        {
+            projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
+        }
+        ProjectDirectoryPath = projectDirectoryPath;
+        StartupFilePath = projectDirectoryPath + "RealismProjectSCR.startup";
+
         string[] StartupFile = File.ReadAllLines(StartupFilePath);
         Station[] _Stations = new Station[Convert.ToInt32(StartupFile[0])]; // startupFile[0] = amount of stations
         string[] StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
@@ -51,7 +65,7 @@ class Program
                 string[] AdjacentStationNames = StationInfo[0].Split(';');
                 Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStationNames);
 
-                Console.WriteLine("Imported " + Stations[i].Name + " Station Data");
+                // Console.WriteLine("Imported " + Stations[i].Name + " Station Data"); // In case of debug, un-comment this line of code.
             }
             catch (IndexOutOfRangeException)
             {
@@ -73,10 +87,11 @@ class Program
         Console.WriteLine("Waiting for input...");
 
         Tab();
-
+        /*
+        // When debugging station data, use this
         Station TestStation = new("Beechly", null, null, null);
         Console.WriteLine(TestStation.stblPath);
-
+        */
 
         bool proceed = false; // Use for all menu checks
         bool close = false;
