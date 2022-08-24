@@ -12,15 +12,12 @@ class Program
     public static string[] StartupFile;
     public static Station[] Stations;
     public static string[] StationNames;
-    public static int StationInfoLength;
     public static string ProjectDirectoryPath;
 
     static void Main()
     {
         Console.Title = "Realism Project Network Planner v0.1 Beta";
         Console.WriteLine("Importing Program Data...");
-
-        
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
         string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
@@ -32,9 +29,9 @@ class Program
         ProjectDirectoryPath = projectDirectoryPath;
         StartupFilePath = projectDirectoryPath + "RealismProjectSCR.startup";
 
-        string[] StartupFile = File.ReadAllLines(StartupFilePath);
+        StartupFile = File.ReadAllLines(StartupFilePath);
         Station[] _Stations = new Station[Convert.ToInt32(StartupFile[0])]; // startupFile[0] = amount of stations
-        string[] StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
+        StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
 
 
 
@@ -79,7 +76,7 @@ class Program
         }
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v0.1 Beta");
+        Console.WriteLine("SCR Realism Project v1.9.7 Build 2");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -96,7 +93,6 @@ class Program
         bool proceed = false; // Use for all menu checks
         bool close = false;
         string EnteredCommandRaw = null;
-        
 
         while (!close)
         {
@@ -152,11 +148,27 @@ class Program
 
                         case "stationtable":
                         case "stationschedule":
-                            if (EnteredCommand.Length < 3)
+                            if (!Contains((EnteredCommand[2]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            if (EnteredCommand[3] == "all")
+                            {
+                                Station.NameToStation(EnteredCommand[2]).PrintDepartures();
+                                break;
+                            }
+                            if ((EnteredCommand[3] != "all") && (EnteredCommand.Length < 5))
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");
                                 break;
                             }
+                            /*
+                            else // Find a way to automatically see if something is in time format or in frames
+                            {
+
+                            }
+                            */
 
                             break;
 
@@ -255,13 +267,28 @@ class Program
                     }
                     break;
 
+                case "":
+
+                    break;
+
                 default: // Not an existing command
                     Console.WriteLine("Invalid Command. Please try again...");
                     break;
             }
         }
     }
-
+    public static bool Contains(string obj1, string[] array)
+    {
+        bool output = false;
+        foreach (var item in array)
+        {
+            if (item.ToLower() == obj1.ToLower())
+            {
+                output = true;
+            }
+        }
+        return output;
+    }
     public static void Tab()
     {
         Console.WriteLine("");

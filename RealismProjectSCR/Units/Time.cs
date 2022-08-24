@@ -48,15 +48,27 @@ namespace RealismProjectSCR.Units
         }
     }
 
-    struct TimeFrame
+    public struct TimeFrame
     {
-        public int Start { get; set; }
-        public int End { get; set; }
+        public int Start { get; set; } // Meassured in ScheduleFrames
+        public int End { get; set; }// Meassured in ScheduleFrames
+        public string StartTime { get; set; } // Meassured in Time (e. g. 13:45:15)
+        public string EndTime { get; set; } // Meassured in Time (e. g. 13:45:15)
 
         public TimeFrame(int Start, int End)
         {
             this.Start = Start;
             this.End = End;
+            this.StartTime = Time.ScheduleFramesToDateTime(Start).ToLongTimeString();
+            this.EndTime = Time.ScheduleFramesToDateTime(End).ToLongTimeString();
+
+        }
+        public TimeFrame(string StartTime, string EndTime)
+        {
+            this.StartTime = StartTime;
+            this.EndTime = EndTime;
+            this.Start = Time.TimeToSeconds(StartTime);
+            this.End = Time.TimeToSeconds(EndTime);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
 
         public string ToDebug()
         {
-            return Time.ScheduleFramesToDateTime(Frame) + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
+            return Time.ScheduleFramesToDateTime(Frame) + " / " + Frame + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
         }
 
         public string ToPassenger()
