@@ -11,6 +11,7 @@ class Program
     public static string StartupFilePath;
     public static string[] StartupFile;
     public static Station[] Stations;
+    public static Route[] Routes;
     public static string[] StationNames;
     public static string ProjectDirectoryPath;
 

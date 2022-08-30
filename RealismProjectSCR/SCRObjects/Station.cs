@@ -45,7 +45,6 @@ namespace RealismProjectSCR.SCRObjects
                 {
                     return Program.Stations[i];
                 }
-                
             }
             return null;
         }

@@ -1,7 +1,7 @@
-Airport Terminal 1:Airport Terminal 2
+Airport Terminal 1:Airport Terminal 2;Airport Terminal 3
 Airport Terminal 2:Stepford Airport Central;Airport Terminal 3
 Airport Terminal 3:Airport Terminal 2
-Airport West:James Street;Cambridge Street Parkway
+Airport West:James Street;Cambridge Street Parkway;Airport Terminal 2
 Angel Pass:St. Helens Bridge;Bodin
 Ashlan Park:Connolly;Cambridge Street Parkway
 Beaulieu Park:East Berrily;Berrily;Morganstown
@@ -19,14 +19,16 @@ Eden Quay:Newry;Faraday Road;Benton
 Edgemead:Leighton West;Leighton City;Faymere;Westercoast;Westwyvern
 Elsemere Junction:Elsemere Pond;New Harrow;St. Helens Bridge;Stepford East;Stepford Central;Berrily;Morganstown
 Elsemere Pond:New Harrow;St. Helens Bridge;Elsemere Junction
+Esterfield:Rosedale Village;Farleigh
 Faraday Road:Eden Quay;West Benton
 Faymere:Edgemead;Westercoast
+Farleigh:Rosedale Village;Esterfield;James Street;Airport West
 Financial Quarter:City Hospital;Stepford Central;Beechly;Stepford Victoria
 Greenslade:Whitney Green
 Hampton Hargate:Benton;Benton Bridge;Upper Staploe;Water Newton
 Hemdon Park:Willowfield;Beechly
 Houghton Rake:Woodhead Lane;Whitefield
-James Street:Airport West
+James Street:Airport West;Farleigh
 Leighton City:Leighton Stepford Road;Stepford Central;Leighton West;Edgemead;Westercoast;Westwyvern;Northshore;Llyn-by-the-sea
 Leighton Stepford Road:Rocket Parade;Water Newton;Morganstown;Stepford Airport Central;Benton;Leighton City
 Leighton West:Leighton City;Edgemead
@@ -41,6 +43,7 @@ Newry Harbour:Newry
 Northshore:Starryloch;Westwyvern;Westercoast;Leighton City;Llyn-by-the-sea
 Port Benton:Benton;Morganstown Docks
 Rocket Parade:Water Newton;Leighton Stepford Road
+Rosedale Village:Esterfield;Farleigh
 St. Helens Bridge:Stepford East;Stepford Central;Angel Pass;New Harrow;Bodin;Elsemere Pond;Elsemere Junction;Berrily;Benton;Morganstown;Stepford Airport Parkway
 Starryloch:Westwyvern;Northshore
 Stepford Airport Central:Stepford Central;Stepford Airport Parkway;Morganstown;Airport Terminal 1;Airport Terminal 2;Leighton Stepford Road
