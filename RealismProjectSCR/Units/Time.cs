@@ -11,7 +11,11 @@ namespace RealismProjectSCR.Units
 {
     public class Time
     {
-
+        public static int FormatFrames = 0;
+        public static int FormatTime = 1;
+        public static int FormatSeconds = 2;
+        public static int FormatInvalid = 3;
+        
         public static int ElapsedSeconds()
         {
             int seconds = DateTime.UtcNow.Second;
@@ -46,6 +50,45 @@ namespace RealismProjectSCR.Units
 
             return seconds + minutes + hours; 
         }
+        
+        public static int GetTimeFormat(string time)
+        {
+            int type = 3;
+            
+            string[] StringTimeCheck = time.Split(':');
+            if (StringTimeCheck.Length != 3)
+            {
+                try 
+                { 
+                    int Time = Convert.ToInt32(time); 
+                    if ((Time >= 5760) || (Time < 86400))
+                    {
+                        type = 2;
+                    }
+                    if ((Time >= 0) || (Time < 5760))
+                    {
+                        type = 1;
+                    }
+                    else
+                    {
+                        type = 3;
+                    }
+                }
+                catch (System.FormatException) {type = 3;}
+            }
+            else
+            {
+                try
+                {
+                    Convert.ToInt32(StringTimeCheck[0]);
+                    Convert.ToInt32(StringTimeCheck[1]);
+                    Convert.ToInt32(StringTimeCheck[2]);
+                    type = 1;
+                }
+                catch (System.FormatException) {type = 3;}
+            }
+            return type;
+        }        
     }
 
     public struct TimeFrame

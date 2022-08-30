@@ -189,6 +189,11 @@ class Program
                     switch (EnteredCommand[1]) // Looks at the second argument given
                     {
                         case "seconds":
+                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatSeconds)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
                             switch (EnteredCommand[2])
                             {
                                 case "frames":
@@ -208,8 +213,13 @@ class Program
 
                         case "frames":
                         case "scheduleframes":
-                            switch (EnteredCommand[2])
+                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatFrames)
                             {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            switch (EnteredCommand[2])
+                            {                                
                                 case "seconds":
                                     Console.WriteLine(Convert.ToInt32(EnteredCommand[3]) * 15);
                                     break;
@@ -226,19 +236,7 @@ class Program
                             break;
 
                         case "time":
-                            string[] StringTimeCheck = EnteredCommand[3].Split(':');
-                            if (StringTimeCheck.Length != 3)
-                            {
-                                Console.WriteLine("Invalid Argument given. Please try again...");
-                                break;
-                            }
-                            try
-                            {
-                                int hours = Convert.ToInt32(StringTimeCheck[0]);
-                                int minutes = Convert.ToInt32(StringTimeCheck[1]);
-                                int seconds = Convert.ToInt32(StringTimeCheck[2]);
-                            }
-                            catch (System.FormatException)
+                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatTime)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;

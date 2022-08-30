@@ -52,9 +52,7 @@ namespace RealismProjectSCR.SCRObjects
         public void PrintDepartures()
         {
             string[] departures = GetDepartures();
-            Console.WriteLine("--------------------------------");
             Console.WriteLine("Departures for: " + this.Name);
-            Console.WriteLine("--------------------------------");
             if ((departures == null) || (departures.Length == 0))
             {
                 Console.WriteLine("There are currently no scheduled trains for this station.");
