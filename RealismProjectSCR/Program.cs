@@ -75,6 +75,9 @@ class Program
             //}
             
         }
+        
+        Console.WriteLine("Importing Route Data...");
+        Routes = Route.Import();
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project v1.9.7 Build 2");
