@@ -12,6 +12,17 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
 {
     public class Timing // This class is not done yet.
     {
-        public static int 
+        public int TimingFrames { get; set; }
+        public int Type { get; set; }
+        
+        public static int Departure = 0 { get; }
+        public static int Arrival = 1 { get; }
+        public static int Depot = 2 { get; }
+        
+        public Timing(int TimingFrames, int Type)
+        {
+            this.TimingFrames = TimingFrames;
+            this.Type = Type;
+        }
     }
 }
