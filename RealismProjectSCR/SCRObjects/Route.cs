@@ -7,6 +7,7 @@ using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.Units;
 using RealismProjectSCR.NetworkPlanner;
 using RealismProjectSCR;
+using RealismProjectSCR.SCRObjects.TimeTables;
 
 namespace RealismProjectSCR.SCRObjects
 {
@@ -43,7 +44,7 @@ namespace RealismProjectSCR.SCRObjects
                 routes[i].RouteNumber = (i + 1);
                 routes[i].RouteName = tempRoute[0];
                 routes[i].Operator = tempRoute[1];
-                string[] Terminuses = tempRoute[2].Split(',');
+                Station[] Terminuses = Station.NamesToStations(tempRoute[2].Split(','));
                 routes[i].Terminus1 = Terminuses[0];
                 routes[i].Terminus2 = Terminuses[1];
             }

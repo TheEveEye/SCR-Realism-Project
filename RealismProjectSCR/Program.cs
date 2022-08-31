@@ -14,6 +14,7 @@ class Program
     public static Route[] Routes;
     public static string[] StationNames;
     public static string ProjectDirectoryPath;
+    public static Timing[] DepotTimings;
 
     static void Main()
     {

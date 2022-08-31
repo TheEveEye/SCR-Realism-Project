@@ -11,10 +11,10 @@ namespace RealismProjectSCR.Units
 {
     public class Time
     {
-        public static int FormatFrames = 0;
-        public static int FormatTime = 1;
-        public static int FormatSeconds = 2;
-        public static int FormatInvalid = 3;
+        public static readonly int FormatFrames = 0;
+        public static readonly int FormatTime = 1;
+        public static readonly int FormatSeconds = 2;
+        public static readonly int FormatInvalid = 3;
         
         public static int ElapsedSeconds()
         {
