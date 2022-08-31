@@ -18,19 +18,21 @@ namespace RealismProjectSCR.SCRObjects
         public Station Terminus1 { get; set; }
         public Station Terminus2 { get; set; }
         public Station[] CallingStations { get; set; }
+        public Timing[] Timings { get; set; }
         public string Operator { get; set; }
         public string RouteName { get; set; }
 
-        public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, string Operator, string RouteName)
+        public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, Timing[] Timings, string Operator, string RouteName)
         {
             this.RouteNumber = RouteNumber;
             this.Terminus1 = Terminus1;
             this.Terminus2 = Terminus2;
             this.CallingStations = CallingStations;
+            this.Timings = Timings;
             this.Operator = Operator;
             this.RouteName = RouteName;
         }
-        public static Route[] Import() // Requieres Timing class to be finished.
+        public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
         {
             string[] file = File.ReadAllLines(RoutePath);
             Route[] routes = new Route[file.Length];
@@ -38,7 +40,12 @@ namespace RealismProjectSCR.SCRObjects
             for (int i = 0; i < routes.Length; i++)
             {
                 string[] tempRoute = file[i].Split(';');
-
+                routes[i].RouteNumber = (i + 1);
+                routes[i].RouteName = tempRoute[0];
+                routes[i].Operator = tempRoute[1];
+                string[] Terminuses = tempRoute[2].Split(',');
+                routes[i].Terminus1 = Terminuses[0];
+                routes[i].Terminus2 = Terminuses[1];
             }
         }
     }
