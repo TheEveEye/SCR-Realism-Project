@@ -47,6 +47,22 @@ namespace RealismProjectSCR.SCRObjects
                 Station[] Terminuses = Station.NamesToStations(tempRoute[2].Split(','));
                 routes[i].Terminus1 = Terminuses[0];
                 routes[i].Terminus2 = Terminuses[1];
+                
+                string[] StationData = tempRoute[3].Split(',')
+                routes[i].CallingStations = new Station[StationData.Length]
+                routes[i].Timings = new Timing[StationData.Length]
+                for (int j = 0; j < StationData.Length; j++)
+                {
+                    string[] tempStationData = StationData[j].Split(':');
+                    routes[i].CallingStations[j] = Station.NameToStation(tempStationData[0]);
+                    
+                    Timing tempTiming = new Timing(Convert.ToInt32(tempStationData[1]), Timing.Departure, routes[i].CallingStations[j])
+                    if ((j == StationData.Length / 2) || (j == StationData.Length - 1))
+                    {
+                        tempTiming.Type = Timing.Arrival;   
+                    }
+                    routes[i].Timings[j] = tempTiming;
+                }
             }
         }
     }
