@@ -21,17 +21,17 @@ namespace RealismProjectSCR.SCRObjects
         public Station[] CallingStations { get; set; }
         public Timing[] Timings { get; set; }
         public string Operator { get; set; }
-        public string RouteName { get; set; }
+        public string Name { get; set; }
         
         // Route Change IDs:
         // Used in EditRoute function
         
-        public int Name = 0; // Change Route Name
-        public int Operator = 1; // Change Operator of Route
-        public int Terminus = 2; // Change the Terminuses of Route
-        public int StationsTimings = 3; // Changes the station and/or Timings of Route
+        public int RouteName = 0; // Change Route Name
+        public int RouteOperator = 1; // Change Operator of Route
+        public int RouteTerminus = 2; // Change the Terminuses of Route
+        public int RouteStationsTimings = 3; // Changes the station and/or Timings of Route
 
-        public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, Timing[] Timings, string Operator, string RouteName)
+        public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, Timing[] Timings, string Operator, string Name)
         {
             this.RouteNumber = RouteNumber;
             this.Terminus1 = Terminus1;
@@ -39,7 +39,7 @@ namespace RealismProjectSCR.SCRObjects
             this.CallingStations = CallingStations;
             this.Timings = Timings;
             this.Operator = Operator;
-            this.RouteName = RouteName;
+            this.Name = Name;
         }
         public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
         {
@@ -48,30 +48,33 @@ namespace RealismProjectSCR.SCRObjects
 
             for (int i = 0; i < routes.Length; i++)
             {
-                string[] tempRoute = file[i].Split(';');
-                routes[i].RouteNumber = (i + 1);
-                routes[i].RouteName = tempRoute[0];
-                routes[i].Operator = tempRoute[1];
-                Station[] Terminuses = Station.NamesToStations(tempRoute[2].Split(','));
-                routes[i].Terminus1 = Terminuses[0];
-                routes[i].Terminus2 = Terminuses[1];
-                
-                string[] StationData = tempRoute[3].Split(',')
-                routes[i].CallingStations = new Station[StationData.Length]
-                routes[i].Timings = new Timing[StationData.Length]
+                Route tempRoute = new Route(0, null, null, null, null, null, null);
+                string[] tempRouteData = file[i].Split(';');
+                tempRoute.RouteNumber = (i + 1);
+                tempRoute.Name = tempRouteData[0];
+                tempRoute.Operator = tempRouteData[1];
+                Station[] Terminuses = Station.NamesToStations(tempRouteData[2].Split(','));
+                tempRoute.Terminus1 = Terminuses[0];
+                tempRoute.Terminus2 = Terminuses[1];
+
+                string[] StationData = tempRouteData[3].Split(',');
+                tempRoute.CallingStations = new Station[StationData.Length];
+                tempRoute.Timings = new Timing[StationData.Length];
                 for (int j = 0; j < StationData.Length; j++)
                 {
                     string[] tempStationData = StationData[j].Split(':');
-                    routes[i].CallingStations[j] = Station.NameToStation(tempStationData[0]);
-                    
-                    Timing tempTiming = new Timing(Convert.ToInt32(tempStationData[1]), Timing.Departure, routes[i].CallingStations[j])
+                    tempRoute.CallingStations[j] = Station.NameToStation(tempStationData[0]);
+
+                    Timing tempTiming = new Timing(Convert.ToInt32(tempStationData[1]), Timing.Departure, tempRoute.CallingStations[j]);
                     if ((j == StationData.Length / 2) || (j == StationData.Length - 1))
                     {
                         tempTiming.Type = Timing.Arrival;   
                     }
-                    routes[i].Timings[j] = tempTiming;
+                    tempRoute.Timings[j] = tempTiming;
                 }
+                routes[i] = tempRoute;
             }
+            return routes;
         }
         
         public static void EditRoute()
