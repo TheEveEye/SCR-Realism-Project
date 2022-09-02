@@ -22,6 +22,14 @@ namespace RealismProjectSCR.SCRObjects
         public Timing[] Timings { get; set; }
         public string Operator { get; set; }
         public string RouteName { get; set; }
+        
+        // Route Change IDs:
+        // Used in EditRoute function
+        
+        public int Name = 0; // Change Route Name
+        public int Operator = 1; // Change Operator of Route
+        public int Terminus = 2; // Change the Terminuses of Route
+        public int StationsTimings = 3; // Changes the station and/or Timings of Route
 
         public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, Timing[] Timings, string Operator, string RouteName)
         {
@@ -64,6 +72,11 @@ namespace RealismProjectSCR.SCRObjects
                     routes[i].Timings[j] = tempTiming;
                 }
             }
+        }
+        
+        public static void EditRoute()
+        {
+            
         }
     }
 }
