@@ -14,15 +14,17 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
     {
         public int TimingFrames { get; set; }
         public int Type { get; set; }
+        public Station Station { get; set; }
 
         public static readonly int Departure = 0;
         public static readonly int Arrival = 1;
         public static readonly int Depot = 2;
         
-        public Timing(int TimingFrames, int Type)
+        public Timing(int TimingFrames, int Type, Station Station)
         {
             this.TimingFrames = TimingFrames;
             this.Type = Type;
+            this.Station = Station;
         }
     }
 }
