@@ -41,6 +41,45 @@ namespace RealismProjectSCR.SCRObjects
             this.Operator = Operator;
             this.Name = Name;
         }
+
+        public static void PrintData(int RouteNumber)
+        {
+            // Timings for: R001 (Stepford Central <> Airport Central)
+            //               Station                     Seconds    Frames    T+
+            // Stepford Central (Depart)                 90         4         00:01:30
+            // Stepford East                             120        8         00:03:30
+            // Stepford High Street                      105        7         00:05:15
+            // Whitefield Lido                           75         5         00:06:00
+            // Stepford United Football Club (Arrive)    90         6         00:07:30
+            // Stepford United Football Club (Depart)    60         4         00:08:30
+            // Whitefield Lido                           90         6         00:10:00
+            // Stepford High Street                      75         5         00:11:15
+            // Stepford East                             105        7         00:13:00
+            // Stepford Central (Arrive)                 120        8         00:15:00
+
+            Console.WriteLine("Timings for: " + RouteNumberString(RouteNumber) + " (" + Program.Routes[RouteNumber - 1].Name + ")");
+        }
+
+        public static string RouteNumberString(int RouteNumber)
+        {
+            char[] chars = Convert.ToString(RouteNumber).ToCharArray();
+            string output = "";
+            switch (chars.Length)
+            {
+                case 1: output = "R00" + RouteNumber; break;
+                case 2: output = "R0" + RouteNumber; break;
+                case 3: output = "R" + RouteNumber; break;
+                default: output = "0"; break;
+
+            }
+            return output;
+        }
+
+        public static void EditRoute()
+        {
+
+        }
+
         public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
         {
             string[] file = File.ReadAllLines(RoutePath);
@@ -65,7 +104,18 @@ namespace RealismProjectSCR.SCRObjects
                     string[] tempStationData = StationData[j].Split(':');
                     tempRoute.CallingStations[j] = Station.NameToStation(tempStationData[0]);
 
-                    Timing tempTiming = new Timing(Convert.ToInt32(tempStationData[1]), Timing.Departure, tempRoute.CallingStations[j]);
+                    Timing tempTiming = new Timing(0, 3, null);
+                    try
+                    {
+                        tempTiming.TimingFrames = Convert.ToInt32(tempStationData[1]);
+                    }
+                    catch (FormatException)
+                    {
+                        tempTiming.TimingFrames = 0;
+                    }
+                    
+                    tempTiming.Type = Timing.Departure;
+                    tempTiming.Station = tempRoute.CallingStations[j];
                     if ((j == StationData.Length / 2) || (j == StationData.Length - 1))
                     {
                         tempTiming.Type = Timing.Arrival;   
@@ -75,11 +125,6 @@ namespace RealismProjectSCR.SCRObjects
                 routes[i] = tempRoute;
             }
             return routes;
-        }
-        
-        public static void EditRoute()
-        {
-            
         }
     }
 }

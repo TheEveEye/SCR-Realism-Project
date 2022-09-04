@@ -18,7 +18,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner v0.1 Beta";
+        Console.Title = "Realism Project Network Planner Build 15";
         Console.WriteLine("Importing Program Data...");
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -81,7 +81,7 @@ class Program
         Routes = Route.Import();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.9.7 Build 2");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 15");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -175,6 +175,26 @@ class Program
                             }
                             */
 
+                            break;
+
+                        case "route":
+                        case "routetimings":
+                        case "routedata":
+                            if (EnteredCommand.Length < 3)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            try
+                            {
+                                Convert.ToInt32(EnteredCommand[2]);
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            Route.PrintData(Convert.ToInt32(EnteredCommand[2]));
                             break;
 
                         default: // Not an existing command

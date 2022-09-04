@@ -19,6 +19,7 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
         public static readonly int Departure = 0;
         public static readonly int Arrival = 1;
         public static readonly int Depot = 2;
+        public static readonly int Invalid = 3;
         
         public Timing(int TimingFrames, int Type, Station Station)
         {
