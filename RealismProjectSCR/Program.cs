@@ -18,7 +18,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 15";
+        Console.Title = "Realism Project Network Planner Build 16";
         Console.WriteLine("Importing Program Data...");
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -81,7 +81,7 @@ class Program
         Routes = Route.Import();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 15");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 16");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");

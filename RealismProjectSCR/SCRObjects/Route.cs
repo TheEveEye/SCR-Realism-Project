@@ -45,7 +45,7 @@ namespace RealismProjectSCR.SCRObjects
         public static void PrintData(int RouteNumber)
         {
             // Timings for: R001 (Stepford Central <> Airport Central)
-            //               Station                     Seconds    Frames    T+
+            // Station                                   Seconds    Frames    T+
             // Stepford Central (Depart)                 90         4         00:01:30
             // Stepford East                             120        8         00:03:30
             // Stepford High Street                      105        7         00:05:15
@@ -57,9 +57,26 @@ namespace RealismProjectSCR.SCRObjects
             // Stepford East                             105        7         00:13:00
             // Stepford Central (Arrive)                 120        8         00:15:00
 
+            int LongestStationName = FindLongestStationName(Program.Routes[RouteNumber - 1]);
             Console.WriteLine("Timings for: " + RouteNumberString(RouteNumber) + " (" + Program.Routes[RouteNumber - 1].Name + ")");
+            Console.WriteLine("Station" + IntToSpaces(LongestStationName) + "    Seconds    Frames    T+");
+            int totalFrames = 0;
+            foreach (Timing timing in Program.Routes[RouteNumber - 1].Timings)
+            {
+                int Length = timing.Station.Name.ToCharArray().Length;
+                totalFrames += timing.TimingFrames;
+                Console.WriteLine(timing.Station.Name + IntToSpaces(LongestStationName - Length) + "    " + (timing.TimingFrames * 15) + IntToSpaces(7 - (Convert.ToString(timing.TimingFrames * 15).ToCharArray().Length)) + "    " + timing.TimingFrames + IntToSpaces(6 - (Convert.ToString(timing.TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames));
+            }
         }
-
+        static string IntToSpaces(int amount)
+        {
+            string output = "";
+            for (int i = 0; i < amount; i++)
+            {
+                output += " ";
+            }
+            return output;
+        }
         public static string RouteNumberString(int RouteNumber)
         {
             char[] chars = Convert.ToString(RouteNumber).ToCharArray();
@@ -78,6 +95,27 @@ namespace RealismProjectSCR.SCRObjects
         public static void EditRoute()
         {
 
+        }
+
+        public static int FindLongestStationName(Route route)
+        {
+            int Longest = 0;
+            if ((route.Terminus1.Name + " (Depart)").ToCharArray().Length > Longest)
+            {
+                Longest = (route.Terminus1.Name + " (Depart)").ToCharArray().Length;
+            }
+            if ((route.Terminus2.Name + " (Depart)").ToCharArray().Length > Longest)
+            {
+                Longest = (route.Terminus2.Name + " (Depart)").ToCharArray().Length;
+            }
+            foreach (Station station in route.CallingStations)
+            {
+                if (station.Name.ToCharArray().Length > Longest)
+                {
+                    Longest = station.Name.ToCharArray().Length;
+                }
+            }
+            return Longest;
         }
 
         public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
