@@ -23,7 +23,19 @@ namespace RealismProjectSCR
             this.Name = Name;
             this.TimeFrame = TimeFrame;
             this.Legs = Legs;
-            this.Path = Program.ProjectPath + @"Shifts\"+ this.Name + @"\"; 
+            this.Path = GetPath(this.Name); 
+        }
+        public static string GetPath(string Name)
+        {
+            Program.ProjectPath + @"Shifts\"+ this.Name + @"\";
+        }
+        public static Shift Import(string Name)
+        {
+            Shift output = new Shift()
+        }
+        public static Shift Create(Shift Shift)
+        {
+            
         }
     }
 }
