@@ -13,5 +13,17 @@ namespace RealismProjectSCR
 {
     public class Shift
     {
+        public string Name { get; set; }
+        public TimeFrame TimeFrame { get; set; }
+        public List<Leg> Legs { get; set; }
+        public string Path { get; set; }
+        
+        public Shift(string Name, TimeFrame TimeFrame, List<Leg> Legs)
+        {
+            this.Name = Name;
+            this.TimeFrame = TimeFrame;
+            this.Legs = Legs;
+            this.Path = Program.ProjectPath + @"Shifts\"+ this.Name + @"\"; 
+        }
     }
 }
