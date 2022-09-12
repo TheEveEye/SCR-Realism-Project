@@ -10,13 +10,15 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
     public class Departure
     {
         public int Frame { get; set; }
+        public Station Station { get; set; }
         public Platform[] PossiblePlatforms { get; set; }
         public Station Terminus { get; set; }
         public Route Route { get; set; }
 
-        public Departure(int Frame, Platform[] PossiblePlatforms, Station Terminus, Route Route)
+        public Departure(int Frame, Station Station, Platform[] PossiblePlatforms, Station Terminus, Route Route)
         {
             this.Frame = Frame;
+            this.Station = Station;
             this.PossiblePlatforms = PossiblePlatforms;
             this.Terminus = Terminus;
             this.Route = Route;

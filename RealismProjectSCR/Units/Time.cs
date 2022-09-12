@@ -113,5 +113,9 @@ namespace RealismProjectSCR.Units
             this.Start = Time.TimeToSeconds(StartTime);
             this.End = Time.TimeToSeconds(EndTime);
         }
+        public int ToFrames()
+        {
+            return End - Start;
+        }
     }
 }

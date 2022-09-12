@@ -27,13 +27,17 @@ namespace RealismProjectSCR
         }
         public static string GetPath(string Name)
         {
-            Program.ProjectPath + @"Shifts\"+ this.Name + @"\";
+            return Program.ProjectDirectoryPath + @"Shifts\"+ Name + @"\";
         }
         public static Shift Import(string Name)
         {
-            Shift output = new Shift()
+            Shift output = new(null, new TimeFrame(null, null), null);
+
+
+
+            return output;
         }
-        public static Shift Create(Shift Shift)
+        public static void Create(Shift Shift)
         {
             
         }
