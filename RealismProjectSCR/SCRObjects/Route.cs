@@ -26,10 +26,19 @@ namespace RealismProjectSCR.SCRObjects
         // Route Change IDs:
         // Used in EditRoute function
         
-        public int RouteName = 0; // Change Route Name
-        public int RouteOperator = 1; // Change Operator of Route
-        public int RouteTerminus = 2; // Change the Terminuses of Route
-        public int RouteStationsTimings = 3; // Changes the station and/or Timings of Route
+        public static readonly int RouteName = 0; // Change Route Name
+        public static readonly int RouteOperator = 1; // Change Operator of Route
+        public static readonly int RouteTerminus = 2; // Change the Terminuses of Route
+        public static readonly int RouteStationsTimings = 3; // Changes the station and/or Timings of Route
+        
+        public static readonly string[] EditTypes =
+        {
+            "timings",
+            "stations",
+            "name",
+            "operator",
+            "terminuses"
+        };
 
         public Route(int RouteNumber, Station Terminus1, Station Terminus2, Station[] CallingStations, Timing[] Timings, string Operator, string Name)
         {
@@ -135,7 +144,7 @@ namespace RealismProjectSCR.SCRObjects
             return Longest;
         }
 
-        public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
+        public static Route[] Import()
         {
             string[] file = File.ReadAllLines(RoutePath);
             Route[] routes = new Route[file.Length];
@@ -180,6 +189,36 @@ namespace RealismProjectSCR.SCRObjects
                 routes[i] = tempRoute;
             }
             return routes;
+        }
+        public string ToExport()
+        {
+            string output;
+            if (Departures.Length == 0)
+            {
+                output = Name + ";" + Convert.ToString(TotalLength) + Operator + ";" + "," + ";" + "" + ":" + "";
+            }
+            else
+            {
+                output = Name + ";" + Convert.ToString(TotalLength) + Operator + ";" + Terminus1 + "," + Terminus2 + ";" + Stations[0].Name + ":" + Timings[0].Time;
+                for (int i = 1; i < stations.Length; i++)
+                {
+                    output += "," + Stations[i].Name + ":" + Timings[i].Time;
+                }
+            }
+            return output;
+            //Display Name;TotalLength;Operator;Terminus 1,Terminus 2;Station1:Time in Frames,Station2:Time in Frames,Station3:Time in Frames,Station4:Time in Frames,Station5:Time in Frames,Station6:Time in Frames
+        }
+        public static string[] GetRawData()
+        {
+            return File.ReadAllLines(RoutePath);
+        }
+        public static void EditTimings(Timing[] timings, Route route)
+        {
+            
+        }
+        public static void Push(string[])
+        {
+            File.WriteAllLines
         }
     }
 }
