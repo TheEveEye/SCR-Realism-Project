@@ -13,11 +13,11 @@ namespace RealismProjectSCR.SCRObjects
         public string Name { get; set; }
         public Station[] AdjacentStations { get; set; }
         public Platform[] Platforms { get; set; }
-        public Departure[] Departures { get; set; }
+        public List<Departure> Departures { get; set; }
 
         public string stblPath { get; }
 
-        public Station(string Name, Station[] AdjacentStations, Platform[] Platforms, Departure[] Departures)
+        public Station(string Name, Station[] AdjacentStations, Platform[] Platforms, List<Departure> Departures)
         {
             this.Name = Name;
             this.AdjacentStations = AdjacentStations;
@@ -73,8 +73,8 @@ namespace RealismProjectSCR.SCRObjects
             }
             else
             {
-                string[] output = new string[this.Departures.Length];
-                for (int i = 0; i < Departures.Length; i++)
+                string[] output = new string[this.Departures.Count];
+                for (int i = 0; i < Departures.Count; i++)
                 {
                     output[i] = this.Departures[i].ToDebug();
                 }
@@ -83,8 +83,8 @@ namespace RealismProjectSCR.SCRObjects
         }
         public string[] GetDepartures(TimeFrame TimeFrame)
         {
-            string[] output = new string[this.Departures.Length];
-            for (int i = 0; i < Departures.Length; i++)
+            string[] output = new string[this.Departures.Count];
+            for (int i = 0; i < Departures.Count; i++)
             {
                 if ((Departures[i].Frame > TimeFrame.Start) && (Departures[i].Frame < TimeFrame.End))
                 {

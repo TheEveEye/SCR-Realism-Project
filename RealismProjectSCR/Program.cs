@@ -16,11 +16,13 @@ class Program
     public static string[] StationNames;
     public static string ProjectDirectoryPath;
     public static Timing[] DepotTimings;
+    public static List<string> ShiftPaths;
+    public static List<string> ShiftNames;
     public static Shift ActiveShift;
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 20";
+        Console.Title = "Realism Project Network Planner Build 22";
         Console.WriteLine("Importing Program Data...");
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -67,15 +69,39 @@ class Program
         Console.WriteLine("Importing Route Data...");
         Routes = Route.Import();
 
+        Console.WriteLine("Importing Shift Data...");
+        ShiftPaths = GetShiftPaths();
+        ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
+
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 20");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 22");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
-        Tab();
+  
+        bool selectedShift = false;
+        while (!selectedShift)
+        {
+            Tab();
+            Console.WriteLine("Select Shift:");
+            for (int i = 0; i < ShiftNames.Count; i++)
+            {
+                Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
+            }
+            string selectedShiftInput = Console.ReadLine();
+            try
+            {
+                ActiveShift = Shift.Import(ShiftPaths[Convert.ToInt32(selectedShiftInput) - 1]);
+                selectedShift = true;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Invalid Argument given. Please try again...");
+            }
+        }
+
         Console.WriteLine("Waiting for input...");
 
-        Tab();
         /*
         // When debugging station data, use this
         Station TestStation = new("Beechly", null, null, null);
@@ -117,8 +143,67 @@ class Program
                     break;
 
                 case "help":
-                case "commnds":
+                case "commands":
 
+                    break;
+
+                case "add":
+                    if (EnteredCommand.Length < 2)
+                    {
+                        Console.WriteLine("Not enough Arguments given. Please try again...");
+                        break;
+                    }
+                    switch (EnteredCommand[1])
+                    {
+                        case "leg":
+                            if (EnteredCommand.Length < 6)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            if (ActiveShift == null)
+                            {
+                                Console.WriteLine("Please select a shift first...");
+                                break;
+                            }
+                            try
+                            {
+                                Convert.ToInt32(EnteredCommand[2]);
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            Route route = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
+                            try
+                            {
+                                Convert.ToInt32(EnteredCommand[3]);
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            int StartingFrame = Convert.ToInt32(EnteredCommand[3]);
+                            if (!Contains((EnteredCommand[4]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            if (!Contains((EnteredCommand[5]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            Leg createdLeg = Leg.Create(route, StartingFrame, Station.NameToStation(EnteredCommand[4]), Station.NameToStation(EnteredCommand[5]));
+                            ActiveShift.AddLeg(createdLeg);
+                            break;
+
+                        default: // Not an existing command
+                            Console.WriteLine("Invalid Argument given. Please try again...");
+                            break;
+                    }
                     break;
 
                 case "get": // Allows you to get any information
@@ -280,6 +365,11 @@ class Program
                     break;
             }
         }
+    }
+    static List<string> GetShiftPaths()
+    {
+        string path = ProjectDirectoryPath + @"Shifts\";
+        return Directory.GetDirectories(ProjectDirectoryPath + @"Shifts\").ToList<string>();
     }
     public static bool Contains(string obj1, string[] array)
     {

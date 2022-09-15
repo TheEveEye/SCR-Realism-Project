@@ -25,20 +25,45 @@ namespace RealismProjectSCR
             this.Legs = Legs;
             this.Path = GetPath(this.Name); 
         }
-        public static string GetPath(string Name)
-        {
-            return Program.ProjectDirectoryPath + @"Shifts\"+ Name + @"\";
-        }
         public void AddLeg(Leg leg)
         {
-            Legs.Add(Leg);
+            Legs.Add(leg);
+            for (int i = 0; i < leg.Departures.Length; i++)
+            {
+                leg.Departures[i].Station.Departures.Add(leg.Departures[i]);
+            }
         }
-        public static Shift Import(string Name)
+        public static string[] NamesFromPaths(string[] paths)
         {
-            Shift output = new(null, new TimeFrame(null, null), null);
+            string[] names = new string[paths.Length];
+            for (int i = 0;i < paths.Length; i++)
+            {
+                names[i] = NameFromPath(paths[i]);
+            }
+            return names;
+        }
 
+        public static string NameFromPath(string path)
+        {
+            return path.Split('\\')[path.Split('\\').Length - 1];
+        }
+        public static string GetPath(string Name)
+        {
+            return Program.ProjectDirectoryPath + @"Shifts\" + Name + @"\";
+        }
+        public static Shift Import(string Path)
+        {
+            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), new List<Leg>());
 
-
+            string[] shiftInfo = File.ReadAllLines(Path + @"\Info.shift");
+            string[] timeFrameRaw = shiftInfo[0].Split(';');
+            output.TimeFrame = new TimeFrame(Convert.ToInt32(timeFrameRaw[0]), Convert.ToInt32(timeFrameRaw[1]));
+            string[] legsRaw = File.ReadAllLines(Path + @"\Legs.shift");
+            Leg[] legs = new Leg[legsRaw.Length];
+            for (int i = 0; i < legs.Length; i++)
+            {
+                legs[i] = Leg.Import(legsRaw[i]);
+            }
             return output;
         }
         public static void Create(Shift Shift)

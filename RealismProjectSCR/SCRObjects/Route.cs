@@ -88,19 +88,6 @@ namespace RealismProjectSCR.SCRObjects
                 Console.WriteLine("This Route does not exist. Please try again...");
             }
         }
-        public int[] IndexesOfStation(Station station)
-        {
-            int a = 0;
-            for (int i = 0; i < CallingStations.Length; i++)
-            {
-                if (CallingStations[i] == station)
-                {
-                    a++;
-                }
-            }
-            int[] output = new int[a];
-            output[0] = Array.IndexOf(CallingStations, station,)
-        }
         static string IntToSpaces(int amount)
         {
             string output = "";
@@ -216,10 +203,64 @@ namespace RealismProjectSCR.SCRObjects
             return output;
             //Display Name;TotalLength;Operator;Terminus 1,Terminus 2;Station1:Time in Frames,Station2:Time in Frames,Station3:Time in Frames,Station4:Time in Frames,Station5:Time in Frames,Station6:Time in Frames
         }
-        public static Departure[] GetDepartures(Route route, Station startingStation, Station endingStation)
+        public static Departure[] GetLegDepartures(Route route, int startingFrame, Station startingStation, Station endingStation)
         {
-            Array.FindAll(route.CallingStations);
+            int[] startingStationIndexes = GetStationIndexes(route, startingStation);
+            int[] endingStationIndexes = GetStationIndexes(route, endingStation);
+            if ((startingStationIndexes.Length == 0) || (endingStationIndexes.Length == 0))
+            {
+                return new Departure[0];
+            }
+            int[] shortestDistanceIndex = new int[2];
+            int shortestDistance = route.CallingStations.Length;
+            if (endingStationIndexes[0] - startingStationIndexes[0] > 0)
+            {
+                shortestDistance = endingStationIndexes[0] - startingStationIndexes[0];
+                shortestDistanceIndex[0] = 0;
+                shortestDistanceIndex[1] = 0;
+            }
+            for (int i = 1; i < startingStationIndexes.Length; i++)
+            {
+                for (int j = 1; j < endingStationIndexes.Length; j++)
+                {
+                    if ((endingStationIndexes[j] - startingStationIndexes[i] > 0) && (endingStationIndexes[0] - startingStationIndexes[i] < shortestDistance))
+                    {
+                        shortestDistance = endingStationIndexes[j] - startingStationIndexes[i];
+                        shortestDistanceIndex[0] = startingStationIndexes[i];
+                        shortestDistanceIndex[1] = endingStationIndexes[j];
+                    }
+                }
+            }
+
+            Station[] callingLegStations = new Station[shortestDistance];
+            for (int i = shortestDistanceIndex[0]; i < shortestDistanceIndex[1]; i++)
+            {
+                callingLegStations[i - shortestDistanceIndex[0]] = route.CallingStations[i];
+            }
+
+            Departure[] legDepartures = new Departure[callingLegStations.Length];
+            int timer = startingFrame;
+            for (int i = 0; i < legDepartures.Length; i++)
+            {
+                timer += route.Timings[i + shortestDistanceIndex[0]].TimingFrames;
+                legDepartures[i] = new Departure(timer, callingLegStations[i], null, endingStation, route);
+            }
+
+            return legDepartures;
         }
+        public static int[] GetStationIndexes(Route route, Station station)
+        {
+            List<int> output = new List<int>();
+            for (int i = 0; i < route.CallingStations.Length; i++)
+            {
+                if (route.CallingStations[i] == station)
+                {
+                    output.Add(i);
+                }
+            }
+            return output.ToArray();
+        }
+
         public static void Push(Route[] routes)
         {
             string[] exportRoutes = new string[routes.Length];

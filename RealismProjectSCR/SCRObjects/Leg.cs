@@ -38,16 +38,24 @@ namespace RealismProjectSCR.SCRObjects
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
         }
-        public static Leg Create(Route route, Station startingStation, Station endingStation)
+        public static Leg Create(Route route, int startingFrame, Station startingStation, Station endingStation)
         {
-            Leg output = new Leg(route, new(null, null), null, startingStation, endingStation);
-            int timer = 0;
-            Departure[] departures = null;
-        }
+            Leg output = new Leg(route, new(0, 0), null, startingStation, endingStation);
+            output.Departures = Route.GetLegDepartures(route, startingFrame, startingStation, endingStation);
+            output.TimeFrame = DeparturesTimeFrame(output.Departures);
 
-        public void New(Route route, int startingFrame, Station startingStation, Station endingStation)
+            return output;
+        }
+        public static TimeFrame DeparturesTimeFrame(Departure[] departures)
         {
-            
+            TimeFrame output = new TimeFrame(departures[0].Frame, 0);
+            int timer = output.Start;
+            for (int i = 0; i < departures.Length; i++)
+            {
+                timer += departures[i].Frame;
+            }
+            output.End = timer;
+            return output;
         }
         public string[] ToDriver()
         {
