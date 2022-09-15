@@ -45,9 +45,9 @@ namespace RealismProjectSCR.SCRObjects
             Departure[] departures = null;
         }
 
-        public void AddLeg()
+        public void New(Route route, int startingFrame, Station startingStation, Station endingStation)
         {
-
+            
         }
         public string[] ToDriver()
         {
