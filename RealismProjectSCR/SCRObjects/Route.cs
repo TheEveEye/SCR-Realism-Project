@@ -88,6 +88,19 @@ namespace RealismProjectSCR.SCRObjects
                 Console.WriteLine("This Route does not exist. Please try again...");
             }
         }
+        public int[] IndexesOfStation(Station station)
+        {
+            int a = 0;
+            for (int i = 0; i < CallingStations.Length; i++)
+            {
+                if (CallingStations[i] == station)
+                {
+                    a++;
+                }
+            }
+            int[] output = new int[a];
+            output[0] = Array.IndexOf(CallingStations, station,)
+        }
         static string IntToSpaces(int amount)
         {
             string output = "";
