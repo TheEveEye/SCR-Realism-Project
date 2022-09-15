@@ -29,6 +29,10 @@ namespace RealismProjectSCR
         {
             return Program.ProjectDirectoryPath + @"Shifts\"+ Name + @"\";
         }
+        public void AddLeg(Leg leg)
+        {
+            Legs.Add(Leg);
+        }
         public static Shift Import(string Name)
         {
             Shift output = new(null, new TimeFrame(null, null), null);
