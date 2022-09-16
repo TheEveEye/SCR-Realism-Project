@@ -48,27 +48,30 @@ namespace RealismProjectSCR.SCRObjects
         }
         public static TimeFrame DeparturesTimeFrame(Departure[] departures)
         {
-            TimeFrame output = new TimeFrame(departures[0].Frame, 0);
-            int timer = output.Start;
-            for (int i = 0; i < departures.Length; i++)
-            {
-                timer += departures[i].Frame;
-            }
-            output.End = timer;
-            return output;
+            return new TimeFrame(departures[0].Frame, departures[departures.Length - 1].Frame);
         }
         public string[] ToDriver()
         {
-            string[] output = new string[2 + Departures.Length];
+            List<string> output = new List<string>();
 
-            return output;
-        }
-        public string ToExport()
-        {
-            string output = Convert.ToString(Route.RouteNumber) + ";" + Convert.ToString(TimeFrame.Start) + "," + Convert.ToString(TimeFrame.End) + ";" + StartingStation.Name + "," + EndingStation.Name + ";" + Departures[0].Station.Name + ":" + Convert.ToString(Departures[0].Frame);
-            for (int i = 1; i < Departures.Length; i++)
+            output.Add("----------------------------------------------------------------");
+
+            output.Add("Timings for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
+            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1]);
+            output.Add("");
+            foreach (var item in this.Departures)
             {
-                output += "," + Departures[i].Station.Name + ":" + Convert.ToString(Departures[i].Frame);
+                output.Add(item.ToDriver());
+            }
+            output.Add("----------------------------------------------------------------");
+            return output.ToArray();
+        }
+        public static string ToExport(Leg leg)
+        {
+            string output = Convert.ToString(leg.Route.RouteNumber) + ";" + Convert.ToString(leg.TimeFrame.Start) + "," + Convert.ToString(leg.TimeFrame.End) + ";" + leg.StartingStation.Name + "," + leg.EndingStation.Name + ";" + leg.Departures[0].Station.Name + ":" + Convert.ToString(leg.Departures[0].Frame);
+            for (int i = 1; i < leg.Departures.Length; i++)
+            {
+                output += "," + leg.Departures[i].Station.Name + ":" + Convert.ToString(leg.Departures[i].Frame);
             }
             return output;
         }

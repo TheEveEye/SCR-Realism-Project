@@ -26,9 +26,20 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
 
         public string ToDebug()
         {
-            return Time.ScheduleFramesToDateTime(Frame) + " / " + Frame + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
-        }
+            if (PossiblePlatforms == null)
+            {
+                return Time.ScheduleFramesToDateTime(Frame) + " / " + Frame + " - " + Terminus.Name;
+            }
+            else
+            {
+                return Time.ScheduleFramesToDateTime(Frame) + " / " + Frame + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
+            }
 
+        }
+        public string ToDriver()
+        {
+            return Station.Name + " - " + Time.ScheduleFramesToDateTime(Frame);
+        }
         public string ToPassenger()
         {
             return Time.ScheduleFramesToDateTime(Frame) + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();

@@ -32,6 +32,16 @@ namespace RealismProjectSCR
             {
                 leg.Departures[i].Station.Departures.Add(leg.Departures[i]);
             }
+            Push();
+        }
+        public void Push()
+        {
+            string[] vs = new string[Legs.Count];
+            for (int i = 0; i < vs.Length; i++)
+            {
+                vs[i] = Leg.ToExport(Legs[i]);
+            }
+            File.WriteAllLines(GetPath(this.Name) + @"Legs.shift", vs);
         }
         public static string[] NamesFromPaths(string[] paths)
         {
@@ -64,6 +74,7 @@ namespace RealismProjectSCR
             {
                 legs[i] = Leg.Import(legsRaw[i]);
             }
+            output.Legs = legs.ToList<Leg>();
             return output;
         }
         public static void Create(Shift Shift)

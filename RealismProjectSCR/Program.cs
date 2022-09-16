@@ -44,7 +44,7 @@ class Program
         string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
         for (int i = 0; i < _Stations.Length; i++) // This for-loop 
         {  
-            _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>); // Fills in the name of the station
+            _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>()); // Fills in the name of the station
 
             // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
         }
@@ -74,7 +74,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 22");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 23");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -230,6 +230,11 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            if (EnteredCommand.Length < 4)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
                             if (EnteredCommand[3] == "all")
                             {
                                 Station.NameToStation(EnteredCommand[2]).PrintDepartures();
@@ -255,12 +260,37 @@ class Program
                             {
                                 Convert.ToInt32(EnteredCommand[2]);
                             }
-                            catch (FormatException)
+                            catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
                             Route.PrintData(Convert.ToInt32(EnteredCommand[2]));
+                            break;
+
+                        case "leg":
+                        case "legtimings":
+                        case "legdata":
+                            if (EnteredCommand.Length < 3)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            try
+                            {
+                                Convert.ToInt32(EnteredCommand[2]);
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            string[] legData = ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2])].ToDriver();
+                            foreach (string item in legData)
+                            {
+                                Console.WriteLine(item);
+                            }
+
                             break;
 
                         default: // Not an existing command
@@ -386,5 +416,18 @@ class Program
     public static void Tab()
     {
         Console.WriteLine("");
+    }
+    public static string IntToSpaces(int amount)
+    {
+        string output = "";
+        for (int i = 0; i < amount; i++)
+        {
+            output += " ";
+        }
+        return output;
+    }
+    public static string FillWithSpaces(string current, int length)
+    {
+        return current + IntToSpaces(length - current.ToCharArray().Length);
     }
 }
