@@ -77,9 +77,20 @@ namespace RealismProjectSCR
             output.Legs = legs.ToList<Leg>();
             return output;
         }
+
         public static void Create(Shift Shift)
         {
             
+        }
+
+        public string[] LegsToDebug()
+        {
+            List<string> output = new List<string>();
+            for (int i = 0; i < Legs.Count; i++)
+            {
+                output.Add(Legs[i].ToCompact(i + 1));
+            }
+            return output.ToArray();
         }
     }
 }

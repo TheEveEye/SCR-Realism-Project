@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 22";
+        Console.Title = "Realism Project Network Planner Build 23";
         Console.WriteLine("Importing Program Data...");
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -45,7 +45,7 @@ class Program
         for (int i = 0; i < _Stations.Length; i++) // This for-loop 
         {  
             _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>()); // Fills in the name of the station
-
+            _Stations[i].GetSetShortcuts();
             // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
         }
         Stations = _Stations;
@@ -186,17 +186,14 @@ class Program
                                 break;
                             }
                             int StartingFrame = Convert.ToInt32(EnteredCommand[3]);
-                            if (!Contains((EnteredCommand[4]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            Station startingStation = Station.FromArgument(EnteredCommand[4]);
+                            Station endingStation = Station.FromArgument(EnteredCommand[5]);
+                            if ((startingStation == null) || (endingStation == null)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            if (!Contains((EnteredCommand[5]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
-                            {
-                                Console.WriteLine("Invalid Argument given. Please try again...");
-                                break;
-                            }
-                            Leg createdLeg = Leg.Create(route, StartingFrame, Station.NameToStation(EnteredCommand[4]), Station.NameToStation(EnteredCommand[5]));
+                            Leg createdLeg = Leg.Create(route, StartingFrame + ActiveShift.TimeFrame.Start, startingStation, endingStation);
                             ActiveShift.AddLeg(createdLeg);
                             break;
 
@@ -225,7 +222,8 @@ class Program
 
                         case "stationtable":
                         case "stationschedule":
-                            if (!Contains((EnteredCommand[2]), StationNames)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            Station searchedStation = Station.FromArgument(EnteredCommand[2]);
+                            if (searchedStation == null) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -237,12 +235,12 @@ class Program
                             }
                             if (EnteredCommand[3] == "all")
                             {
-                                Station.NameToStation(EnteredCommand[2]).PrintDepartures();
+                                searchedStation.PrintDepartures();
                                 break;
                             }
                             if ((EnteredCommand[3] != "all") && (EnteredCommand.Length < 5))
                             {
-                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                searchedStation.PrintDepartures();
                                 break;
                             }
 
@@ -285,12 +283,28 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            string[] legData = ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2])].ToDriver();
+                            if (ActiveShift.Legs.Count < Convert.ToInt32(EnteredCommand[2]))
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            string[] legData = ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver();
                             foreach (string item in legData)
                             {
                                 Console.WriteLine(item);
                             }
 
+                            break;
+
+                        case "legs":
+                        case "leglist":
+                            string[] compactLegs = ActiveShift.LegsToDebug();
+                            Console.WriteLine("----------------------------------------------------------------");
+                            foreach (string item in compactLegs)
+                            {
+                                Console.WriteLine(item);
+                            }
+                            Console.WriteLine("----------------------------------------------------------------");
                             break;
 
                         default: // Not an existing command
@@ -400,6 +414,19 @@ class Program
     {
         string path = ProjectDirectoryPath + @"Shifts\";
         return Directory.GetDirectories(ProjectDirectoryPath + @"Shifts\").ToList<string>();
+    }
+    public static string BuildString(string[] strings, string seperator)
+    {
+        if (strings.Length < 1)
+        {
+            return string.Empty;
+        }
+        string output = strings[0];
+        for (int i = 1; i < strings.Length; i++)
+        {
+            output += seperator + strings[i];
+        }
+        return output;
     }
     public static bool Contains(string obj1, string[] array)
     {

@@ -99,7 +99,6 @@ namespace RealismProjectSCR.SCRObjects
                 case 2: output = "R0" + RouteNumber; break;
                 case 3: output = "R" + RouteNumber; break;
                 default: output = "0"; break;
-
             }
             return output;
         }
@@ -218,8 +217,8 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
 
-            Station[] callingLegStations = new Station[shortestDistance];
-            for (int i = shortestDistanceIndex[0]; i < shortestDistanceIndex[1]; i++)
+            Station[] callingLegStations = new Station[shortestDistance + 1];
+            for (int i = shortestDistanceIndex[0]; i < shortestDistanceIndex[1] + 1; i++)
             {
                 callingLegStations[i - shortestDistanceIndex[0]] = route.CallingStations[i];
             }

@@ -57,7 +57,7 @@ namespace RealismProjectSCR.SCRObjects
             output.Add("----------------------------------------------------------------");
 
             output.Add("Timings for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
-            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1]);
+            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name);
             output.Add("");
             foreach (var item in this.Departures)
             {
@@ -75,10 +75,14 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
+        public string ToCompact(int LegNumber)
+        {
+            return "Leg " + LegNumber + "    Route: " + Route.RouteNumberString(this.Route.RouteNumber) + " (" + this.Route.Name + ")    Time Frame: " + this.TimeFrame.StartTime + " - " + this.TimeFrame.EndTime + " (" + this.TimeFrame.Start + " - " + this.TimeFrame.End + ")    Driving: " + this.StartingStation.Name + " - " + this.EndingStation.Name;
+        }
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');
-            Leg output = new Leg(null, 0, 0, null, null, null);
+            Leg output = new Leg(null, 0, 0, new Departure[0], null, null);
             output.Route = Program.Routes[Convert.ToInt32(split[0]) - 1];
             string[] timeframe = split[1].Split(',');
             output.TimeFrame = new(Convert.ToInt32(timeframe[0]), Convert.ToInt32(timeframe[1]));
@@ -93,7 +97,9 @@ namespace RealismProjectSCR.SCRObjects
             {
                 string[] rawdeparture = rawdepartures[i].Split(':');
                 departures[i] = new Departure(Convert.ToInt32(rawdeparture[1]), Station.NameToStation(rawdeparture[0]), null, output.EndingStation, output.Route);
+                departures[i].Station.Departures.Add(departures[i]);
             }
+            output.Departures = departures;
             return output;
         }
     }

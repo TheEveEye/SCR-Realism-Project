@@ -1,1 +1,49 @@
-11;3912,3953;Newry,Connolly;Newry:3912,Eden Quay:3920,Faraday Road:3927,West Benton:3933,Benton:3940,Cambridge Street Parkway:3947,Ashlan Park:3953
+56;3625,3654;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3625,Stepford Airport Parkway:3633,Leighton Stepford Road:3654
+56;3665,3694;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3665,Stepford Airport Parkway:3687,Stepford Airport Central:3694
+56;3705,3734;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3705,Stepford Airport Parkway:3713,Leighton Stepford Road:3734
+56;3745,3774;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3745,Stepford Airport Parkway:3767,Stepford Airport Central:3774
+56;3785,3814;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3785,Stepford Airport Parkway:3793,Leighton Stepford Road:3814
+56;3825,3854;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3825,Stepford Airport Parkway:3847,Stepford Airport Central:3854
+56;3865,3894;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3865,Stepford Airport Parkway:3873,Leighton Stepford Road:3894
+56;3625,3654;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3625,Stepford Airport Parkway:3647,Stepford Airport Central:3654
+56;3665,3694;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3665,Stepford Airport Parkway:3673,Leighton Stepford Road:3694
+56;3705,3734;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3705,Stepford Airport Parkway:3727,Stepford Airport Central:3734
+56;3745,3774;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3745,Stepford Airport Parkway:3753,Leighton Stepford Road:3774
+56;3785,3814;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3785,Stepford Airport Parkway:3807,Stepford Airport Central:3814
+56;3825,3854;Stepford Airport Central,Leighton Stepford Road;Stepford Airport Central:3825,Stepford Airport Parkway:3833,Leighton Stepford Road:3854
+56;3865,3894;Leighton Stepford Road,Stepford Airport Central;Leighton Stepford Road:3865,Stepford Airport Parkway:3887,Stepford Airport Central:3894
+57;3644,3692;Leighton Stepford Road,Airport Terminal 3;Leighton Stepford Road:3644,Stepford Airport Central:3669,Airport Terminal 2:3682,Airport Terminal 3:3692
+57;3704,3752;Airport Terminal 3,Leighton Stepford Road;Airport Terminal 3:3704,Airport Terminal 2:3716,Stepford Airport Central:3729,Leighton Stepford Road:3752
+57;3764,3812;Leighton Stepford Road,Airport Terminal 3;Leighton Stepford Road:3764,Stepford Airport Central:3789,Airport Terminal 2:3802,Airport Terminal 3:3812
+57;3824,3872;Airport Terminal 3,Leighton Stepford Road;Airport Terminal 3:3824,Airport Terminal 2:3836,Stepford Airport Central:3849,Leighton Stepford Road:3872
+57;3884,3922;Leighton Stepford Road,Airport Terminal 2;Leighton Stepford Road:3884,Stepford Airport Central:3909,Airport Terminal 2:3922
+57;3620,3643;Stepford Airport Central,Airport Terminal 3;Stepford Airport Central:3620,Airport Terminal 2:3633,Airport Terminal 3:3643
+57;3664,3712;Airport Terminal 3,Leighton Stepford Road;Airport Terminal 3:3664,Airport Terminal 2:3676,Stepford Airport Central:3689,Leighton Stepford Road:3712
+57;3724,3772;Leighton Stepford Road,Airport Terminal 3;Leighton Stepford Road:3724,Stepford Airport Central:3749,Airport Terminal 2:3762,Airport Terminal 3:3772
+57;3784,3832;Airport Terminal 3,Leighton Stepford Road;Airport Terminal 3:3784,Airport Terminal 2:3796,Stepford Airport Central:3809,Leighton Stepford Road:3832
+57;3844,3892;Leighton Stepford Road,Airport Terminal 3;Leighton Stepford Road:3844,Stepford Airport Central:3869,Airport Terminal 2:3882,Airport Terminal 3:3892
+57;3904,3916;Airport Terminal 3,Airport Terminal 2;Airport Terminal 3:3904,Airport Terminal 2:3916
+17;3623,3674;Airport Terminal 2,Newry;Airport Terminal 2:3623,Airport West:3633,Cambridge Street Parkway:3641,Benton:3648,West Benton:3655,Faraday Road:3660,Eden Quay:3667,Newry:3674
+17;3684,3738;Newry,Airport Terminal 2;Newry:3684,Eden Quay:3692,Faraday Road:3698,West Benton:3704,Benton:3711,Cambridge Street Parkway:3718,Airport West:3727,Airport Terminal 2:3738
+17;3743,3794;Airport Terminal 2,Newry;Airport Terminal 2:3743,Airport West:3753,Cambridge Street Parkway:3761,Benton:3768,West Benton:3775,Faraday Road:3780,Eden Quay:3787,Newry:3794
+17;3804,3858;Newry,Airport Terminal 2;Newry:3804,Eden Quay:3812,Faraday Road:3818,West Benton:3824,Benton:3831,Cambridge Street Parkway:3838,Airport West:3847,Airport Terminal 2:3858
+17;3863,3914;Airport Terminal 2,Newry;Airport Terminal 2:3863,Airport West:3873,Cambridge Street Parkway:3881,Benton:3888,West Benton:3895,Faraday Road:3900,Eden Quay:3907,Newry:3914
+17;3624,3678;Newry,Airport Terminal 2;Newry:3624,Eden Quay:3632,Faraday Road:3638,West Benton:3644,Benton:3651,Cambridge Street Parkway:3658,Airport West:3667,Airport Terminal 2:3678
+17;3683,3734;Airport Terminal 2,Newry;Airport Terminal 2:3683,Airport West:3693,Cambridge Street Parkway:3701,Benton:3708,West Benton:3715,Faraday Road:3720,Eden Quay:3727,Newry:3734
+17;3744,3798;Newry,Airport Terminal 2;Newry:3744,Eden Quay:3752,Faraday Road:3758,West Benton:3764,Benton:3771,Cambridge Street Parkway:3778,Airport West:3787,Airport Terminal 2:3798
+17;3803,3854;Airport Terminal 2,Newry;Airport Terminal 2:3803,Airport West:3813,Cambridge Street Parkway:3821,Benton:3828,West Benton:3835,Faraday Road:3840,Eden Quay:3847,Newry:3854
+17;3864,3918;Newry,Airport Terminal 2;Newry:3864,Eden Quay:3872,Faraday Road:3878,West Benton:3884,Benton:3891,Cambridge Street Parkway:3898,Airport West:3907,Airport Terminal 2:3918
+46;3616,3623;Financial Quarter,Stepford Victoria;Financial Quarter:3616,Stepford Victoria:3623
+46;3635,3739;Stepford Victoria,Airport Terminal 2;Stepford Victoria:3635,Financial Quarter:3643,City Hospital:3650,Stepford Central:3656,Stepford East:3665,St. Helens Bridge:3674,Bodin:3685,Coxly:3693,Benton:3703,Benton Bridge:3712,Stepford Airport Parkway:3720,Stepford Airport Central:3728,Airport Terminal 2:3739
+46;3755,3861;Airport Terminal 2,Stepford Victoria;Airport Terminal 2:3755,Stepford Airport Central:3767,Stepford Airport Parkway:3776,Benton Bridge:3784,Benton:3794,Coxly:3803,Bodin:3812,St. Helens Bridge:3823,Stepford East:3832,Stepford Central:3841,City Hospital:3847,Financial Quarter:3854,Stepford Victoria:3861
+46;3875,3914;Stepford Victoria,St. Helens Bridge;Stepford Victoria:3875,Financial Quarter:3883,City Hospital:3890,Stepford Central:3896,Stepford East:3905,St. Helens Bridge:3914
+46;3616,3662;Coxly,Airport Terminal 2;Coxly:3616,Benton:3626,Benton Bridge:3635,Stepford Airport Parkway:3643,Stepford Airport Central:3651,Airport Terminal 2:3662
+46;3675,3781;Airport Terminal 2,Stepford Victoria;Airport Terminal 2:3675,Stepford Airport Central:3687,Stepford Airport Parkway:3696,Benton Bridge:3704,Benton:3714,Coxly:3723,Bodin:3732,St. Helens Bridge:3743,Stepford East:3752,Stepford Central:3761,City Hospital:3767,Financial Quarter:3774,Stepford Victoria:3781
+46;3795,3899;Stepford Victoria,Airport Terminal 2;Stepford Victoria:3795,Financial Quarter:3803,City Hospital:3810,Stepford Central:3816,Stepford East:3825,St. Helens Bridge:3834,Bodin:3845,Coxly:3853,Benton:3863,Benton Bridge:3872,Stepford Airport Parkway:3880,Stepford Airport Central:3888,Airport Terminal 2:3899
+60;3625,3661;Stepford Airport Parkway,Airport Terminal 2;Stepford Airport Parkway:3625,Stepford Airport Central:3633,Airport Terminal 1:3641,Airport Terminal 3:3651,Airport Terminal 2:3661
+60;3674,3693;Airport Terminal 2,Stepford Airport Parkway;Airport Terminal 2:3674,Stepford Airport Central:3686,Stepford Airport Parkway:3693
+60;3705,3741;Stepford Airport Parkway,Airport Terminal 2;Stepford Airport Parkway:3705,Stepford Airport Central:3713,Airport Terminal 1:3721,Airport Terminal 3:3731,Airport Terminal 2:3741
+60;3754,3773;Airport Terminal 2,Stepford Airport Parkway;Airport Terminal 2:3754,Stepford Airport Central:3766,Stepford Airport Parkway:3773
+60;3785,3821;Stepford Airport Parkway,Airport Terminal 2;Stepford Airport Parkway:3785,Stepford Airport Central:3793,Airport Terminal 1:3801,Airport Terminal 3:3811,Airport Terminal 2:3821
+60;3834,3853;Airport Terminal 2,Stepford Airport Parkway;Airport Terminal 2:3834,Stepford Airport Central:3846,Stepford Airport Parkway:3853
+60;3865,3901;Stepford Airport Parkway,Airport Terminal 2;Stepford Airport Parkway:3865,Stepford Airport Central:3873,Airport Terminal 1:3881,Airport Terminal 3:3891,Airport Terminal 2:3901

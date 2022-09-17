@@ -17,6 +17,9 @@ namespace RealismProjectSCR.SCRObjects
 
         public string stblPath { get; }
 
+        string[] Shortcuts { get; set; }
+        static string[] ShortcutsRaw = File.ReadAllLines(Program.ProjectDirectoryPath + @"SCRObjects\StationShortcuts.txt");
+
         public Station(string Name, Station[] AdjacentStations, Platform[] Platforms, List<Departure> Departures)
         {
             this.Name = Name;
@@ -48,6 +51,41 @@ namespace RealismProjectSCR.SCRObjects
             }
             return null;
         }
+        public static Station FromArgument(string Argument)
+        {
+            if (Argument.Split('-').Length == 1)
+            {
+                if (Program.Contains(Argument, Program.StationNames))
+                {
+                    return NameToStation(Argument);
+                }
+                else
+                {
+                    for (int i = 0; i < Program.Stations.Length; i++)
+                    {
+                        if (Program.Contains(Argument, Program.Stations[i].Shortcuts))
+                        {
+                            return Program.Stations[i];
+                        }
+                    }
+                }
+            }
+            else if (Argument.Split('-').Length > 1)
+            {
+                string BuiltName = Program.BuildString(Argument.Split('-'), " ");
+                if (Program.Contains(BuiltName, Program.StationNames))
+                {
+                    return NameToStation(BuiltName);
+                }
+            }
+            return null;
+        }
+
+        public void SortDepartures()
+        {
+
+        }
+
         public void PrintDepartures()
         {
             string[] departures = GetDepartures();
@@ -92,6 +130,16 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
             return output;
+        }
+        public void GetSetShortcuts()
+        {
+            for (int i = 0; i < ShortcutsRaw.Length; i++)
+            {
+                if (ShortcutsRaw[i].Split(':')[0] == this.Name)
+                {
+                    this.Shortcuts = ShortcutsRaw[i].Split(':')[1].Split(';');
+                }
+            }
         }
     }
 }
