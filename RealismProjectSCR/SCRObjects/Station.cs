@@ -102,7 +102,26 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
         }
-        
+        public void PrintDepartures(int timeStart, int timeEnd)
+        {
+            string[] departures = GetDepartures(new TimeFrame(timeStart, timeEnd));
+            Console.WriteLine("Departures for: " + this.Name);
+            if ((departures == null) || (departures.Length == 0))
+            {
+                Console.WriteLine("There are currently no scheduled trains for this station.");
+            }
+            else
+            {
+                foreach (string departure in departures)
+                {
+                    if (!String.IsNullOrEmpty(departure))
+                    {
+                        Console.WriteLine(departure);
+                    }
+                }
+            }
+        }
+
         public string[] GetDepartures()
         {
             if (this.Departures == null)

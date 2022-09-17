@@ -29,7 +29,6 @@ namespace RealismProjectSCR.Units
         {
             return ElapsedSeconds() / 15;
         }
-
         public static DateTime ScheduleFramesToDateTime(int Frames)
         {
             TimeSpan ts = TimeSpan.FromSeconds(Frames * 15);

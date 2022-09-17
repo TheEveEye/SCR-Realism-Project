@@ -170,7 +170,7 @@ class Program
                             {
                                 Convert.ToInt32(EnteredCommand[2]);
                             }
-                            catch (FormatException)
+                            catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -180,7 +180,7 @@ class Program
                             {
                                 Convert.ToInt32(EnteredCommand[3]);
                             }
-                            catch (FormatException)
+                            catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -230,7 +230,7 @@ class Program
                             }
                             if (EnteredCommand.Length < 4)
                             {
-                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                searchedStation.PrintDepartures();
                                 break;
                             }
                             if (EnteredCommand[3] == "all")
@@ -240,7 +240,22 @@ class Program
                             }
                             if ((EnteredCommand[3] != "all") && (EnteredCommand.Length < 5))
                             {
-                                searchedStation.PrintDepartures();
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            if (EnteredCommand.Length >= 5)
+                            {
+                                try
+                                {
+                                    Convert.ToInt32(EnteredCommand[3]);
+                                    Convert.ToInt32(EnteredCommand[4]);
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                    break;
+                                }
+                                searchedStation.PrintDepartures(Convert.ToInt32(EnteredCommand[3]), Convert.ToInt32(EnteredCommand[4]));
                                 break;
                             }
 
