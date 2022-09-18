@@ -83,12 +83,32 @@ namespace RealismProjectSCR.SCRObjects
 
         public void SortDepartures()
         {
+            int[] rawDepartureFrames = new int[this.Departures.Count];
+            for (int i = 0; i < rawDepartureFrames.Length; i++)
+            {
+                rawDepartureFrames[i] = this.Departures[i].Frame;
+            }
+            int[] SortedDepartureFrames = new int[rawDepartureFrames.Length];
+            rawDepartureFrames.CopyTo(SortedDepartureFrames, 0);
+            Array.Sort(SortedDepartureFrames);
+            int SortStart = SortedDepartureFrames[0];
+            int SortEnd = SortedDepartureFrames[SortedDepartureFrames.Length - 1];
 
+            List<Departure> SortedDepartures = new List<Departure>();
+            for (int i = SortStart; i < SortEnd; i++)
+            {
+                int[] tempIndexes = Program.IndexesOf(i, rawDepartureFrames.ToArray<int>());
+                for (int j = 0; j < tempIndexes.Length; j++)
+                {
+                    SortedDepartures.Add(this.Departures[tempIndexes[j]]);
+                }
+            }
+            this.Departures = SortedDepartures;
         }
 
         public void PrintDepartures()
         {
-            string[] departures = GetDepartures();
+            string[] departures = GetDepartures(false);
             Console.WriteLine("Departures for: " + this.Name);
             if ((departures == null) || (departures.Length == 0))
             {
@@ -122,7 +142,7 @@ namespace RealismProjectSCR.SCRObjects
             }
         }
 
-        public string[] GetDepartures()
+        public string[] GetDepartures(bool showArrivals)
         {
             if (this.Departures == null)
             {
@@ -130,12 +150,19 @@ namespace RealismProjectSCR.SCRObjects
             }
             else
             {
-                string[] output = new string[this.Departures.Count];
+                List<string> output = new List<string>();
                 for (int i = 0; i < Departures.Count; i++)
                 {
-                    output[i] = this.Departures[i].ToDebug();
+                    if ((this.Departures[i].Station == this.Departures[i].Terminus) && (!showArrivals))
+                    {
+                        
+                    }
+                    else
+                    {
+                        output.Add(this.Departures[i].ToPassenger());
+                    }
                 }
-                return output;
+                return output.ToArray();
             }
         }
         public string[] GetDepartures(TimeFrame TimeFrame)

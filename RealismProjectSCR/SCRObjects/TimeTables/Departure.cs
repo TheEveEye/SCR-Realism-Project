@@ -40,6 +40,22 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
             }
 
         }
+        public string ToDispatcher()
+        {
+            if (PossiblePlatforms == null)
+            {
+                if (this.Terminus == this.Station)
+                {
+                    return "(Arrival) " + Route.RouteNumberString(this.Route.RouteNumber) + "    " + Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " / " + Frame + " - " + Terminus.Name;
+                }
+                return Route.RouteNumberString(this.Route.RouteNumber) + "    " + Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " / " + Frame + " - " + Terminus.Name;
+            }
+            else
+            {
+                return Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " / " + Frame + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
+            }
+        }
+
         public string ToDriver()
         {
             return Station.Name + " - " + Time.ScheduleFramesToDateTime(Frame).ToLongTimeString();
@@ -48,9 +64,9 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
         {
             if (this.Terminus == this.Station)
             {
-                return "(Arrival) " + Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
+                return Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " - " + "(Arrival) " + Terminus.Name + "    (" + Route.RouteNumberString(this.Route.RouteNumber) + ")";
             }
-            return Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " - " + Terminus.Name + " - Platforms: " + PossiblePlatforms.ToString();
+            return Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " - " + Terminus.Name + "    (" + Route.RouteNumberString(this.Route.RouteNumber) + ")";
         }
     }
 }

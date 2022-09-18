@@ -228,6 +228,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            searchedStation.SortDepartures();
                             if (EnteredCommand.Length < 4)
                             {
                                 searchedStation.PrintDepartures();
@@ -429,6 +430,18 @@ class Program
     {
         string path = ProjectDirectoryPath + @"Shifts\";
         return Directory.GetDirectories(ProjectDirectoryPath + @"Shifts\").ToList<string>();
+    }
+    public static int[] IndexesOf(int obj, int[] array)
+    {
+        List<int> output = new List<int>();
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (obj == array[i])
+            {
+                output.Add(i);
+            }
+        }
+        return output.ToArray();
     }
     public static string BuildString(string[] strings, string seperator)
     {
