@@ -77,12 +77,15 @@ namespace RealismProjectSCR
             output.Legs = legs.ToList<Leg>();
             return output;
         }
-
-        public static void Create(Shift Shift)
+        public static Shift Create(string startingTime, string endingTime, string shiftName)
+        {
+            return Create(Time.TimeToScheduleFrame(startingTime), Time.TimeToScheduleFrame(endingTime))
+        }
+        
+        public static Shift Create(int startingFrame, int endingFrame, string shiftName)
         {
             
         }
-
         public string[] LegsToDebug()
         {
             List<string> output = new List<string>();
