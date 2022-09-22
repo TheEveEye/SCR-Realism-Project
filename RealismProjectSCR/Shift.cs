@@ -15,13 +15,16 @@ namespace RealismProjectSCR
     {
         public string Name { get; set; }
         public TimeFrame TimeFrame { get; set; }
+        public string Description { get; set; }
         public List<Leg> Legs { get; set; }
         public string Path { get; set; }
+
         
-        public Shift(string Name, TimeFrame TimeFrame, List<Leg> Legs)
+        public Shift(string Name, TimeFrame TimeFrame, string Description, List<Leg> Legs)
         {
             this.Name = Name;
             this.TimeFrame = TimeFrame;
+            this.Description = Description;
             this.Legs = Legs;
             this.Path = GetPath(this.Name); 
         }
@@ -53,7 +56,6 @@ namespace RealismProjectSCR
             }
             return names;
         }
-
         public static string NameFromPath(string path)
         {
             return path.Split('\\')[path.Split('\\').Length - 1];
@@ -78,12 +80,15 @@ namespace RealismProjectSCR
             output.Legs = legs.ToList<Leg>();
             return output;
         }
-
-        public static void Create(Shift Shift)
+        public static Shift Create(string startingTime, string endingTime, string shiftName, string description)
         {
-            
+            return Create(Time.TimeToScheduleFrame(startingTime), Time.TimeToScheduleFrame(endingTime), shiftName, description)
         }
-
+        
+        public static Shift Create(int startingFrame, int endingFrame, string shiftName, string description)
+        {
+            return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>)
+        }
         public string[] LegsToDebug()
         {
             List<string> output = new List<string>();
