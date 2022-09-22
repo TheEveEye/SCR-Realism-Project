@@ -66,9 +66,10 @@ namespace RealismProjectSCR
         }
         public static Shift Import(string Path)
         {
-            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), new List<Leg>());
+            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), "", new List<Leg>());
 
             string[] shiftInfo = File.ReadAllLines(Path + @"\Info.shift");
+            output.Description = shiftInfo[1];
             string[] timeFrameRaw = shiftInfo[0].Split(';');
             output.TimeFrame = new TimeFrame(Convert.ToInt32(timeFrameRaw[0]), Convert.ToInt32(timeFrameRaw[1]));
             string[] legsRaw = File.ReadAllLines(Path + @"\Legs.shift");
@@ -82,12 +83,12 @@ namespace RealismProjectSCR
         }
         public static Shift Create(string startingTime, string endingTime, string shiftName, string description)
         {
-            return Create(Time.TimeToScheduleFrame(startingTime), Time.TimeToScheduleFrame(endingTime), shiftName, description)
+            return Create(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15, shiftName, description);
         }
         
         public static Shift Create(int startingFrame, int endingFrame, string shiftName, string description)
         {
-            return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>)
+            return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>());
         }
         public string[] LegsToDebug()
         {

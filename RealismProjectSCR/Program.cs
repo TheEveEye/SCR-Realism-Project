@@ -18,7 +18,6 @@ class Program
     public static Timing[] DepotTimings;
     public static List<string> ShiftPaths;
     public static List<string> ShiftNames;
-    public static List<string> ShiftDescriptions;
     public static Shift ActiveShift;
 
     static void Main()
@@ -73,7 +72,6 @@ class Program
         Console.WriteLine("Importing Shift Data...");
         ShiftPaths = GetShiftPaths();
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
-        ShiftDescriptions = Shift.DescriptionsFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project v1.10.0 Build 23");
@@ -91,10 +89,10 @@ class Program
                 bool validDescription = false;
                 string tempInput;
                 
-                string tempShiftName;
-                string tempStartingTime;
-                string tempEndingTime;
-                string tempShiftDescription;
+                string tempShiftName = "";
+                string tempStartingTime = "";
+                string tempEndingTime = "";
+                string tempShiftDescription = "";
                 
                 while (!validName)
                 {
@@ -113,7 +111,7 @@ class Program
                 while (!validTime)
                 {
                     Console.WriteLine("Enter Starting Time:");
-                    tempInput = Console.WriteLine();
+                    tempInput = Console.ReadLine();
                     if (String.IsNullOrEmpty(tempInput))
                     {
                         Console.WriteLine("Invalid Input. Please try again...");
@@ -132,7 +130,7 @@ class Program
                 while (!validTime)
                 {
                     Console.WriteLine("Enter Ending Time:");
-                    tempInput = Console.WriteLine();
+                    tempInput = Console.ReadLine();
                     if (String.IsNullOrEmpty(tempInput))
                     {
                         Console.WriteLine("Invalid Input. Please try again...");
@@ -150,19 +148,19 @@ class Program
                 while (!validDescription)
                 {
                     Console.WriteLine("Enter Description:");
-                    tempInput = Console.WriteLine();
+                    tempInput = Console.ReadLine();
                     if (String.IsNullOrEmpty(tempInput))
                     {
                         Console.WriteLine("Invalid Input. Please try again...");
                     }
                     else
                     {
-                        tempDescription = tempInput;
+                        tempShiftDescription = tempInput;
                         validDescription = true;
                     }
                 }
                 
-                Shift.Create(tempShiftName, tempStartingTime, tempEndingTime, tempDescription);
+                Shift.Create(tempStartingTime, tempEndingTime, tempShiftName, tempShiftDescription);
             }
             else
             {
