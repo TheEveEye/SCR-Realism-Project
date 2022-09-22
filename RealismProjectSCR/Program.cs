@@ -18,6 +18,7 @@ class Program
     public static Timing[] DepotTimings;
     public static List<string> ShiftPaths;
     public static List<string> ShiftNames;
+    public static List<string> ShiftDescriptions;
     public static Shift ActiveShift;
 
     static void Main()
@@ -72,6 +73,7 @@ class Program
         Console.WriteLine("Importing Shift Data...");
         ShiftPaths = GetShiftPaths();
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
+        ShiftDescriptions = Shift.DescriptionsFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project v1.10.0 Build 23");
@@ -82,21 +84,104 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            Tab();
-            Console.WriteLine("Select Shift:");
-            for (int i = 0; i < ShiftNames.Count; i++)
+            if (ShiftNames.Count == 0)
             {
-                Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
+                bool validName = false;
+                bool validTime = false;
+                bool validDescription = false;
+                string tempInput;
+                
+                string tempShiftName;
+                string tempStartingTime;
+                string tempEndingTime;
+                string tempShiftDescription;
+                
+                while (!validName)
+                {
+                    Console.WriteLine("Creating New Shift... Enter Name:");
+                    tempInput = Console.ReadLine();
+                    if (String.IsNullOrEmpty(tempInput))
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    else
+                    {
+                        tempShiftName = tempInput;
+                        validName = true;
+                    }
+                }
+                while (!validTime)
+                {
+                    Console.WriteLine("Enter Starting Time:");
+                    tempInput = Console.WriteLine();
+                    if (String.IsNullOrEmpty(tempInput))
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    else
+                    {
+                        tempStartingTime = tempInput;
+                        validTime = true;
+                    }
+                }
+                validTime = false;
+                while (!validTime)
+                {
+                    Console.WriteLine("Enter Ending Time:");
+                    tempInput = Console.WriteLine();
+                    if (String.IsNullOrEmpty(tempInput))
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    else
+                    {
+                        tempEndingTime = tempInput;
+                        validTime = true;
+                    }
+                }
+                while (!validDescription)
+                {
+                    Console.WriteLine("Enter Description:");
+                    tempInput = Console.WriteLine();
+                    if (String.IsNullOrEmpty(tempInput))
+                    {
+                        Console.WriteLine("Invalid Input. Please try again...");
+                    }
+                    else
+                    {
+                        tempDescription = tempInput;
+                        validDescription = true;
+                    }
+                }
+                
+                Shift.Create(tempShiftName, tempStartingTime, tempEndingTime, tempDescription);
             }
-            string selectedShiftInput = Console.ReadLine();
-            try
+            else
             {
-                ActiveShift = Shift.Import(ShiftPaths[Convert.ToInt32(selectedShiftInput) - 1]);
-                selectedShift = true;
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Invalid Argument given. Please try again...");
+                Tab();
+                Console.WriteLine("Select Shift:");
+                for (int i = 0; i < ShiftNames.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
+                }
+                string selectedShiftInput = Console.ReadLine();
+                try
+                {
+                    ActiveShift = Shift.Import(ShiftPaths[Convert.ToInt32(selectedShiftInput) - 1]);
+                    selectedShift = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid Argument given. Please try again...");
+                }
             }
         }
 
