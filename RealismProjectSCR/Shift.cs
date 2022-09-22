@@ -42,6 +42,7 @@ namespace RealismProjectSCR
                 vs[i] = Leg.ToExport(Legs[i]);
             }
             File.WriteAllLines(GetPath(this.Name) + @"Legs.shift", vs);
+
         }
         public static string[] NamesFromPaths(string[] paths)
         {
