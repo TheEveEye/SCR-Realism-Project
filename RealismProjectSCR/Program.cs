@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
+using Microsoft.VisualBasic;
 using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
@@ -24,7 +25,7 @@ class Program
     {
         Console.Title = "Realism Project Network Planner Build 26";
         Console.WriteLine("Importing Program Data...");
-        
+
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
         string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
         string projectDirectoryPath = "";
@@ -43,7 +44,7 @@ class Program
         Console.WriteLine("Importing Station Data...");
         string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
         for (int i = 0; i < _Stations.Length; i++) // This for-loop 
-        {  
+        {
             _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>()); // Fills in the name of the station
             _Stations[i].GetSetShortcuts();
             // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
@@ -53,7 +54,7 @@ class Program
         {
             Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStations[i].Split(':')[1].Split(';'));
         }
-        
+
 
         // Temporary code to automatically enter adjacent stations
         /*
@@ -65,7 +66,7 @@ class Program
             File.WriteAllLines(Station.NameToStation(temp[0]).stblPath, new string[] { temp[1] });
         }
         */
-        
+
         Console.WriteLine("Importing Route Data...");
         Routes = Route.Import();
 
@@ -78,90 +79,15 @@ class Program
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
-  
+
         bool selectedShift = false;
         while (!selectedShift)
         {
             if (ShiftNames.Count == 0)
             {
-                bool validName = false;
-                bool validTime = false;
-                bool validDescription = false;
-
-                string tempInput;
-                
-                string tempShiftName = "";
-                string tempStartingTime = "";
-                string tempEndingTime = "";
-                string tempShiftDescription = "";
-                
-                while (!validName)
-                {
-                    Console.WriteLine("Creating New Shift... Enter Name:");
-                    tempInput = Console.ReadLine();
-                    if (String.IsNullOrEmpty(tempInput))
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    else
-                    {
-                        tempShiftName = tempInput;
-                        validName = true;
-                    }
-                }
-                while (!validTime)
-                {
-                    Console.WriteLine("Enter Starting Time:");
-                    tempInput = Console.ReadLine();
-                    if (String.IsNullOrEmpty(tempInput))
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    else
-                    {
-                        tempStartingTime = tempInput;
-                        validTime = true;
-                    }
-                }
-                validTime = false;
-                while (!validTime)
-                {
-                    Console.WriteLine("Enter Ending Time:");
-                    tempInput = Console.ReadLine();
-                    if (String.IsNullOrEmpty(tempInput))
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    else
-                    {
-                        tempEndingTime = tempInput;
-                        validTime = true;
-                    }
-                }
-                while (!validDescription)
-                {
-                    Console.WriteLine("Enter Description:");
-                    tempInput = Console.ReadLine();
-                    if (String.IsNullOrEmpty(tempInput))
-                    {
-                        Console.WriteLine("Invalid Input. Please try again...");
-                    }
-                    else
-                    {
-                        tempShiftDescription = tempInput;
-                        validDescription = true;
-                    }
-                }
-                
-                Shift.Create(tempStartingTime, tempEndingTime, tempShiftName, tempShiftDescription);
+                ActiveShift = Shift.Create(Shift.Collect());
+                ShiftNames.Add(ActiveShift.Name);
+                ShiftPaths.Add(ActiveShift.Path);
             }
             else
             {
@@ -171,16 +97,29 @@ class Program
                 {
                     Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
                 }
+                Console.WriteLine((ShiftNames.Count + 1) + " - Create New");
+
                 string selectedShiftInput = Console.ReadLine();
-                try
-                {
-                    ActiveShift = Shift.Import(ShiftPaths[Convert.ToInt32(selectedShiftInput) - 1]);
-                    selectedShift = true;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Invalid Argument given. Please try again...");
-                }
+                int selectedShiftIndex = ShiftNames.Count + 2;
+                //try
+                //{
+                    selectedShiftIndex = Convert.ToInt32(selectedShiftInput);
+                    if (selectedShiftIndex == ShiftNames.Count + 1)
+                    {
+                        ActiveShift = Shift.Create(Shift.Collect());
+                        ShiftNames.Add(ActiveShift.Name);
+                        ShiftPaths.Add(ActiveShift.Path);
+                    }
+                    else
+                    {
+                        ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                        selectedShift = true;
+                    }
+                //}
+                //catch (Exception)
+                //{
+                //    Console.WriteLine("Invalid Argument given. Please try again...");
+                //}
             }
         }
 
@@ -207,7 +146,7 @@ class Program
                 {
                     proceed = true;
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Invalid Command. Please try again...");
                 }
@@ -420,7 +359,7 @@ class Program
                         Console.WriteLine("Not enough Arguments given. Please try again...");
                         break;
                     }
-                    
+
                     switch (EnteredCommand[1]) // Looks at the second argument given
                     {
                         case "seconds":
@@ -454,7 +393,7 @@ class Program
                                 break;
                             }
                             switch (EnteredCommand[2])
-                            {                                
+                            {
                                 case "seconds":
                                     Console.WriteLine(Convert.ToInt32(EnteredCommand[3]) * 15);
                                     break;

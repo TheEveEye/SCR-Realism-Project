@@ -81,14 +81,117 @@ namespace RealismProjectSCR
             output.Legs = legs.ToList<Leg>();
             return output;
         }
-        public static Shift Create(string startingTime, string endingTime, string shiftName, string description)
+        public static Shift Collect()
         {
-            return Create(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15, shiftName, description);
+            bool validName = false;
+            bool validTime = false;
+            bool validDescription = false;
+
+            string tempInput;
+
+            string tempShiftName = "";
+            string tempStartingTime = "";
+            string tempEndingTime = "";
+            string tempShiftDescription = "";
+
+            while (!validName)
+            {
+                Console.WriteLine("Creating New Shift... Enter Name:");
+                tempInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(tempInput))
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                else
+                {
+                    tempShiftName = tempInput;
+                    validName = true;
+                }
+            }
+            while (!validTime)
+            {
+                Console.WriteLine("Enter Starting Time:");
+                tempInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(tempInput))
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                else
+                {
+                    tempStartingTime = tempInput;
+                    validTime = true;
+                }
+            }
+            validTime = false;
+            while (!validTime)
+            {
+                Console.WriteLine("Enter Ending Time:");
+                tempInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(tempInput))
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                else
+                {
+                    tempEndingTime = tempInput;
+                    validTime = true;
+                }
+            }
+            while (!validDescription)
+            {
+                Console.WriteLine("Enter Description:");
+                tempInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(tempInput))
+                {
+                    Console.WriteLine("Invalid Input. Please try again...");
+                }
+                else
+                {
+                    tempShiftDescription = tempInput;
+                    validDescription = true;
+                }
+            }
+
+            return Build(tempStartingTime, tempEndingTime, tempShiftName, tempShiftDescription);
         }
-        
-        public static Shift Create(int startingFrame, int endingFrame, string shiftName, string description)
+        public static Shift Create(Shift shift)
+        {
+            string tempShiftPath = Program.ProjectDirectoryPath + @"Shifts\" + shift.Name + @"\";
+            if (Directory.Exists(tempShiftPath))
+            {
+                throw new IOException();
+            }
+            else
+            {
+                Directory.CreateDirectory(tempShiftPath);
+                File.Create(tempShiftPath + "Info.shift");
+                File.Create(tempShiftPath + "Legs.shift");
+
+                string[] infoContents =
+                {
+                    Convert.ToString(shift.TimeFrame.Start) + ";" + Convert.ToString(shift.TimeFrame.End),
+                    shift.Description
+                };
+
+                File.WriteAllLines(tempShiftPath + "Info.shift", infoContents);
+                return shift;
+            }
+        }
+        public static Shift Build(int startingFrame, int endingFrame, string shiftName, string description)
         {
             return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>());
+        }
+        public static Shift Build(string startingTime, string endingTime, string shiftName, string description)
+        {
+            return new Shift(shiftName, new TimeFrame(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15), description, new List<Leg>());
         }
         public string[] LegsToDebug()
         {

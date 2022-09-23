@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Shifts\Template\**" />
+    <EmbeddedResource Remove="Shifts\Template\**" />
+    <None Remove="Shifts\Template\**" />
+  </ItemGroup>
+
 </Project>
