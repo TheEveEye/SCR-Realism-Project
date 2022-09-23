@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 23";
+        Console.Title = "Realism Project Network Planner Build 26";
         Console.WriteLine("Importing Program Data...");
         
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -74,7 +74,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 23");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 26");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
