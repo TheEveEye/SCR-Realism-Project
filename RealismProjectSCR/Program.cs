@@ -87,6 +87,7 @@ class Program
                 bool validName = false;
                 bool validTime = false;
                 bool validDescription = false;
+
                 string tempInput;
                 
                 string tempShiftName = "";
