@@ -40,16 +40,14 @@ namespace RealismProjectSCR.SCRObjects
         }
         public static Station NameToStation(string Name)
         {
-            
-
-            for (int i = 0; i < Program.Stations.Length; i++)
+            if (Program.StationNames.Contains(Name))
             {
-                if (Program.Stations[i].Name.ToLower() == Name.ToLower())
-                {
-                    return Program.Stations[i];
-                }
+                return Program.Stations[Array.IndexOf(Program.StationNames, Name)];
             }
-            return null;
+            else
+            {
+                return null;
+            }
         }
         public static Station FromArgument(string Argument)
         {

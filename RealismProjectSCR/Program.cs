@@ -23,7 +23,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 26";
+        Console.Title = "Realism Project Network Planner Build 28";
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -75,7 +75,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 26");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 28");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -171,6 +171,8 @@ class Program
                     break;
 
                 case "add":
+                case "new":
+                case "create":
                     if (EnteredCommand.Length < 2)
                     {
                         Console.WriteLine("Not enough Arguments given. Please try again...");
@@ -218,6 +220,23 @@ class Program
                             }
                             Leg createdLeg = Leg.Create(route, StartingFrame + ActiveShift.TimeFrame.Start, startingStation, endingStation);
                             ActiveShift.AddLeg(createdLeg);
+                            break;
+
+                        case "shift":
+
+                            Shift tempShift = Shift.Create(Shift.Collect());
+                            ShiftNames.Add(ActiveShift.Name);
+                            ShiftPaths.Add(ActiveShift.Path);
+                            Console.WriteLine("Do you want to set it as your Active Shift?");
+                            if (BoolFromInput(Console.ReadLine()) == true)
+                            {
+                                Console.WriteLine("Okay, Selected Shift: " + tempShift.Name);
+                                ActiveShift = tempShift;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Okay, Selected Shift: " + ActiveShift.Name);
+                            }
                             break;
 
                         default: // Not an existing command
@@ -507,5 +526,36 @@ class Program
     public static string FillWithSpaces(string current, int length)
     {
         return current + IntToSpaces(length - current.ToCharArray().Length);
+    }
+    public static bool? BoolFromInput(string input)
+    {
+        bool? output = null;
+        string[] trueList = new string[]
+        { 
+            "yes",
+            "true",
+            "y",
+            "positive"
+        };
+        string[] falseList = new string[]
+        {
+            "no",
+            "false",
+            "n",
+            "negative"
+        };
+        if (String.IsNullOrEmpty(input))
+        {
+            output = null;
+        }
+        else if (trueList.Contains(input))
+        {
+            output = true;
+        }
+        else if (falseList.Contains(input))
+        {
+            output = false;
+        }
+        return output;
     }
 }

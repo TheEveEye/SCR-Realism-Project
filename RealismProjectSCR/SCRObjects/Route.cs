@@ -58,32 +58,39 @@ namespace RealismProjectSCR.SCRObjects
             // Stepford High Street                      75         5         00:11:15
             // Stepford East                             105        7         00:13:00
             // Stepford Central (Arrive)                 120        8         00:15:00
-            if (!String.IsNullOrEmpty(Program.Routes[RouteNumber - 1].Name))
+            try
             {
-                Route route = Program.Routes[RouteNumber - 1];
-                int LongestStationName = FindLongestStationName(route);
-                Console.WriteLine("Timings for: " + RouteNumberString(RouteNumber) + " (" + route.Name + ") Total Time: " + (route.TotalLength * 15 / 60) + " Minutes / " + route.TotalLength + " Frames");
-                Console.WriteLine("Station" + Program.IntToSpaces(LongestStationName - 7) + "    Seconds    Frames    T+");
-                int totalFrames = 0;
-                for (int i = 0; i < route.Timings.Length; i++)
+                if (!String.IsNullOrEmpty(Program.Routes[RouteNumber - 1].Name))
                 {
-                    int Length = route.Timings[i].Station.Name.ToCharArray().Length;
-                    totalFrames += route.Timings[i].TimingFrames;
-                    if ((i == 0) || (i == route.Timings.Length / 2))
+                    Route route = Program.Routes[RouteNumber - 1];
+                    int LongestStationName = FindLongestStationName(route);
+                    Console.WriteLine("Timings for: " + RouteNumberString(RouteNumber) + " (" + route.Name + ") Total Time: " + (route.TotalLength * 15 / 60) + " Minutes / " + route.TotalLength + " Frames");
+                    Console.WriteLine("Station" + Program.IntToSpaces(LongestStationName - 7) + "    Seconds    Frames    T+");
+                    int totalFrames = 0;
+                    for (int i = 0; i < route.Timings.Length; i++)
                     {
-                        Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Depart)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
-                    }
-                    else if ((i == Program.Routes[RouteNumber - 1].Timings.Length - 1) || (i == route.Timings.Length / 2 - 1))
-                    {
-                        Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Arrive)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
-                    }
-                    else
-                    {
-                        Console.WriteLine(Program.FillWithSpaces(route.Timings[i].Station.Name, LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString());
+                        int Length = route.Timings[i].Station.Name.ToCharArray().Length;
+                        totalFrames += route.Timings[i].TimingFrames;
+                        if ((i == 0) || (i == route.Timings.Length / 2))
+                        {
+                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Depart)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
+                        }
+                        else if ((i == Program.Routes[RouteNumber - 1].Timings.Length - 1) || (i == route.Timings.Length / 2 - 1))
+                        {
+                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Arrive)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
+                        }
+                        else
+                        {
+                            Console.WriteLine(Program.FillWithSpaces(route.Timings[i].Station.Name, LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString());
+                        }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("This Route does not exist. Please try again...");
+                }
             }
-            else
+            catch (Exception)
             {
                 Console.WriteLine("This Route does not exist. Please try again...");
             }
