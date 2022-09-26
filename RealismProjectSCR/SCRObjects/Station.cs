@@ -203,7 +203,8 @@ namespace RealismProjectSCR.SCRObjects
             int longest = 0;
             foreach (var route in departures)
             {
-                int tempLength = route.Route.Name.Length;
+                string tempString = String.Format("{0} ({1})", Route.RouteNumberString(route.Route.RouteNumber), route.Route.Name);
+                int tempLength = tempString.Length;
                 if (tempLength > longest)
                 {
                     longest = tempLength;
@@ -216,9 +217,6 @@ namespace RealismProjectSCR.SCRObjects
             int LongestTerminusStationNameLength = FindLongestTerminusStationNameLength(this.Departures.ToArray());
             int LongestRouteNameLength = FindLongestRouteNameLength(this.Departures.ToArray());
 
-
-
-
             List<string> output = new List<string>();
             output.Add(String.Format("Departure for {0}    Total Departures: {1}", this.Name, this.Departures.Count));
             if (this.Departures.Count == 0)
@@ -229,7 +227,10 @@ namespace RealismProjectSCR.SCRObjects
             {
                 output.Add("Time:       " + Program.FillWithSpaces("Route:", LongestRouteNameLength + 4) + Program.FillWithSpaces("Terminus:", LongestTerminusStationNameLength + 4));
             }
-
+            foreach (Departure departure in this.Departures)
+            {
+                output.Add(String.Format("{0}    {1}", Time.ScheduleFramesToDateTime(departure.Frame).ToLongTimeString(), departure.Route.ToNumberNameOutput()));
+            }
 
 
             string outputString = "";

@@ -109,7 +109,10 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
-
+        public string ToNumberNameOutput()
+        {
+            return String.Format("{0} ({1})", Route.RouteNumberString(this.RouteNumber), this.Name);
+        }
         public static void EditRoute()
         {
 
