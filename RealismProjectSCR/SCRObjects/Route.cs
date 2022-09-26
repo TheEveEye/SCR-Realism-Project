@@ -69,19 +69,19 @@ namespace RealismProjectSCR.SCRObjects
                     int totalFrames = 0;
                     for (int i = 0; i < route.Timings.Length; i++)
                     {
-                        int Length = route.Timings[i].Station.Name.ToCharArray().Length;
+                        int Length = route.Timings[i].Station.Name.Length;
                         totalFrames += route.Timings[i].TimingFrames;
                         if ((i == 0) || (i == route.Timings.Length / 2))
                         {
-                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Depart)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
+                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Depart)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
                         }
                         else if ((i == Program.Routes[RouteNumber - 1].Timings.Length - 1) || (i == route.Timings.Length / 2 - 1))
                         {
-                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Arrive)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
+                            Console.WriteLine((Program.FillWithSpaces(route.Timings[i].Station.Name + " (Arrive)", LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString()));
                         }
                         else
                         {
-                            Console.WriteLine(Program.FillWithSpaces(route.Timings[i].Station.Name, LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).ToCharArray().Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).ToCharArray().Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString());
+                            Console.WriteLine(Program.FillWithSpaces(route.Timings[i].Station.Name, LongestStationName) + "    " + (route.Timings[i].TimingFrames * 15) + Program.IntToSpaces(7 - (Convert.ToString(route.Timings[i].TimingFrames * 15).Length)) + "    " + route.Timings[i].TimingFrames + Program.IntToSpaces(6 - (Convert.ToString(route.Timings[i].TimingFrames).Length)) + "    " + Time.ScheduleFramesToDateTime(totalFrames).ToLongTimeString());
                         }
                     }
                 }
@@ -118,19 +118,19 @@ namespace RealismProjectSCR.SCRObjects
         public static int FindLongestStationName(Route route)
         {
             int Longest = 0;
-            if ((route.Terminus1.Name + " (Depart)").ToCharArray().Length > Longest)
+            if ((route.Terminus1.Name + " (Depart)").Length > Longest)
             {
-                Longest = (route.Terminus1.Name + " (Depart)").ToCharArray().Length;
+                Longest = (route.Terminus1.Name + " (Depart)").Length;
             }
-            if ((route.Terminus2.Name + " (Depart)").ToCharArray().Length > Longest)
+            if ((route.Terminus2.Name + " (Depart)").Length > Longest)
             {
-                Longest = (route.Terminus2.Name + " (Depart)").ToCharArray().Length;
+                Longest = (route.Terminus2.Name + " (Depart)").Length;
             }
             foreach (Station station in route.CallingStations)
             {
-                if (station.Name.ToCharArray().Length > Longest)
+                if (station.Name.Length > Longest)
                 {
-                    Longest = station.Name.ToCharArray().Length;
+                    Longest = station.Name.Length;
                 }
             }
             return Longest;

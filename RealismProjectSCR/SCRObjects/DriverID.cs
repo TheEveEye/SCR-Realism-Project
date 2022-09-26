@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace RealismProjectSCR.SCRObjects
 {
-    public class DriverID
+    public class Driver
     {
         public Route Route { get; set; }
+        public List<Leg> Legs { get; set; }
         public string PlayerName { get; set; }
         public int DriverNumber { get; set; }
         public string DriverIDString { get; set; }
 
-        public DriverID(Route Route, string PlayerName, int DriverNumber)
+        public Driver(Route Route, List<Leg> Legs, string PlayerName, int DriverNumber)
         {
             this.Route = Route;
             this.PlayerName = PlayerName;

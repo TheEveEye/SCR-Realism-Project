@@ -116,7 +116,7 @@ namespace RealismProjectSCR
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }
-                if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                else if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }

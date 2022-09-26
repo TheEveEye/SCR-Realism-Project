@@ -185,5 +185,59 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
         }
+        public static int FindLongestTerminusStationNameLength(Departure[] departures)
+        {
+            int longest = 0;
+            foreach (var terminus in departures)
+            {
+                int tempLength = terminus.Terminus.Name.Length;
+                if (tempLength > longest)
+                {
+                    longest = tempLength;
+                }
+            }
+            return longest;
+        }
+        public static int FindLongestRouteNameLength(Departure[] departures)
+        {
+            int longest = 0;
+            foreach (var route in departures)
+            {
+                int tempLength = route.Route.Name.Length;
+                if (tempLength > longest)
+                {
+                    longest = tempLength;
+                }
+            }
+            return longest;
+        }
+        public string ToStationTable()
+        {
+            int LongestTerminusStationNameLength = FindLongestTerminusStationNameLength(this.Departures.ToArray());
+            int LongestRouteNameLength = FindLongestRouteNameLength(this.Departures.ToArray());
+
+
+
+
+            List<string> output = new List<string>();
+            output.Add(String.Format("Departure for {0}    Total Departures: {1}", this.Name, this.Departures.Count));
+            if (this.Departures.Count == 0)
+            {
+                output.Add("This station currently has no scheduled departures.");
+            }
+            else
+            {
+                output.Add("Time:       " + Program.FillWithSpaces("Route:", LongestRouteNameLength + 4) + Program.FillWithSpaces("Terminus:", LongestTerminusStationNameLength + 4));
+            }
+
+
+
+            string outputString = "";
+            foreach (string line in output)
+            {
+                outputString += line + "\n";
+            }
+            return outputString;
+        }
     }
 }

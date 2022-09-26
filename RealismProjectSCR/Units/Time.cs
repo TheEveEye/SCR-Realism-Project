@@ -42,12 +42,21 @@ namespace RealismProjectSCR.Units
         public static int TimeToSeconds(string Time)
         {
             string[] units = Time.Split(':');
-
+            if ((units.Length != 2) || (units.Length != 3))
+            {
+                throw new ArgumentException("Not enough Arguments given");
+            }
             int hours = Convert.ToInt32(units[0]) * 60 * 60;
             int minutes = Convert.ToInt32(units[1]) * 60;
-            int seconds = Convert.ToInt32(units[2]);
-
-            return seconds + minutes + hours; 
+            if (units.Length == 3)
+            {
+                int seconds = Convert.ToInt32(units[2]);
+                return seconds + minutes + hours;
+            }
+            else
+            {
+                return minutes + hours;
+            }
         }
         
         public static int GetTimeFormat(string time)
