@@ -19,8 +19,9 @@ namespace RealismProjectSCR.SCRObjects
         public Departure[] Departures { get; set; }
         public Station StartingStation { get; set; }
         public Station EndingStation { get; set; }
+        public Headcode? Headcode { get; set; }
 
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation)
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode)
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -28,8 +29,9 @@ namespace RealismProjectSCR.SCRObjects
             this.Departures = Departures;
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
+            this.Headcode = Headcode;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation)
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode)
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -37,10 +39,11 @@ namespace RealismProjectSCR.SCRObjects
             this.Departures = Departures;
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
+            this.Headcode = Headcode;
         }
         public static Leg Create(Route route, int startingFrame, Station startingStation, Station endingStation)
         {
-            Leg output = new Leg(route, new(0, 0), null, startingStation, endingStation);
+            Leg output = new Leg(route, new(0, 0), null, startingStation, endingStation, null);
             output.Departures = Route.GetLegDepartures(route, startingFrame, startingStation, endingStation);
             output.TimeFrame = DeparturesTimeFrame(output.Departures);
 
@@ -82,7 +85,7 @@ namespace RealismProjectSCR.SCRObjects
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');
-            Leg output = new Leg(null, 0, 0, new Departure[0], null, null);
+            Leg output = new Leg(null, 0, 0, new Departure[0], null, null, null);
             output.Route = Program.Routes[Convert.ToInt32(split[0]) - 1];
             string[] timeframe = split[1].Split(',');
             output.TimeFrame = new(Convert.ToInt32(timeframe[0]), Convert.ToInt32(timeframe[1]));
