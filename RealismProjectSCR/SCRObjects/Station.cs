@@ -12,7 +12,7 @@ namespace RealismProjectSCR.SCRObjects
     {
         public string Name { get; set; }
         public Station[] AdjacentStations { get; set; }
-        public Platform[] Platforms { get; set; }
+        public Platform?[] Platforms { get; set; }
         public List<Departure> Departures { get; set; }
 
         public string stblPath { get; }
@@ -218,7 +218,9 @@ namespace RealismProjectSCR.SCRObjects
             int LongestRouteNameLength = FindLongestRouteNameLength(this.Departures.ToArray());
 
             List<string> output = new List<string>();
-            output.Add(String.Format("Departure for {0}    Total Departures: {1}", this.Name, this.Departures.Count));
+            output.Add("----------------------------------------------------------------");
+
+            output.Add(String.Format("Departure for {0}    Total Departures/Arrivals: {1}", this.Name, this.Departures.Count));
             if (this.Departures.Count == 0)
             {
                 output.Add("This station currently has no scheduled departures.");
@@ -229,9 +231,17 @@ namespace RealismProjectSCR.SCRObjects
             }
             foreach (Departure departure in this.Departures)
             {
-                output.Add(String.Format("{0}    {1}", Time.ScheduleFramesToDateTime(departure.Frame).ToLongTimeString(), departure.Route.ToNumberNameOutput()));
+                if (departure.Terminus == this)
+                {
+                    output.Add(String.Format("{0}    {1}    {2}    ", Time.ScheduleFramesToDateTime(departure.Frame).ToLongTimeString(), Program.FillWithSpaces(departure.Route.ToNumberNameOutput(), LongestRouteNameLength), Program.FillWithSpaces("Arrival", LongestTerminusStationNameLength)));
+                }
+                else
+                {
+                    output.Add(String.Format("{0}    {1}    {2}    ", Time.ScheduleFramesToDateTime(departure.Frame).ToLongTimeString(), Program.FillWithSpaces(departure.Route.ToNumberNameOutput(), LongestRouteNameLength), Program.FillWithSpaces(departure.Terminus.Name, LongestTerminusStationNameLength)));
+                }
             }
 
+            output.Add("----------------------------------------------------------------");
 
             string outputString = "";
             foreach (string line in output)

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using Microsoft.VisualBasic;
+﻿using RealismProjectSCR;
 using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
-using RealismProjectSCR.NetworkPlanner;
-using RealismProjectSCR;
 
 class Program
 {
@@ -23,7 +18,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 29";
+        Console.Title = "Realism Project Network Planner Build 30";
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -75,7 +70,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 29");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 30");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -101,25 +96,18 @@ class Program
 
                 string selectedShiftInput = Console.ReadLine();
                 int selectedShiftIndex = ShiftNames.Count + 2;
-                //try
-                //{
-                    selectedShiftIndex = Convert.ToInt32(selectedShiftInput);
-                    if (selectedShiftIndex == ShiftNames.Count + 1)
-                    {
-                        ActiveShift = Shift.Create(Shift.Collect());
-                        ShiftNames.Add(ActiveShift.Name);
-                        ShiftPaths.Add(ActiveShift.Path);
-                    }
-                    else
-                    {
-                        ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
-                        selectedShift = true;
-                    }
-                //}
-                //catch (Exception)
-                //{
-                //    Console.WriteLine("Invalid Argument given. Please try again...");
-                //}
+                selectedShiftIndex = Convert.ToInt32(selectedShiftInput);
+                if (selectedShiftIndex == ShiftNames.Count + 1)
+                {
+                    ActiveShift = Shift.Create(Shift.Collect());
+                    ShiftNames.Add(ActiveShift.Name);
+                    ShiftPaths.Add(ActiveShift.Path);
+                }
+                else
+                {
+                    ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                    selectedShift = true;
+                }
             }
         }
 
@@ -133,7 +121,7 @@ class Program
 
         bool proceed = false; // Use for all menu checks
         bool close = false;
-        string EnteredCommandRaw = null;
+        string EnteredCommandRaw = " ";
 
         while (!close)
         {
@@ -271,6 +259,8 @@ class Program
                                 break;
                             }
                             searchedStation.SortDepartures();
+                            Console.WriteLine(searchedStation.ToStationTable());
+                            /*
                             if (EnteredCommand.Length < 4)
                             {
                                 searchedStation.PrintDepartures();
@@ -301,6 +291,7 @@ class Program
                                 searchedStation.PrintDepartures(Convert.ToInt32(EnteredCommand[3]), Convert.ToInt32(EnteredCommand[4]));
                                 break;
                             }
+                            */
 
                             break;
 
@@ -531,7 +522,7 @@ class Program
     {
         bool? output = null;
         string[] trueList = new string[]
-        { 
+        {
             "yes",
             "true",
             "y",

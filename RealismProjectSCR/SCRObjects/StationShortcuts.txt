@@ -2,7 +2,7 @@ Airport Terminal 1:T1
 Airport Terminal 2:T2
 Airport Terminal 3:T3
 Airport West:AW
-Angel Pass:AP
+Angel Pass:Angel
 Ashlan Park:APK
 Beaulieu Park:BP
 Beechley:BCY
@@ -15,7 +15,7 @@ City Hospital:CH
 Connolly:CON
 Coxly:CXY
 East Berrily:EB
-Eden Quay:EQ
+Eden Quay:EQ;Quay
 Edgemead:EM
 Elsemere Junction:EJ
 Elsemere Pond:EP
@@ -32,16 +32,16 @@ James Street:JS
 Leighton City:LC
 Leighton Stepford Road:LSR
 Leighton West:LW
-Llyn-by-the-Sea:LBTS
+Llyn-by-the-Sea:LBTS;Llyn
 Millcastle:MLC
-Millcastle Racecourse:MR
+Millcastle Racecourse:MR;MRC
 Morganstown:MGT
-Morganstown Docks:MGTD;MD
-New Harrow:NHW
+Morganstown Docks:MGTD;MD;Docks
+New Harrow:NHW;Harrow
 Newry:NRY
 Newry Harbour:NH
 Northshore:NS
-Port Benton:PB
+Port Benton:PB;Port
 Rocket Parade:RP
 Rosedale Village:RV
 St. Helens Bridge:SHB
