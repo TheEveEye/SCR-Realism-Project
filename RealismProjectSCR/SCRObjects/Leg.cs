@@ -21,7 +21,7 @@ namespace RealismProjectSCR.SCRObjects
         public Station EndingStation { get; set; }
         public Headcode? Headcode { get; set; }
 
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode)
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode) //Constructor with startFrame, endFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -31,7 +31,7 @@ namespace RealismProjectSCR.SCRObjects
             this.EndingStation = EndingStation;
             this.Headcode = Headcode;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode)
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode) //Constructor with TimeFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -40,6 +40,24 @@ namespace RealismProjectSCR.SCRObjects
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
             this.Headcode = Headcode;
+        }
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation) //Constructor with startFrame and endFrame
+        {
+            this.Route = Route;
+            this.TimeFrame = new(StartFrame, EndFrame);
+            this.TotalFrames = this.TimeFrame.ToFrames();
+            this.Departures = Departures;
+            this.StartingStation = StartingStation;
+            this.EndingStation = EndingStation;
+        }
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation) //Constructor with TimeFrame
+        {
+            this.Route = Route;
+            this.TimeFrame = TimeFrame;
+            this.TotalFrames = this.TimeFrame.ToFrames();
+            this.Departures = Departures;
+            this.StartingStation = StartingStation;
+            this.EndingStation = EndingStation;
         }
         public static Leg Create(Route route, int startingFrame, Station startingStation, Station endingStation)
         {
@@ -53,21 +71,35 @@ namespace RealismProjectSCR.SCRObjects
         {
             return new TimeFrame(departures[0].Frame, departures[departures.Length - 1].Frame);
         }
-        public string[] ToDriver()
+        public string ToDriver()
         {
             List<string> output = new List<string>();
 
             output.Add("----------------------------------------------------------------");
 
-            output.Add("Timings for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
+            output.Add("Departures for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
             output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name);
             output.Add("");
             foreach (var item in this.Departures)
             {
                 output.Add(item.ToDriver());
             }
+            
+            // 12:25:00 + Stepford Central
+            //          |
+            // 12:27:00 + Stepford East
+            //          |
+            // 12:28:45 + Stepford High Street
+
             output.Add("----------------------------------------------------------------");
-            return output.ToArray();
+            
+            string outputString = "";
+            foreach (string Line in output) // Building String
+            {
+                outputString += Line;
+            }
+            
+            return outputString;
         }
         public static string ToExport(Leg leg)
         {
