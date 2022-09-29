@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RealismProjectSCR.Units;
+using RealismProjectSCR.SCRObjects;
+using RealismProjectSCR.SCRObjects.TimeTables;
+using RealismProjectSCR;
 
 namespace RealismProjectSCR.SCRObjects.TimeTables
 {
