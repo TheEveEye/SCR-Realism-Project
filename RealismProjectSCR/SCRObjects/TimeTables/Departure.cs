@@ -58,7 +58,7 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
 
         public string ToDriver()
         {
-            return Station.Name + " - " + Time.ScheduleFramesToDateTime(Frame).ToLongTimeString();
+            return Time.ScheduleFramesToDateTime(Frame).ToLongTimeString() + " - " + Station.Name;
         }
         public string ToPassenger()
         {
