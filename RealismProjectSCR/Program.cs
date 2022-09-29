@@ -18,7 +18,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 31";
+        Console.Title = "Realism Project Network Planner Build 32";
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -70,7 +70,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 31");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 32");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -78,26 +78,9 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            if (ShiftNames.Count == 0)
+            try
             {
-                ActiveShift = Shift.Create(Shift.Collect());
-                ShiftNames.Add(ActiveShift.Name);
-                ShiftPaths.Add(ActiveShift.Path);
-            }
-            else
-            {
-                Tab();
-                Console.WriteLine("Select Shift:");
-                for (int i = 0; i < ShiftNames.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
-                }
-                Console.WriteLine((ShiftNames.Count + 1) + " - Create New");
-
-                string selectedShiftInput = Console.ReadLine();
-                int selectedShiftIndex = ShiftNames.Count + 2;
-                selectedShiftIndex = Convert.ToInt32(selectedShiftInput);
-                if (selectedShiftIndex == ShiftNames.Count + 1)
+                if (ShiftNames.Count == 0)
                 {
                     ActiveShift = Shift.Create(Shift.Collect());
                     ShiftNames.Add(ActiveShift.Name);
@@ -105,9 +88,33 @@ class Program
                 }
                 else
                 {
-                    ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
-                    selectedShift = true;
+                    Tab();
+                    Console.WriteLine("Select Shift:");
+                    for (int i = 0; i < ShiftNames.Count; i++)
+                    {
+                        Console.WriteLine((i + 1) + " - " + ShiftNames[i]);
+                    }
+                    Console.WriteLine((ShiftNames.Count + 1) + " - Create New");
+
+                    string selectedShiftInput = Console.ReadLine();
+                    int selectedShiftIndex = ShiftNames.Count + 2;
+                    selectedShiftIndex = Convert.ToInt32(selectedShiftInput);
+                    if (selectedShiftIndex == ShiftNames.Count + 1)
+                    {
+                        ActiveShift = Shift.Create(Shift.Collect());
+                        ShiftNames.Add(ActiveShift.Name);
+                        ShiftPaths.Add(ActiveShift.Path);
+                    }
+                    else
+                    {
+                        ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                        selectedShift = true;
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Some error occured, please try again...");
             }
         }
 
@@ -337,11 +344,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            string[] legData = ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver();
-                            foreach (string item in legData)
-                            {
-                                Console.WriteLine(item);
-                            }
+                            Console.WriteLine(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver());
 
                             break;
 

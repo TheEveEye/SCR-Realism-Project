@@ -96,7 +96,7 @@ namespace RealismProjectSCR.SCRObjects
             string outputString = "";
             foreach (string Line in output) // Building String
             {
-                outputString += Line;
+                outputString += Line + "\n";
             }
             
             return outputString;
