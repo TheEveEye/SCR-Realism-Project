@@ -37,6 +37,10 @@ namespace RealismProjectSCR
             }
             Push();
         }
+        public void PredictHeadcodes()
+        {
+
+        }
         public void Push()
         {
             string[] vs = new string[Legs.Count];

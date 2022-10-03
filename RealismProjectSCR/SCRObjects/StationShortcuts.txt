@@ -39,7 +39,7 @@ Morganstown:MGT
 Morganstown Docks:MGTD;MD;Docks
 New Harrow:NHW;Harrow
 Newry:NRY
-Newry Harbour:NH
+Newry Harbour:NH;Harbour
 Northshore:NS
 Port Benton:PB;Port
 Rocket Parade:RP
@@ -47,11 +47,11 @@ Rosedale Village:RV
 St. Helens Bridge:SHB
 Starryloch:STL
 Stepford Airport Central:AC;SAC
-Stepford Airport Parkway:SAP;AP
+Stepford Airport Parkway:SAP;AP;Parkway
 Stepford Central:SC
 Stepford East:SE
 Stepford High Street:SHS;HS
-Stepford United Football Club:SUFC
+Stepford United Football Club:SUFC;UFC
 Stepford Victoria:SV
 Upper Staploe:US
 Water Newton:WN

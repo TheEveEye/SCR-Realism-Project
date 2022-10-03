@@ -1,0 +1,27 @@
+﻿Airport Central:A
+Benton:B
+Beechley:C
+Willowfield:D
+Edgemead:E
+Whitefield:F
+Greenslade:G
+Newry Harbour:H
+St. Helens Bridge:I
+Farleigh:J
+Leighton West:K
+Llyn-by-the-sea:L
+Morganstown:M
+Newry:N
+Connolly:O
+Port Benton:P
+Airport Parkway:P
+Esterfield:Q
+Leighton Stepford Road:R
+Stepford Central:S
+Leighton City:T
+Stepford UFC:U
+Stepford Victoria:V
+Westwyvern:W
+Airport Terminal 2:X
+Berrily:Y
+Airport Terminal 3:Z

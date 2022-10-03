@@ -18,7 +18,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 32";
+        Console.Title = "Realism Project Network Planner Build 33";
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
@@ -70,7 +70,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 32");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 33");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");
@@ -162,7 +162,18 @@ class Program
 
                 case "help":
                 case "commands":
+                    if (EnteredCommand.Length == 1)
+                    {
 
+                    }
+                    else if (EnteredCommand.Length > 1)
+                    {
+                        switch (EnteredCommand[1])
+                        {
+                            default:
+                                break;
+                        }
+                    }
                     break;
 
                 case "add":
