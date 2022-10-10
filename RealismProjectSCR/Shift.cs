@@ -39,7 +39,22 @@ namespace RealismProjectSCR
         }
         public void PredictHeadcodes()
         {
+            Leg[] currentLegs = this.Legs.ToArray();
+            StationCodeCounter stationCodeCounter = new StationCodeCounter();
+            for (int i = 0; i < currentLegs.Length; i++)
+            {
 
+            }
+        }
+        public void SortLegs()
+        {
+            int[] LegsStartingFrame = new int[this.Legs.Count];
+            for (int i = 0; i < LegsStartingFrame.Length; i++)
+            {
+                LegsStartingFrame[i] = this.Legs[i].TimeFrame.Start;
+            }
+
+            Array.Sort(LegsStartingFrame);
         }
         public void Push()
         {

@@ -16,6 +16,8 @@ namespace RealismProjectSCR.SCRObjects
         public Platform?[] Platforms { get; set; }
         public List<Departure> Departures { get; set; }
 
+        public static Station[] TerminusStations { get; set; }
+
         public string stblPath { get; }
 
         string[] Shortcuts { get; set; }
@@ -79,7 +81,16 @@ namespace RealismProjectSCR.SCRObjects
             }
             return null;
         }
-
+        public static Station[] GetTerminusStations()
+        {
+            StationCodeCounter tempStationCodeCounter = StationCode.GetStationCodeCounter();
+            Station[] stations = new Station[tempStationCodeCounter.StationCounters.Length];
+            for (int i = 0; i < stations.Length; i++)
+            {
+                stations[i] = tempStationCodeCounter.StationCounters[i].Station;
+            }
+            return stations;
+        }
         public void SortDepartures()
         {
             int[] rawDepartureFrames = new int[this.Departures.Count];

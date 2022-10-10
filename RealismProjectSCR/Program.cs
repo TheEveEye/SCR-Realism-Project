@@ -463,8 +463,40 @@ class Program
                     }
                     break;
 
-                case "":
+                case "edit":
+                case "change":
+                case "modify":
 
+                    if (EnteredCommand.Length < 3)
+                    {
+                        Console.WriteLine("Not enough Arguments given. Please try again...");
+                        break;
+                    }
+                    switch (EnteredCommand[1])
+                    {
+                        case "route":
+                            if (EnteredCommand.Length < 5)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            try
+                            {
+                                Routes[Convert.ToInt32(EnteredCommand[2])].EditRoute(EnteredCommand[3], EnteredCommand[4]);
+                                Console.WriteLine(String.Format("Successfully modified \"{0}\" in {1} to \"{2}\".", EnteredCommand[3], Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2])), EnteredCommand[4]));
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            
+                            break;
+
+                        default: // Not an existing command
+                            Console.WriteLine("Invalid Command. Please try again...");
+                            break;
+                    }
                     break;
 
                 default: // Not an existing command
