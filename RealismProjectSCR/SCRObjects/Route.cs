@@ -174,6 +174,26 @@ namespace RealismProjectSCR.SCRObjects
                     }
                     break;
 
+                case "headcode":
+                case "priority":
+                    try
+                    {
+                        int newHeadcode = Convert.ToInt32(newValue);
+                        if ((newHeadcode == 9) || (newHeadcode == 1) || (newHeadcode == 2))
+                        {
+                            this.HeadcodePriority = newHeadcode;
+                        }
+                        else
+                        {
+                            throw new ArgumentException(String.Format("\"{0}\" is not a valid value to change.", newValue));
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw new ArgumentException(String.Format("\"{0}\" is not a valid value to change.", newValue));
+                    }
+
+                    break;
 
                 default:
                     throw new ArgumentException(String.Format("\"{0}\" is not a valid object to change.", whatShallBeChanged));
