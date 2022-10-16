@@ -13,7 +13,7 @@ namespace RealismProjectSCR.SCRObjects
     {
         public string Name { get; set; }
         public Station[] AdjacentStations { get; set; }
-        public Platform?[] Platforms { get; set; }
+        public Platform?[] Platforms { get; set; } // THIS NEEDS TO BE EDITED
         public List<Departure> Departures { get; set; }
 
         public static Station[] TerminusStations { get; set; }

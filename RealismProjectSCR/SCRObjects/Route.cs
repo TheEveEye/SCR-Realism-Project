@@ -221,7 +221,7 @@ namespace RealismProjectSCR.SCRObjects
             return Longest;
         }
 
-        public static Route[] Import() // This function is not finished. Things to do: CallingStations[] and Timings[] importing. Timings[] will require SCRObjects.Timing Class
+        public static Route[] Import() // Adding in Platform Allocations soon.
         {
             string[] file = File.ReadAllLines(RoutePath);
             Route[] routes = new Route[file.Length];
@@ -229,7 +229,7 @@ namespace RealismProjectSCR.SCRObjects
             for (int i = 0; i < routes.Length; i++)
             {
                 Route tempRoute = new Route(0, null, null, null, null, null, 0, null, 0);
-                string[] tempRouteData = file[i].Split(';'); //Name;TotalLength;Operator;Terminus1,Terminus2;Station1:Timing1,Station2:Timing2
+                string[] tempRouteData = file[i].Split(';'); //Name;TotalLength;Operator;Terminus1,Terminus2;Station1:Timing1,Station2:Timing2 !!! THIS WILL CHANGE ONCE PLATFORM ALLOCATIONS ARE ADDED !!!
                 tempRoute.RouteNumber = (i + 1);
                 tempRoute.Name = tempRouteData[0];
                 tempRoute.TotalLength = Convert.ToInt32(tempRouteData[1]);
