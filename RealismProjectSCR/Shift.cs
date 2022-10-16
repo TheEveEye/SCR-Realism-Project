@@ -37,7 +37,7 @@ namespace RealismProjectSCR
             }
             Push();
         }
-        public void PredictHeadcodes()
+        public void PredictHeadcodes() // Get this done before platform allocations
         {
             Leg[] currentLegs = this.Legs.ToArray();
             StationCodeCounter stationCodeCounter = new StationCodeCounter();
