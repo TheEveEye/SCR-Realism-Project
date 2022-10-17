@@ -67,6 +67,28 @@ namespace RealismProjectSCR.SCRObjects
 
             return output;
         }
+        public Station GetTerminus()
+        {
+            if (Route.IsTerminus(EndingStation))
+            {
+                return EndingStation;
+            }
+            else
+            {
+                if (Route.Terminus1 == StartingStation)
+                {
+                    return Route.Terminus2;
+                }
+                else if (Route.Terminus2 == StartingStation)
+                {
+                    return Route.Terminus1;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
         public static TimeFrame DeparturesTimeFrame(Departure[] departures)
         {
             return new TimeFrame(departures[0].Frame, departures[departures.Length - 1].Frame);

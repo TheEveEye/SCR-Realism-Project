@@ -199,7 +199,20 @@ namespace RealismProjectSCR.SCRObjects
                     throw new ArgumentException(String.Format("\"{0}\" is not a valid object to change.", whatShallBeChanged));
             }
         }
+        public bool IsTerminus(Station station)
+        {
+            bool output = false;
 
+            if (station == this.Terminus1)
+            {
+                output = true;
+            }
+            else if (station == this.Terminus2)
+            {
+                output = true;
+            }
+            return output;
+        }
         public static int FindLongestStationName(Route route)
         {
             int Longest = 0;
