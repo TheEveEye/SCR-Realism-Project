@@ -43,7 +43,13 @@ namespace RealismProjectSCR
             StationCodeCounter stationCodeCounter = new StationCodeCounter();
             for (int i = 0; i < currentLegs.Length; i++)
             {
-
+                Station lastStation = currentLegs[i].EndingStation;
+                Route legRoute = currentLegs[i].Route;
+                Headcode newHeadcode;
+                if (legRoute.IsTerminus(lastStation))
+                {
+                    newHeadcode = new Headcode(stationCodeCounter., );
+                }
             }
         }
         public void SortLegs()
