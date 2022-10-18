@@ -78,8 +78,8 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            //try
-            //{
+            try
+            {
                 if (ShiftNames.Count == 0)
                 {
                     ActiveShift = Shift.Create(Shift.Collect());
@@ -112,11 +112,11 @@ class Program
                         selectedShift = true;
                     }
                 }
-            //}
-            //catch (Exception)
-            //{
-            //    Console.WriteLine("Some error occured, please try again...");
-            //}
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Some error occured, please try again...");
+            }
         }
 
         Console.WriteLine("Waiting for input...");
@@ -337,6 +337,7 @@ class Program
                         case "leg":
                         case "legtimings":
                         case "legdata":
+                            ActiveShift.PredictHeadcodes();
                             if (EnteredCommand.Length < 3)
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");
@@ -363,6 +364,7 @@ class Program
                         case "legs":
                         case "leglist":
                             string[] compactLegs = ActiveShift.LegsToDebug();
+                            ActiveShift.PredictHeadcodes();
                             Console.WriteLine("----------------------------------------------------------------");
                             foreach (string item in compactLegs)
                             {

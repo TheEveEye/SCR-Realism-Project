@@ -230,7 +230,7 @@ namespace RealismProjectSCR.SCRObjects
             int LongestRouteNameLength = FindLongestRouteNameLength(this.Departures.ToArray());
 
             List<string> output = new List<string>();
-            output.Add("----------------------------------------------------------------");
+            output.Add("--------------------------------------------------------------------------------------------------------------------------------");
 
             output.Add(String.Format("Departure for {0}    Total Departures/Arrivals: {1}", this.Name, this.Departures.Count));
             if (this.Departures.Count == 0)
@@ -253,7 +253,7 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
 
-            output.Add("----------------------------------------------------------------");
+            output.Add("--------------------------------------------------------------------------------------------------------------------------------");
 
             string outputString = "";
             foreach (string line in output)

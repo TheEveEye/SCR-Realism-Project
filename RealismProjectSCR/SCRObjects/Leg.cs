@@ -160,7 +160,7 @@ namespace RealismProjectSCR.SCRObjects
             output.Add("----------------------------------------------------------------");
 
             output.Add("Departures for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
-            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name);
+            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name + "    Predicted Headcode: " + Headcode.Code);
             output.Add("");
             foreach (var item in this.Departures)
             {
@@ -196,7 +196,7 @@ namespace RealismProjectSCR.SCRObjects
 
         public string ToCompact(int LegNumber)
         {
-            return "Leg " + LegNumber + "    Route: " + Route.RouteNumberString(this.Route.RouteNumber) + " (" + this.Route.Name + ")    Time Frame: " + this.TimeFrame.StartTime + " - " + this.TimeFrame.EndTime + " (" + this.TimeFrame.Start + " - " + this.TimeFrame.End + ")    Driving: " + this.StartingStation.Name + " - " + this.EndingStation.Name;
+            return "Leg " + LegNumber + "    Route: " + Route.RouteNumberString(this.Route.RouteNumber) + " (" + this.Route.Name + ")    Time Frame: " + this.TimeFrame.StartTime + " - " + this.TimeFrame.EndTime + " (" + this.TimeFrame.Start + " - " + this.TimeFrame.End + ")    Driving: " + this.StartingStation.Name + " - " + this.EndingStation.Name + "    Predicted Headcode: " + this.Headcode.Code;
         }
 
         public static Leg Import(string input)
@@ -216,7 +216,7 @@ namespace RealismProjectSCR.SCRObjects
             for (int i = 0; i < departures.Length; i++)
             {
                 string[] rawdeparture = rawdepartures[i].Split(':');
-                departures[i] = new Departure(Convert.ToInt32(rawdeparture[1]), Station.NameToStation(rawdeparture[0]), null, output.EndingStation, output.Route);
+                departures[i] = new Departure(Convert.ToInt32(rawdeparture[1]), Station.NameToStation(rawdeparture[0]), null, output.EndingStation, output.Route, null); // NOT FINISHED
                 departures[i].Station.Departures.Add(departures[i]);
             }
             output.Departures = departures;

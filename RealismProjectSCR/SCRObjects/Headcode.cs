@@ -116,8 +116,16 @@ namespace RealismProjectSCR.SCRObjects
         public int GetAndCountUp(Station Terminus)
         {
             int index = Array.IndexOf(TerminusStations, Terminus);
-            StationCounters[index].Counter++;
-            return StationCounters[index].Counter;
+            int output = StationCounters[index].Counter;
+            if (StationCounters[index].Counter != 99)
+            {
+                StationCounters[index].Counter++;
+            }
+            else
+            {
+                StationCounters[index].Counter = 0;
+            }
+            return output;
         }
     }
 }

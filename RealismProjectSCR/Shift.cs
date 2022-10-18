@@ -44,13 +44,12 @@ namespace RealismProjectSCR
             StationCodeCounter stationCodeCounter = new StationCodeCounter();
             for (int i = 0; i < currentLegs.Length; i++)
             {
-                Station lastStation = currentLegs[i].EndingStation;
                 Station legTerminus = currentLegs[i].GetTerminus();
                 Route legRoute = currentLegs[i].Route;
-                Headcode newHeadcode = new Headcode(0, ' ', 0);
-                newHeadcode.Priority = legRoute.HeadcodePriority;
-                newHeadcode.Terminus = StationCodeCounter.TerminusChars[Array.IndexOf(StationCodeCounter.TerminusStations, legTerminus)];
-                newHeadcode.Number = stationCodeCounter.GetAndCountUp(legTerminus);
+
+                Headcode newHeadcode = new Headcode(legRoute.HeadcodePriority, StationCodeCounter.TerminusChars[Array.IndexOf(StationCodeCounter.TerminusStations, legTerminus)], stationCodeCounter.GetAndCountUp(legTerminus));
+
+                this.Legs[Array.IndexOf(this.Legs.ToArray(), currentLegs[i])].Headcode = newHeadcode;
             }
         }
 
@@ -230,10 +229,11 @@ namespace RealismProjectSCR
 
         public string[] LegsToDebug()
         {
+            List<Leg> sortedLegs = Leg.Sort(Legs, "starttime");
             List<string> output = new List<string>();
             for (int i = 0; i < Legs.Count; i++)
             {
-                output.Add(Legs[i].ToCompact(i + 1));
+                output.Add(sortedLegs[i].ToCompact(i + 1));
             }
             return output.ToArray();
         }
