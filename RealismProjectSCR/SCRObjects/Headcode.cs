@@ -22,11 +22,22 @@ namespace RealismProjectSCR.SCRObjects
 
         public Headcode(int Priority, char Terminus, int Number)
         {
-            this.Code = Convert.ToString(Priority) + Terminus + Convert.ToString(Number);
+            this.Code = Convert.ToString(Priority) + Terminus + ExtendNumber(Number);
 
             this.Priority = Priority;
             this.Terminus = Terminus;
             this.Number = Number;
+        }
+        static string ExtendNumber(int number)
+        {
+            if (Convert.ToString(number).Length == 1)
+            {
+                return "0" + number;
+            }
+            else
+            {
+                return Convert.ToString(number);
+            }
         }
     }
     public struct StationCode
@@ -44,38 +55,54 @@ namespace RealismProjectSCR.SCRObjects
 
         public static StationCodeCounter GetStationCodeCounter()
         {
-            string[] rawStationHeadcodes = File.ReadAllLines(Program.ProjectDirectoryPath + @"SCRObjects\StationHeadcodes.txt");
-
-            char[] outputChars = new char[rawStationHeadcodes.Length];
-            Station[] outputStations = new Station[rawStationHeadcodes.Length];
-
-            for (int i = 0; i < rawStationHeadcodes.Length; i++)
+            StationCode[] outputStationCodes = new StationCode[StationCodeCounter.TerminusStations.Length];
+            for (int i = 0; i < StationCodeCounter.TerminusStations.Length; i++)
             {
-                string[] tempRaw = rawStationHeadcodes[i].Split(':');
-                outputStations[i] = Station.NameToStation(tempRaw[0]);
-                outputChars[i] = Convert.ToChar(tempRaw[1]);
-            }
-            StationCode[] outputStationCodes = new StationCode[rawStationHeadcodes.Length];
-            for (int i = 0; i < rawStationHeadcodes.Length; i++)
-            {
-                outputStationCodes[i] = new StationCode(outputStations[i], outputChars[i]);
+                outputStationCodes[i] = new StationCode(StationCodeCounter.TerminusStations[i], StationCodeCounter.TerminusChars[i]);
             }
             StationCodeCounter output = new StationCodeCounter();
-            StationCodeCounter.TerminusStations = outputStations;
-            StationCodeCounter.TerminusChars = outputChars;
             output.StationCounters = outputStationCodes;
             return output;
         }
         public static StationCode[] GetStationHeadcodes()
         {
-            return GetStationCodeCounter().StationCounters;
+            StationCode[] output = new StationCode[StationCodeCounter.TerminusStations.Length];
+            for (int i = 0; i < StationCodeCounter.TerminusStations.Length; i++)
+            {
+                output[i] = new StationCode(StationCodeCounter.TerminusStations[i], StationCodeCounter.TerminusChars[i]);
+            }
+            return output;
         }
     }
     public struct StationCodeCounter
     {
         public StationCode[] StationCounters { get; set; }
-        public static Station[] TerminusStations { get; set; }
-        public static char[] TerminusChars { get; set; }
+
+        public static Station[] TerminusStations = TerminusSetup();
+        public static char[] TerminusChars = CharSetup();
+        
+        static Station[] TerminusSetup()
+        {
+            string[] rawStationHeadcodes = File.ReadAllLines(Program.ProjectDirectoryPath + @"SCRObjects\StationHeadcodes.txt");
+            Station[] outputStations = new Station[rawStationHeadcodes.Length];
+            for (int i = 0; i < rawStationHeadcodes.Length; i++)
+            {
+                string[] tempRaw = rawStationHeadcodes[i].Split(':');
+                outputStations[i] = Station.NameToStation(tempRaw[0]);
+            }
+            return outputStations;
+        }
+        static char[] CharSetup()
+        {
+            string[] rawStationHeadcodes = File.ReadAllLines(Program.ProjectDirectoryPath + @"SCRObjects\StationHeadcodes.txt");
+            char[] outputChars = new char[rawStationHeadcodes.Length];
+            for (int i = 0; i < rawStationHeadcodes.Length; i++)
+            {
+                string[] tempRaw = rawStationHeadcodes[i].Split(':');
+                outputChars[i] = outputChars[i] = Convert.ToChar(tempRaw[1]);
+            }
+            return outputChars;
+        }
 
         public StationCodeCounter()
         {

@@ -1,4 +1,4 @@
-﻿Airport Central:A
+﻿Stepford Airport Central:A
 Benton:B
 Beechley:C
 Willowfield:D
@@ -14,12 +14,12 @@ Morganstown:M
 Newry:N
 Connolly:O
 Port Benton:P
-Airport Parkway:P
+Stepford Airport Parkway:P
 Esterfield:Q
 Leighton Stepford Road:R
 Stepford Central:S
 Leighton City:T
-Stepford UFC:U
+Stepford United Football Club:U
 Stepford Victoria:V
 Westwyvern:W
 Airport Terminal 2:X

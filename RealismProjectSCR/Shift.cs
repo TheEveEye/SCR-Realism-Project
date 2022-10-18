@@ -47,8 +47,10 @@ namespace RealismProjectSCR
                 Station lastStation = currentLegs[i].EndingStation;
                 Station legTerminus = currentLegs[i].GetTerminus();
                 Route legRoute = currentLegs[i].Route;
-                Headcode newHeadcode;
-                newHeadcode = new Headcode(legRoute.HeadcodePriority, StationCodeCounter.TerminusChars[Array.IndexOf(StationCodeCounter.TerminusStations, legTerminus)], stationCodeCounter.GetAndCountUp(legTerminus));
+                Headcode newHeadcode = new Headcode(0, ' ', 0);
+                newHeadcode.Priority = legRoute.HeadcodePriority;
+                newHeadcode.Terminus = StationCodeCounter.TerminusChars[Array.IndexOf(StationCodeCounter.TerminusStations, legTerminus)];
+                newHeadcode.Number = stationCodeCounter.GetAndCountUp(legTerminus);
             }
         }
 

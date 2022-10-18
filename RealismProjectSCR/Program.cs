@@ -78,8 +78,8 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            try
-            {
+            //try
+            //{
                 if (ShiftNames.Count == 0)
                 {
                     ActiveShift = Shift.Create(Shift.Collect());
@@ -108,14 +108,15 @@ class Program
                     else
                     {
                         ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                        ActiveShift.PredictHeadcodes();
                         selectedShift = true;
                     }
                 }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Some error occured, please try again...");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine("Some error occured, please try again...");
+            //}
         }
 
         Console.WriteLine("Waiting for input...");
