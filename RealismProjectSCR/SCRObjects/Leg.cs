@@ -67,6 +67,7 @@ namespace RealismProjectSCR.SCRObjects
 
             return output;
         }
+
         public Station GetTerminus()
         {
             if (Route.IsTerminus(EndingStation))
@@ -89,10 +90,69 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
         }
+
+        public static List<Leg> Sort(List<Leg> input, string type)
+        {
+            List<Leg> output = new List<Leg>();
+            switch (type)
+            {
+                case "starttime": // Sorts Legs by starting time
+                    List<int> startingTimes = new List<int>();
+                    List<int> sortedStartingTimes = new List<int>();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        startingTimes.Add(input[i].TimeFrame.Start);
+                        sortedStartingTimes.Add(input[i].TimeFrame.Start);
+                    }
+                    sortedStartingTimes.Sort();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        output.Add(input[Array.IndexOf(startingTimes.ToArray(), sortedStartingTimes[i])]);
+                    }
+                    break;
+
+                case "endtime": // Sorts Legs by ending time
+                    List<int> endingTimes = new List<int>();
+                    List<int> sortedEndingTimes = new List<int>();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        endingTimes.Add(input[i].TimeFrame.Start);
+                        sortedEndingTimes.Add(input[i].TimeFrame.Start);
+                    }
+                    sortedEndingTimes.Sort();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        output.Add(input[Array.IndexOf(endingTimes.ToArray(), sortedEndingTimes[i])]);
+                    }
+                    break;
+
+                case "route": // Sorts Legs by route number
+                    List<int> routeNumbers = new List<int>();
+                    List<int> sortedRouteNumbers = new List<int>();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        routeNumbers.Add(input[i].Route.RouteNumber);
+                        sortedRouteNumbers.Add(input[i].Route.RouteNumber);
+                    }
+                    sortedRouteNumbers.Sort();
+                    for (int i = 0; i < input.Count; i++)
+                    {
+                        output.Add(input[Array.IndexOf(routeNumbers.ToArray(), sortedRouteNumbers[i])]);
+                    }
+                    break;
+
+                default:
+                    output = input;
+                    break;
+            }
+            return output;
+        }
+
         public static TimeFrame DeparturesTimeFrame(Departure[] departures)
         {
             return new TimeFrame(departures[0].Frame, departures[departures.Length - 1].Frame);
         }
+
         public string ToDriver()
         {
             List<string> output = new List<string>();
@@ -123,6 +183,7 @@ namespace RealismProjectSCR.SCRObjects
             
             return outputString;
         }
+
         public static string ToExport(Leg leg)
         {
             string output = Convert.ToString(leg.Route.RouteNumber) + ";" + Convert.ToString(leg.TimeFrame.Start) + "," + Convert.ToString(leg.TimeFrame.End) + ";" + leg.StartingStation.Name + "," + leg.EndingStation.Name + ";" + leg.Departures[0].Station.Name + ":" + Convert.ToString(leg.Departures[0].Frame);
@@ -132,10 +193,12 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
+
         public string ToCompact(int LegNumber)
         {
             return "Leg " + LegNumber + "    Route: " + Route.RouteNumberString(this.Route.RouteNumber) + " (" + this.Route.Name + ")    Time Frame: " + this.TimeFrame.StartTime + " - " + this.TimeFrame.EndTime + " (" + this.TimeFrame.Start + " - " + this.TimeFrame.End + ")    Driving: " + this.StartingStation.Name + " - " + this.EndingStation.Name;
         }
+
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');

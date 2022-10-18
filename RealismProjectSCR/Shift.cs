@@ -19,7 +19,6 @@ namespace RealismProjectSCR
         public List<Leg> Legs { get; set; }
         public string Path { get; set; }
 
-        
         public Shift(string Name, TimeFrame TimeFrame, string Description, List<Leg> Legs)
         {
             this.Name = Name;
@@ -28,6 +27,7 @@ namespace RealismProjectSCR
             this.Legs = Legs;
             this.Path = GetPath(this.Name); 
         }
+
         public void AddLeg(Leg leg)
         {
             Legs.Add(leg);
@@ -37,21 +37,21 @@ namespace RealismProjectSCR
             }
             Push();
         }
+
         public void PredictHeadcodes() // Get this done before platform allocations
         {
-            Leg[] currentLegs = this.Legs.ToArray();
+            Leg[] currentLegs = Leg.Sort(this.Legs, "starttime").ToArray();
             StationCodeCounter stationCodeCounter = new StationCodeCounter();
             for (int i = 0; i < currentLegs.Length; i++)
             {
                 Station lastStation = currentLegs[i].EndingStation;
+                Station legTerminus = currentLegs[i].GetTerminus();
                 Route legRoute = currentLegs[i].Route;
                 Headcode newHeadcode;
-                if (legRoute.IsTerminus(lastStation))
-                {
-                    newHeadcode = new Headcode(stationCodeCounter., );
-                }
+                newHeadcode = new Headcode(legRoute.HeadcodePriority, StationCodeCounter.TerminusChars[Array.IndexOf(StationCodeCounter.TerminusStations, legTerminus)], stationCodeCounter.GetAndCountUp(legTerminus));
             }
         }
+
         public void SortLegs()
         {
             int[] LegsStartingFrame = new int[this.Legs.Count];
@@ -62,6 +62,7 @@ namespace RealismProjectSCR
 
             Array.Sort(LegsStartingFrame);
         }
+
         public void Push()
         {
             string[] vs = new string[Legs.Count];
@@ -70,8 +71,8 @@ namespace RealismProjectSCR
                 vs[i] = Leg.ToExport(Legs[i]);
             }
             File.WriteAllLines(GetPath(this.Name) + @"Legs.shift", vs);
-
         }
+
         public static string[] NamesFromPaths(string[] paths)
         {
             string[] names = new string[paths.Length];
@@ -81,14 +82,17 @@ namespace RealismProjectSCR
             }
             return names;
         }
+
         public static string NameFromPath(string path)
         {
             return path.Split('\\')[path.Split('\\').Length - 1];
         }
+
         public static string GetPath(string Name)
         {
             return Program.ProjectDirectoryPath + @"Shifts\" + Name + @"\";
         }
+
         public static Shift Import(string Path)
         {
             Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), "", new List<Leg>());
@@ -106,6 +110,7 @@ namespace RealismProjectSCR
             output.Legs = legs.ToList<Leg>();
             return output;
         }
+
         public static Shift Collect()
         {
             bool validName = false;
@@ -184,9 +189,9 @@ namespace RealismProjectSCR
                     validDescription = true;
                 }
             }
-
             return Build(tempStartingTime, tempEndingTime, tempShiftName, tempShiftDescription);
         }
+
         public static Shift Create(Shift shift)
         {
             string tempShiftPath = Program.ProjectDirectoryPath + @"Shifts\" + shift.Name + @"\";
@@ -210,14 +215,17 @@ namespace RealismProjectSCR
                 return shift;
             }
         }
+
         public static Shift Build(int startingFrame, int endingFrame, string shiftName, string description)
         {
             return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>());
         }
+
         public static Shift Build(string startingTime, string endingTime, string shiftName, string description)
         {
             return new Shift(shiftName, new TimeFrame(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15), description, new List<Leg>());
         }
+
         public string[] LegsToDebug()
         {
             List<string> output = new List<string>();
