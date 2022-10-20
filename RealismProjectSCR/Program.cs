@@ -5,8 +5,6 @@ using RealismProjectSCR.Units;
 
 class Program
 {
-    public static string StartupFilePath;
-    public static string[] StartupFile;
     public static Station[] Stations;
     public static Route[] Routes;
     public static string[] StationNames;
@@ -18,10 +16,10 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 33";
+        Console.Title = "Realism Project Network Planner Build 40";
         Console.WriteLine("Importing Program Data...");
 
-        string rawProjectDirectoryPath = Path.GetFullPath(@"RealismProjectSCR.startup"); // This doesn't work yet
+        string rawProjectDirectoryPath = Path.GetFullPath(@"StationList.txt");
         string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
         string projectDirectoryPath = "";
         for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
@@ -29,22 +27,21 @@ class Program
             projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
         }
         ProjectDirectoryPath = projectDirectoryPath;
-        StartupFilePath = projectDirectoryPath + "RealismProjectSCR.startup";
-        StartupFile = File.ReadAllLines(StartupFilePath);
-        Station[] _Stations = new Station[Convert.ToInt32(StartupFile[0])]; // startupFile[0] = amount of stations
-        StationNames = StartupFile[1].Split(';'); // startupFile[0] = station names
+
+        List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
+        StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObject\StationList.txt");
 
 
 
         Console.WriteLine("Importing Station Data...");
         string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
-        for (int i = 0; i < _Stations.Length; i++) // This for-loop 
+        for (int i = 0; i < _Stations.Count; i++) // This for-loop 
         {
             _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>()); // Fills in the name of the station
             _Stations[i].GetSetShortcuts();
             // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
         }
-        Stations = _Stations;
+        Stations = _Stations.ToArray();
         for (int i = 0; i < Stations.Length; i++)
         {
             Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStations[i].Split(':')[1].Split(';'));
@@ -70,7 +67,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 33");
+        Console.WriteLine("SCR Realism Project v1.10.0 Build 40");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");

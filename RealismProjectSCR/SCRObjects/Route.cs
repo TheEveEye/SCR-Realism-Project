@@ -348,7 +348,7 @@ namespace RealismProjectSCR.SCRObjects
             for (int i = 0; i < legDepartures.Length; i++)
             {
                 timer += route.Timings[i + shortestDistanceIndex[0]].TimingFrames;
-                legDepartures[i] = new Departure(timer, callingLegStations[i], null, endingStation, route);
+                legDepartures[i] = new Departure(timer, callingLegStations[i], null, endingStation, route, null);
             }
 
             return legDepartures;
