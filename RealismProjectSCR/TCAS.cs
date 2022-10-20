@@ -12,6 +12,7 @@ namespace RealismProjectSCR
         static int minimumArrivingThreshold = 4;
         public static bool DepartureCollision(List<Departure> departures, Departure newDeparture)
         {
+
             List<int> departureFrames = new List<int>();
             for (int i = 0; i < departures.Count; i++)
             {

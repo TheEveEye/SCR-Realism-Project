@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
+using System.Xml.Linq;
 
 namespace RealismProjectSCR.SCRObjects
 {
@@ -261,6 +262,46 @@ namespace RealismProjectSCR.SCRObjects
                 outputString += line + "\n";
             }
             return outputString;
+        }
+        public List<Departure> CollectPlatformDepartures(Platform[] platforms)
+        {
+            List<Departure> output = new List<Departure>();
+
+            foreach (Platform platform in platforms)
+            {
+                foreach (Departure departure in platform.Departures)
+                {
+
+                }
+                if (output.Contains())
+                {
+
+                }
+            }
+        }
+        public Platform[] PlatformFromStringName(string[] searchedPlatformNames)
+        {
+            Platform[] output = new Platform[searchedPlatformNames.Length];
+
+            string[] platformNames = new string[this.Platforms.Length];
+            for (int i = 0; i < this.Platforms.Length; i++)
+            {
+                platformNames[i] = this.Platforms[i].PlatformName;
+            }
+
+            for (int i = 0; i < searchedPlatformNames.Length; i++)
+            {
+                if (platformNames.Contains(searchedPlatformNames[i]))
+                {
+                    output[i] = this.Platforms[Array.IndexOf(platformNames, searchedPlatformNames[i])];
+                }
+                else
+                {
+                    output[i] = null;
+                }
+            }
+
+            return output;
         }
     }
 }

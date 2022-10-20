@@ -17,6 +17,16 @@ class Program
     static void Main()
     {
         Console.Title = "Realism Project Network Planner Build 40";
+
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("################################################################");
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.WriteLine("################################################################");
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("################################################################");
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine("################################################################");
+
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"StationList.txt");
