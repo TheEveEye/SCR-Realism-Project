@@ -1,4 +1,5 @@
 ﻿using RealismProjectSCR.SCRObjects.TimeTables;
+using RealismProjectSCR.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RealismProjectSCR
 {
-    public static class TCAS // Train Collision Avoidance System
+    public static class TCAS // Traffic Collision Avoidance System
     {
         static int minimumArrivingThreshold = 4;
 
@@ -16,22 +17,32 @@ namespace RealismProjectSCR
 
         public static bool DepartureCollision(List<Departure> departures, Departure newDeparture)
         {
+            bool output = false;
 
-            List<int> departureFrames = new List<int>();
             for (int i = 0; i < departures.Count; i++)
             {
-                departureFrames.Add(departures[i].Frame);
+                if (WillCollide(departures[i], newDeparture))
+                {
+                    output = true;
+                }
             }
-            departureFrames.Sort();
 
-
+            return output;
         }
         public static bool WillCollide(Departure departure1, Departure departure2)
         {
-            if ()
+            bool output = false;
+            for (int j = 0; j < departure1.PossiblePlatforms.Length; j++)
             {
-
+                if (departure1.PossiblePlatforms.Contains(departure2.PossiblePlatforms[j]))
+                {
+                    if (TimeFrame.Conflicts(departure1.Occupation, departure2.Occupation))
+                    {
+                        output = true;
+                    }
+                }
             }
+            return output;
         }
     }
 }

@@ -39,6 +39,7 @@ namespace RealismProjectSCR.Units
             TimeSpan ts = TimeSpan.FromSeconds(Frames);
             return Convert.ToDateTime(ts.ToString());
         }
+
         public static int TimeToSeconds(string Time)
         {
             string[] units = Time.Split(':');
@@ -114,6 +115,7 @@ namespace RealismProjectSCR.Units
             this.EndTime = Time.ScheduleFramesToDateTime(End).ToLongTimeString();
 
         }
+
         public TimeFrame(string StartTime, string EndTime)
         {
             this.StartTime = StartTime;
@@ -121,9 +123,25 @@ namespace RealismProjectSCR.Units
             this.Start = Time.TimeToSeconds(StartTime);
             this.End = Time.TimeToSeconds(EndTime);
         }
+
         public int ToFrames()
         {
             return End - Start;
+        }
+
+        public static bool Conflicts(TimeFrame timeFrame1, TimeFrame timeFrame2)
+        {
+            bool output = false;
+
+            if ((timeFrame1.Start >= timeFrame2.Start) || (timeFrame1.Start <= timeFrame2.End))
+            {
+                output = true;
+            }
+            if ((timeFrame1.End >= timeFrame2.Start) || (timeFrame1.End <= timeFrame2.End))
+            {
+                output = true;
+            }
+            return output;
         }
     }
 }

@@ -267,17 +267,10 @@ namespace RealismProjectSCR.SCRObjects
         {
             List<Departure> output = new List<Departure>();
 
-            foreach (Platform platform in platforms)
-            {
-                foreach (Departure departure in platform.Departures)
-                {
 
-                }
-                if (output.Contains())
-                {
 
-                }
-            }
+
+            return output;
         }
         public Platform[] PlatformFromStringNamse(string[] searchedPlatformNames)
         {
