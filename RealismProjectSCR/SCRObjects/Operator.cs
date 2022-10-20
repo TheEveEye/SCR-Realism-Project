@@ -8,16 +8,18 @@ namespace RealismProjectSCR.SCRObjects
 {
     public class Operator
     {
-        public static Operator Connect = new Operator("Connect");
-        public static Operator Express = new Operator("Express");
-        public static Operator Waterline = new Operator("Waterline");
-        public static Operator Airlink = new Operator("Airlink");
+        public static Operator Connect = new Operator("Connect", 2);
+        public static Operator Express = new Operator("Express", 4);
+        public static Operator Waterline = new Operator("Waterline", 2);
+        public static Operator Airlink = new Operator("Airlink", 3);
 
         public string Name { get; set; }
+        public int MinimumThreshold { get; set; }
         
-        public Operator(string Name)
+        public Operator(string Name, int MinimumThreshold)
         {
             this.Name = Name;
+            this.MinimumThreshold = MinimumThreshold;
         }
 
         public static Operator FromString(string input)

@@ -10,6 +10,10 @@ namespace RealismProjectSCR
     public static class TCAS // Train Collision Avoidance System
     {
         static int minimumArrivingThreshold = 4;
+
+        static string ThresholdWarning01 = "";
+
+
         public static bool DepartureCollision(List<Departure> departures, Departure newDeparture)
         {
 
@@ -21,6 +25,13 @@ namespace RealismProjectSCR
             departureFrames.Sort();
 
 
+        }
+        public static bool WillCollide(Departure departure1, Departure departure2)
+        {
+            if ()
+            {
+
+            }
         }
     }
 }

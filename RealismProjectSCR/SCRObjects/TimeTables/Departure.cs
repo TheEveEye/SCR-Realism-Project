@@ -18,15 +18,17 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
         public Station Terminus { get; set; }
         public Route Route { get; set; }
         public Headcode Headcode { get; set; }
+        public TimeFrame Occupation { get; set; }
 
-        public Departure(int Frame, Station Station, Platform[] PossiblePlatforms, Station Terminus, Route Route, Headcode headcode)
+        public Departure(int Frame, Station Station, Platform[] PossiblePlatforms, Station Terminus, Route Route, Headcode Headcode)
         {
             this.Frame = Frame;
             this.Station = Station;
             this.PossiblePlatforms = PossiblePlatforms;
             this.Terminus = Terminus;
             this.Route = Route;
-            this.Headcode = headcode;
+            this.Headcode = Headcode;
+            this.Occupation = new TimeFrame(this.Frame - this.Route.Operator.MinimumThreshold - 2, this.Frame + 2);
         }
 
         public string ToDebug()
