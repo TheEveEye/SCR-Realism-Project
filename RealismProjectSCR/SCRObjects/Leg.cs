@@ -206,6 +206,14 @@ namespace RealismProjectSCR.SCRObjects
             return "Leg " + LegNumber + "    Route: " + Route.RouteNumberString(this.Route.RouteNumber) + " (" + this.Route.Name + ")    Time Frame: " + this.TimeFrame.StartTime + " - " + this.TimeFrame.EndTime + " (" + this.TimeFrame.Start + " - " + this.TimeFrame.End + ")    Driving: " + this.StartingStation.Name + " - " + this.EndingStation.Name + "    Predicted Headcode: " + this.Headcode.Code;
         }
 
+        public static Leg CreateInteractive(Driver driver)
+        {
+
+            // Collect DriverID, Route, Starting Station, Ending Station, First Station Start
+            // Don't forget to include TCAS, Driver System
+            // Eventually add automatically created timings based on frequencies
+        }
+
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');
@@ -223,7 +231,7 @@ namespace RealismProjectSCR.SCRObjects
             for (int i = 0; i < departures.Length; i++)
             {
                 string[] rawdeparture = rawdepartures[i].Split(':');
-                departures[i] = new Departure(Convert.ToInt32(rawdeparture[1]), Station.NameToStation(rawdeparture[0]), null, output.EndingStation, output.Route, null); // NOT FINISHED
+                departures[i] = new Departure(Convert.ToInt32(rawdeparture[1]), Station.NameToStation(rawdeparture[0]), null, output.EndingStation, output.Route, null);
                 departures[i].Station.Departures.Add(departures[i]);
             }
             output.Departures = departures;
