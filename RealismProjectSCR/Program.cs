@@ -39,7 +39,7 @@ class Program
         ProjectDirectoryPath = projectDirectoryPath;
 
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
-        StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObject\StationList.txt");
+        StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
 
 
 
@@ -208,31 +208,34 @@ class Program
                             try
                             {
                                 Convert.ToInt32(EnteredCommand[2]);
+                                Convert.ToInt32(EnteredCommand[3]);
+                                Convert.ToInt32(EnteredCommand[4]);
                             }
                             catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            Route route = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
+                            Route route = Routes[Convert.ToInt32(EnteredCommand[3]) - 1];
                             try
                             {
-                                Convert.ToInt32(EnteredCommand[3]);
+                                Convert.ToInt32(EnteredCommand[4]);
                             }
                             catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            int StartingFrame = Convert.ToInt32(EnteredCommand[3]);
-                            Station startingStation = Station.FromArgument(EnteredCommand[4]);
-                            Station endingStation = Station.FromArgument(EnteredCommand[5]);
-                            if ((startingStation == null) || (endingStation == null)) // Find a way to get station names that are 2 or more words like "City Hospital" into one argument
+                            Driver driver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])];
+                            int StartingFrame = Convert.ToInt32(EnteredCommand[4]);
+                            Station startingStation = Station.FromArgument(EnteredCommand[5]);
+                            Station endingStation = Station.FromArgument(EnteredCommand[6]);
+                            if ((startingStation == null) || (endingStation == null))
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            Leg createdLeg = Leg.Create(route, StartingFrame + ActiveShift.TimeFrame.Start, startingStation, endingStation);
+                            Leg createdLeg = Leg.Create(route, StartingFrame + ActiveShift.TimeFrame.Start, startingStation, endingStation, driver);
                             ActiveShift.AddLeg(createdLeg);
                             break;
 

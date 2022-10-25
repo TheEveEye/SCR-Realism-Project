@@ -16,15 +16,18 @@ namespace RealismProjectSCR
         public string Name { get; set; }
         public TimeFrame TimeFrame { get; set; }
         public string Description { get; set; }
+        public List<Driver> Drivers { get; set; }
         public List<Leg> Legs { get; set; }
         public string Path { get; set; }
 
-        public Shift(string Name, TimeFrame TimeFrame, string Description, List<Leg> Legs)
+        public Shift(string Name, TimeFrame TimeFrame, string Description, List<Driver> Drivers, List<Leg> Legs)
         {
             this.Name = Name;
             this.TimeFrame = TimeFrame;
             this.Description = Description;
+            this.Drivers = Drivers;
             this.Legs = Legs;
+
             this.Path = GetPath(this.Name); 
         }
 
@@ -96,7 +99,7 @@ namespace RealismProjectSCR
 
         public static Shift Import(string Path)
         {
-            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), "", new List<Leg>());
+            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), "", new List<Driver>(), new List<Leg>());
 
             string[] shiftInfo = File.ReadAllLines(Path + @"\Info.shift");
             output.Description = shiftInfo[1];
@@ -219,12 +222,12 @@ namespace RealismProjectSCR
 
         public static Shift Build(int startingFrame, int endingFrame, string shiftName, string description)
         {
-            return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Leg>());
+            return new Shift(shiftName, new TimeFrame(startingFrame, endingFrame), description, new List<Driver>(), new List<Leg>());
         }
 
         public static Shift Build(string startingTime, string endingTime, string shiftName, string description)
         {
-            return new Shift(shiftName, new TimeFrame(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15), description, new List<Leg>());
+            return new Shift(shiftName, new TimeFrame(Time.TimeToSeconds(startingTime) / 15, Time.TimeToSeconds(endingTime) / 15), description, new List<Driver>(), new List<Leg>());
         }
 
         public string[] LegsToDebug()

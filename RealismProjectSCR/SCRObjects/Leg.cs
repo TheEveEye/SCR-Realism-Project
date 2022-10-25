@@ -20,9 +20,11 @@ namespace RealismProjectSCR.SCRObjects
         public Station StartingStation { get; set; }
         public Station EndingStation { get; set; }
         public Headcode? Headcode { get; set; }
+        public Driver Driver { get; set; }
+
         public DateTime? CreationTime { get; set; }
 
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, DateTime? CreationTime) //Constructor with startFrame, endFrame and Headcode
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime) //Constructor with startFrame, endFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -31,9 +33,11 @@ namespace RealismProjectSCR.SCRObjects
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
             this.Headcode = Headcode;
+            this.Driver = Driver;
+
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, DateTime? CreationTime) //Constructor with TimeFrame and Headcode
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime) //Constructor with TimeFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -42,9 +46,11 @@ namespace RealismProjectSCR.SCRObjects
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
             this.Headcode = Headcode;
+            this.Driver = Driver;
+
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, DateTime? CreationTime) //Constructor with startFrame and endFrame
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime) //Constructor with startFrame and endFrame
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -52,9 +58,11 @@ namespace RealismProjectSCR.SCRObjects
             this.Departures = Departures;
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
+            this.Driver = Driver;
+
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, DateTime? CreationTime) //Constructor with TimeFrame
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime) //Constructor with TimeFrame
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -62,11 +70,13 @@ namespace RealismProjectSCR.SCRObjects
             this.Departures = Departures;
             this.StartingStation = StartingStation;
             this.EndingStation = EndingStation;
+            this.Driver = Driver;
+
             this.CreationTime = CreationTime;
         }
-        public static Leg Create(Route route, int startingFrame, Station startingStation, Station endingStation)
+        public static Leg Create(Route route, int startingFrame, Station startingStation, Station endingStation, Driver driver)
         {
-            Leg output = new Leg(route, new(0, 0), null, startingStation, endingStation, null);
+            Leg output = new Leg(route, new(0, 0), null, startingStation, endingStation, driver, null);
             output.Departures = Route.GetLegDepartures(route, startingFrame, startingStation, endingStation);
             output.TimeFrame = DeparturesTimeFrame(output.Departures);
 
@@ -208,16 +218,19 @@ namespace RealismProjectSCR.SCRObjects
 
         public static Leg CreateInteractive(Driver driver)
         {
-
+            Leg output = new Leg(null, new TimeFrame(0, 0), null, null, null, driver, DateTime.UtcNow);
             // Collect DriverID, Route, Starting Station, Ending Station, First Station Start
             // Don't forget to include TCAS, Driver System
             // Eventually add automatically created timings based on frequencies
+
+
+            return output;
         }
 
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');
-            Leg output = new Leg(null, 0, 0, new Departure[0], null, null, null);
+            Leg output = new Leg(null, 0, 0, new Departure[0], null, null, null, null);
             output.Route = Program.Routes[Convert.ToInt32(split[0]) - 1];
             string[] timeframe = split[1].Split(',');
             output.TimeFrame = new(Convert.ToInt32(timeframe[0]), Convert.ToInt32(timeframe[1]));
