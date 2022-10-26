@@ -2,22 +2,29 @@
 using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
+using System.Diagnostics;
 
 class Program
 {
     public static Station[] Stations;
     public static Route[] Routes;
     public static string[] StationNames;
-    public static string ProjectDirectoryPath;
     public static Timing[] DepotTimings;
     public static List<string> ShiftPaths;
     public static List<string> ShiftNames;
     public static Shift ActiveShift;
 
+    public static string ProjectDirectoryPath;
+    public static string RepositoryDirectoryPath;
+
+
     static void Main()
     {
         Console.Title = "Realism Project Network Planner Build 40";
 
+
+        // This is just for testing Operator Colors, that might or might not be used later.
+        /*
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("################################################################");
         Console.ForegroundColor = ConsoleColor.Magenta;
@@ -26,24 +33,40 @@ class Program
         Console.WriteLine("################################################################");
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine("################################################################");
+        */
 
         Console.WriteLine("Importing Program Data...");
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"StationList.txt");
         string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
-        string projectDirectoryPath = "";
+        
+        //Console.WriteLine(projectDirectoryPath);
+
+        /*
+        // This was originally used to build the projectDirectoryPath, before BuildString() was used.
         for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
         {
             projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
         }
-        ProjectDirectoryPath = projectDirectoryPath;
+        */
+        ProjectDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 4).ToArray(), @"\") + @"\";
+        RepositoryDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 5).ToArray(), @"\") + @"\";
+
+
+        // Temporary for testing the Window Extensions
+        Process windowExtension1 = new Process();
+        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
+        windowExtension1.StartInfo.Arguments = "";
+        windowExtension1.StartInfo.CreateNoWindow = false;
+
+        Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
+
+
+        Console.WriteLine("Importing Station Data...");
 
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
         StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
 
-
-
-        Console.WriteLine("Importing Station Data...");
         string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
         for (int i = 0; i < _Stations.Count; i++) // This for-loop 
         {
