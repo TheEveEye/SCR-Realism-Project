@@ -20,7 +20,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 40";
+        Console.Title = "Realism Project Network Planner Build 50";
 
 
         // This is just for testing Operator Colors, that might or might not be used later.
@@ -100,7 +100,7 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.0 Build 40");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 50");
         Console.WriteLine("Developed by Eve");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
         Console.WriteLine("----------------------------------------------------------------");

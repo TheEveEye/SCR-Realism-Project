@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealismProjectSCR", "RealismProjectSCR\RealismProjectSCR.csproj", "{95F3FFAC-C9EE-4CBC-928A-E608706592C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealismProjectWindowExtension", "RealismProjectWindowExtension\RealismProjectWindowExtension.csproj", "{63E3B1AD-22D7-40C9-9C9F-39C609030CAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealismProjectWindowExtension", "RealismProjectWindowExtension\RealismProjectWindowExtension.csproj", "{63E3B1AD-22D7-40C9-9C9F-39C609030CAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
