@@ -13,4 +13,8 @@
     <None Remove="Shifts\Template\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DiscordGameSDK\ActivityAssets\" />
+  </ItemGroup>
+
 </Project>

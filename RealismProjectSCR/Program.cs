@@ -22,10 +22,8 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 53";
+        Console.Title = "Realism Project Network Planner Build 54";
 
-        Console.WriteLine(new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds());
-        Console.ReadKey();
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
         Console.ForegroundColor = ConsoleColor.Blue;
@@ -109,8 +107,7 @@ class Program
         long client_ID = 1035200601254023208;
         var discord = new Discord.Discord(client_ID, (UInt64)Discord.CreateFlags.Default);
 
-        //Discord.RunCallbacks(); <= That's the update function
-
+        var discordActivityManager = discord.GetActivityManager();
         Discord.Activity discordActivity;
         discordActivity = new Discord.Activity()
         {
@@ -122,16 +119,29 @@ class Program
             {
                 Start = Time.UnixNow()
             },
-            
+            Assets = new Discord.ActivityAssets()
+            {
+                LargeImage = ProjectDirectoryPath + @"DiscordGameSDK\ActivityAssets\Network Planner v1--HorizontalMargin.png"
+            }
         };
+        
+        discordActivityManager.UpdateActivity(discordActivity, (result) =>
+        {
+            /*if (result == Discord.Result.Ok)
+            {
+                Console.WriteLine("Success!");
+            }
+            else
+            {
+                Console.WriteLine("Failed");
+            }*/
+            Console.WriteLine(result); // !!! THIS ISN'T WORKING !!!
+        });
 
-
-        discord.RunCallbacks();
-
-
+        Console.ReadKey();
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 53                            ");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 54                            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
