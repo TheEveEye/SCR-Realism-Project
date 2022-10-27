@@ -19,8 +19,6 @@ namespace RealismProjectSCR.SCRObjects
 
         public static Station[] TerminusStations { get; set; }
 
-        public string stblPath { get; }
-
         string[] Shortcuts { get; set; }
         static string[] ShortcutsRaw = File.ReadAllLines(Program.ProjectDirectoryPath + @"SCRObjects\StationShortcuts.txt");
 
@@ -30,7 +28,6 @@ namespace RealismProjectSCR.SCRObjects
             this.AdjacentStations = AdjacentStations;
             this.Platforms = Platforms;
             this.Departures = Departures;
-            this.stblPath = Program.ProjectDirectoryPath + @"SCRObjects\TimeTables\StationTables\" + this.Name + ".stbl";
         }  
 
         public static Station[] NamesToStations(string[] Names)

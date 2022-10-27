@@ -68,9 +68,9 @@ class Program
         StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
 
         string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
-        for (int i = 0; i < _Stations.Count; i++) // This for-loop 
+        for (int i = 0; i < StationNames.Length; i++) // This for-loop 
         {
-            _Stations[i] = new Station(StationNames[i], null, null, new List<Departure>()); // Fills in the name of the station
+            _Stations.Add(new Station(StationNames[i], null, null, new List<Departure>())); // Fills in the name of the station
             _Stations[i].GetSetShortcuts();
             // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
         }
