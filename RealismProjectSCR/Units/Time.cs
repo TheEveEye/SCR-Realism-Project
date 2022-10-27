@@ -97,7 +97,12 @@ namespace RealismProjectSCR.Units
                 catch (System.FormatException) {type = 3;}
             }
             return type;
-        }        
+        }
+
+        public static long UnixNow()
+        {
+            return new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+        }
     }
 
     public struct TimeFrame

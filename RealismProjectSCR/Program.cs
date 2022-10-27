@@ -2,6 +2,7 @@
 using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
+
 using System.Diagnostics;
 
 class Program
@@ -14,15 +15,17 @@ class Program
     public static List<string> ShiftNames;
     public static Shift ActiveShift;
 
+    public static List<string> CommandHistory;
+
     public static string ProjectDirectoryPath;
     public static string RepositoryDirectoryPath;
 
-
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 50";
+        Console.Title = "Realism Project Network Planner Build 53";
 
-
+        Console.WriteLine(new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds());
+        Console.ReadKey();
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
         Console.ForegroundColor = ConsoleColor.Blue;
@@ -39,7 +42,7 @@ class Program
 
         string rawProjectDirectoryPath = Path.GetFullPath(@"StationList.txt");
         string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
-        
+
         //Console.WriteLine(projectDirectoryPath);
 
         /*
@@ -51,16 +54,6 @@ class Program
         */
         ProjectDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 4).ToArray(), @"\") + @"\";
         RepositoryDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 5).ToArray(), @"\") + @"\";
-
-
-        // Temporary for testing the Window Extensions
-        Process windowExtension1 = new Process();
-        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
-        windowExtension1.StartInfo.Arguments = "";
-        windowExtension1.StartInfo.CreateNoWindow = false;
-
-        Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
-
 
         Console.WriteLine("Importing Station Data...");
 
@@ -99,10 +92,48 @@ class Program
         ShiftPaths = GetShiftPaths();
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
+        // Temporary for testing the Window Extensions
+        /*
+        Process windowExtension1 = new Process();
+        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
+        windowExtension1.StartInfo.Arguments = "";
+        windowExtension1.StartInfo.CreateNoWindow = false;
+
+        Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
+        */
+
+
+        // Starting up Discord Rich Presence Client
+        // This code it experimental
+
+        long client_ID = 1035200601254023208;
+        var discord = new Discord.Discord(client_ID, (UInt64)Discord.CreateFlags.Default);
+
+        //Discord.RunCallbacks(); <= That's the update function
+
+        Discord.Activity discordActivity;
+        discordActivity = new Discord.Activity()
+        {
+            ApplicationId = 1035200601254023208, // Application ID
+            Name = "Realism Project Network Planner", // Name of the Application
+            State = "Idle", // Last command executed (e. g. Created new leg (R054))
+            Details = "Opening Project", // Name of active Shift (this.ActiveShift.Name)
+            Timestamps = new Discord.ActivityTimestamps()
+            {
+                Start = Time.UnixNow()
+            },
+            
+        };
+
+
+        discord.RunCallbacks();
+
+
+
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 50");
-        Console.WriteLine("Developed by Eve");
-        Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 53                            ");
+        Console.WriteLine("Developed by Eve                                                ");
+        Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
 
         bool selectedShift = false;
@@ -151,12 +182,6 @@ class Program
 
         Console.WriteLine("Waiting for input...");
 
-        /*
-        // When debugging station data, use this
-        Station TestStation = new("Beechly", null, null, null);
-        Console.WriteLine(TestStation.stblPath);
-        */
-
         bool proceed = false; // Use for all menu checks
         bool close = false;
         string EnteredCommandRaw = " ";
@@ -180,6 +205,7 @@ class Program
             proceed = false;
 
             string[] EnteredCommand = EnteredCommandRaw.Split(' '); // Splitting up entered command into each arguement
+            CommandHistory.Add(EnteredCommandRaw);
 
             switch (EnteredCommand[0])
             {
