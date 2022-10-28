@@ -4,5 +4,3 @@ Our goal is to create a perfectly timed timetable for all stations and drivers i
 We achieve this, by manually recording timetables for all routes, and use those to create a more realistic shift experience.
 
 Wanna help? Join us at https://discord.gg/D4mjTAKGKA
-
-This repository is licensed under the terms of the MIT license.
