@@ -15,7 +15,7 @@ class Program
     public static List<string> ShiftNames;
     public static Shift ActiveShift;
 
-    public static List<string> CommandHistory;
+    public static List<string> CommandHistory = new List<string>();
 
     public static string ProjectDirectoryPath;
 
@@ -99,7 +99,7 @@ class Program
         Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
         */
 
-
+        /*
         // Starting up Discord Rich Presence Client
         // This code it experimental
 
@@ -126,16 +126,17 @@ class Program
         
         discordActivityManager.UpdateActivity(discordActivity, (result) =>
         {
-            /*if (result == Discord.Result.Ok)
+            if (result == Discord.Result.Ok)
             {
                 Console.WriteLine("Success!");
             }
             else
             {
                 Console.WriteLine("Failed");
-            }*/
+            }
             Console.WriteLine(result); // !!! THIS ISN'T WORKING !!!
         });
+        */
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project v1.10.1 Build 55                            ");
@@ -226,6 +227,8 @@ class Program
 
                 case "help":
                 case "commands":
+                    Console.WriteLine("The \"help\" command is currently not implemented. We are looking forward to adding this command in the near future.");
+                    /* Remove these comments when the "help" command gets implemented.
                     if (EnteredCommand.Length == 1)
                     {
 
@@ -238,6 +241,7 @@ class Program
                                 break;
                         }
                     }
+                    */
                     break;
 
                 case "add":
