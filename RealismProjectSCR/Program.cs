@@ -37,7 +37,7 @@ class Program
 
         Console.WriteLine("Importing Program Data...");
 
-        ProjectDirectoryPath = Path.GetFullPath(@"objects\");
+        ProjectDirectoryPath = Path.GetFullPath(@"resources\");
 
         //string rawProjectDirectoryPath = Path.GetFullPath(@"objects\");
         //string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
