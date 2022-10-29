@@ -18,11 +18,10 @@ class Program
     public static List<string> CommandHistory;
 
     public static string ProjectDirectoryPath;
-    public static string RepositoryDirectoryPath;
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 54";
+        Console.Title = "Realism Project Network Planner Build 55";
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -38,20 +37,20 @@ class Program
 
         Console.WriteLine("Importing Program Data...");
 
-        string rawProjectDirectoryPath = Path.GetFullPath(@"StationList.txt");
-        string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
+        ProjectDirectoryPath = Path.GetFullPath(@"objects\");
 
+        //string rawProjectDirectoryPath = Path.GetFullPath(@"objects\");
+        //string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
+        //Console.WriteLine(rawProjectDirectoryPath);
         //Console.WriteLine(projectDirectoryPath);
-
-        /*
+        //
         // This was originally used to build the projectDirectoryPath, before BuildString() was used.
-        for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
-        {
-            projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
-        }
-        */
-        ProjectDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 4).ToArray(), @"\") + @"\";
-        RepositoryDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 5).ToArray(), @"\") + @"\";
+        //for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
+        //{
+        //    projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
+        //}
+        // ProjectDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 1).ToArray(), @"\") + @"\";
+
 
         Console.WriteLine("Importing Station Data...");
 
@@ -138,10 +137,8 @@ class Program
             Console.WriteLine(result); // !!! THIS ISN'T WORKING !!!
         });
 
-        Console.ReadKey();
-
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 54                            ");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 55                            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
