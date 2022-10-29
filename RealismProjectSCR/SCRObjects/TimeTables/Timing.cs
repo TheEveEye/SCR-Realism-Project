@@ -16,7 +16,7 @@ namespace RealismProjectSCR.SCRObjects.TimeTables
         public int Type { get; set; }
         public Station Station { get; set; }
 
-        public static readonly int Departure = 0;
+        public static readonly int Departure = 0; // Change these to enum
         public static readonly int Arrival = 1;
         public static readonly int Depot = 2;
         public static readonly int Invalid = 3;

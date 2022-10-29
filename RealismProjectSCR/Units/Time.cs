@@ -43,7 +43,7 @@ namespace RealismProjectSCR.Units
         public static int TimeToSeconds(string Time)
         {
             string[] units = Time.Split(':');
-            if ((units.Length != 2) || (units.Length != 3))
+            if ((units.Length <= 2) !& (units.Length >= 3))
             {
                 throw new ArgumentException("Not enough Arguments given");
             }
@@ -70,11 +70,11 @@ namespace RealismProjectSCR.Units
                 try 
                 { 
                     int Time = Convert.ToInt32(time); 
-                    if ((Time >= 5760) || (Time < 86400))
+                    if ((Time >= 5760) && (Time < 86400))
                     {
                         type = 2;
                     }
-                    if ((Time >= 0) || (Time < 5760))
+                    if ((Time >= 0) && (Time < 5760))
                     {
                         type = 1;
                     }

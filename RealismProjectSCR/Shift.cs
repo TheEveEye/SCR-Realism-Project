@@ -145,11 +145,7 @@ namespace RealismProjectSCR
             {
                 Console.WriteLine("Enter Starting Time:");
                 tempInput = Console.ReadLine();
-                if (String.IsNullOrEmpty(tempInput))
-                {
-                    Console.WriteLine("Invalid Input. Please try again...");
-                }
-                else if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.FormatTime))
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }
@@ -164,11 +160,7 @@ namespace RealismProjectSCR
             {
                 Console.WriteLine("Enter Ending Time:");
                 tempInput = Console.ReadLine();
-                if (String.IsNullOrEmpty(tempInput))
-                {
-                    Console.WriteLine("Invalid Input. Please try again...");
-                }
-                if (Time.GetTimeFormat(tempInput) != Time.FormatTime)
+                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.FormatTime))
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }
@@ -214,6 +206,7 @@ namespace RealismProjectSCR
                     shift.Description
                 };
 
+                string[] tempRead = File.ReadAllLines(tempShiftPath + "Info.shift");
                 File.WriteAllLines(tempShiftPath + "Info.shift", infoContents);
                 return shift;
             }

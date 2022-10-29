@@ -21,7 +21,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 55";
+        Console.Title = "Realism Project Network Planner Build 56";
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -139,7 +139,7 @@ class Program
         */
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 55                            ");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 56                            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -147,8 +147,8 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            try
-            {
+            //try
+            //{
                 if (ShiftNames.Count == 0)
                 {
                     ActiveShift = Shift.Create(Shift.Collect());
@@ -181,11 +181,11 @@ class Program
                         selectedShift = true;
                     }
                 }
-            }
-            catch (Exception)
+            //}
+            /*catch (Exception)
             {
                 Console.WriteLine("Some error occured, please try again...");
-            }
+            }*/
         }
 
         Console.WriteLine("Waiting for input...");
