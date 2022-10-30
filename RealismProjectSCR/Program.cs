@@ -21,7 +21,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 56";
+        Console.Title = "Realism Project Network Planner Build 57";
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -99,18 +99,20 @@ class Program
         Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
         */
 
-        /*
         // Starting up Discord Rich Presence Client
         // This code it experimental
 
-        long client_ID = 1035200601254023208;
-        var discord = new Discord.Discord(client_ID, (UInt64)Discord.CreateFlags.Default);
-
+        Console.WriteLine("Connecting with Discord RPC...");
+        long application_Id = 1035200601254023208;
+        
+        // This makes the SDK connect to Canary
+        System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
+        var discord = new Discord.Discord(application_Id, (UInt64)Discord.CreateFlags.Default);
         var discordActivityManager = discord.GetActivityManager();
         Discord.Activity discordActivity;
         discordActivity = new Discord.Activity()
         {
-            ApplicationId = 1035200601254023208, // Application ID
+            ApplicationId = application_Id, // Application ID
             Name = "Realism Project Network Planner", // Name of the Application
             State = "Idle", // Last command executed (e. g. Created new leg (R054))
             Details = "Opening Project", // Name of active Shift (this.ActiveShift.Name)
@@ -121,9 +123,10 @@ class Program
             Assets = new Discord.ActivityAssets()
             {
                 LargeImage = ProjectDirectoryPath + @"DiscordGameSDK\ActivityAssets\Network Planner v1--HorizontalMargin.png"
-            }
+            },
+            Instance = false,
         };
-        
+
         discordActivityManager.UpdateActivity(discordActivity, (result) =>
         {
             if (result == Discord.Result.Ok)
@@ -136,10 +139,9 @@ class Program
             }
             Console.WriteLine(result); // !!! THIS ISN'T WORKING !!!
         });
-        */
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 56                            ");
+        Console.WriteLine("SCR Realism Project v1.10.1 Build 57                            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
