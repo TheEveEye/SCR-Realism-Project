@@ -6,7 +6,7 @@ namespace RealismProjectWindowExtension
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World! L");
+            Console.WriteLine("Hello World!");
             Console.ReadKey();
         }
     }

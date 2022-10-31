@@ -21,7 +21,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 57";
+        Console.Title = "Realism Project Network Planner Build 58";
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -122,26 +122,28 @@ class Program
             },
             Assets = new Discord.ActivityAssets()
             {
-                LargeImage = ProjectDirectoryPath + @"DiscordGameSDK\ActivityAssets\Network Planner v1--HorizontalMargin.png"
+                LargeImage = "networkplannericon"
             },
             Instance = false,
         };
 
+        
+        Discord.Result hasUpdated = Discord.Result.InsufficientBuffer;
         discordActivityManager.UpdateActivity(discordActivity, (result) =>
         {
             if (result == Discord.Result.Ok)
             {
-                Console.WriteLine("Success!");
+                Console.WriteLine("Connected!");
+                hasUpdated = result;
             }
-            else
-            {
-                Console.WriteLine("Failed");
-            }
-            Console.WriteLine(result); // !!! THIS ISN'T WORKING !!!
         });
+        while (hasUpdated != Discord.Result.Ok)
+        {
+            discord.RunCallbacks();
+        }
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project v1.10.1 Build 57                            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 58            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
