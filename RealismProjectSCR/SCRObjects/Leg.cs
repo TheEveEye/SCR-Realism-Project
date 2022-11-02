@@ -23,7 +23,7 @@ namespace RealismProjectSCR.SCRObjects
 
         public DateTime? CreationTime { get; set; }
 
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime) //Constructor with startFrame, endFrame and Headcode
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime = null) //Constructor with startFrame, endFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -36,7 +36,7 @@ namespace RealismProjectSCR.SCRObjects
 
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime) //Constructor with TimeFrame and Headcode
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Headcode? Headcode, Driver Driver, DateTime? CreationTime = null) //Constructor with TimeFrame and Headcode
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -49,7 +49,7 @@ namespace RealismProjectSCR.SCRObjects
 
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime) //Constructor with startFrame and endFrame
+        public Leg(Route Route, int StartFrame, int EndFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime = null) //Constructor with startFrame and endFrame
         {
             this.Route = Route;
             this.TimeFrame = new(StartFrame, EndFrame);
@@ -61,7 +61,7 @@ namespace RealismProjectSCR.SCRObjects
 
             this.CreationTime = CreationTime;
         }
-        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime) //Constructor with TimeFrame
+        public Leg(Route Route, TimeFrame TimeFrame, Departure[] Departures, Station StartingStation, Station EndingStation, Driver Driver, DateTime? CreationTime = null) //Constructor with TimeFrame
         {
             this.Route = Route;
             this.TimeFrame = TimeFrame;
@@ -176,7 +176,14 @@ namespace RealismProjectSCR.SCRObjects
             output.Add("----------------------------------------------------------------");
 
             output.Add("Departures for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
-            output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name + "    Predicted Headcode: " + Headcode.Code);
+            if (this.Headcode == null)
+            {
+                output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name);
+            }
+            else
+            {
+                output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name + "    Predicted Headcode: " + Headcode.Code);
+            }
             output.Add("");
             foreach (var item in this.Departures)
             {

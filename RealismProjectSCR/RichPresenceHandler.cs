@@ -10,11 +10,28 @@ namespace RealismProjectSCR
 {
     public class RichPresenceHandler
     {
+        static bool isDiscordClientRunning;
+        static bool isDiscordClientInstalled;
         static readonly long ApplicationId = 1035200601254023208;
         static Discord.Discord discord = new Discord.Discord(ApplicationId, (UInt64)Discord.CreateFlags.Default);
         static Discord.ActivityManager discordActivityManager = discord.GetActivityManager();
+        
 
-        Discord.Activity startupActivity = new Discord.Activity()
+        public static Discord.Activity templateActivity = new Discord.Activity()
+        {
+            ApplicationId = ApplicationId, // Application ID
+            Name = "Realism Project Network Planner", // Name of the Application
+            Timestamps = new Discord.ActivityTimestamps()
+            {
+                Start = Program.ProgramStartUnix
+            },
+            Assets = new Discord.ActivityAssets()
+            {
+                LargeImage = "networkplannericon"
+            },
+            Instance = false
+        };
+        public static Discord.Activity startupActivity = new Discord.Activity()
         {
             ApplicationId = ApplicationId, // Application ID
             Name = "Realism Project Network Planner", // Name of the Application
@@ -29,43 +46,59 @@ namespace RealismProjectSCR
                 LargeImage = "networkplannericon"
             },
             Instance = false,
-        };     
-    }
-    class State
-    {
-        public string Message { get; set; }
-        public StateType Type { get; set; }
-        public Leg? AddedLeg { get; set; }
-
-        public static State Idle = new State()
-        {
-            Message = "Idle",
-            Type = StateType.Idle,
-
-        };
-        public static State LegAdd = new State()
-        {
-            AddedLeg = Leg.LastCreatedLeg(),
-            Message = String.Format("Added new leg on {0}", LegAdd.AddedLeg.Route.ToNumberNameOutput()),
-            Type = StateType.LegAdd,
         };
 
-        public enum StateType
+        public static Discord.Result UpdateActivity(Discord.Activity discordActivity)
         {
-            Idle = 0,
-            LegAdd = 1,
-            LegView = 2,
-            LegEdit = 3,
-            LegOther = 4,
-            Station = 5,
-            DriverAdd = 6,
-            DriverView = 7,
-            DriverEdit = 8,
-            RouteEdit = 9,
-            RouteView = 10,
-            Platform = 11,
-            Other = 12,
-            Custom = 13,
+            Discord.Result hasUpdated = Discord.Result.LobbyFull;
+            discordActivityManager.UpdateActivity(discordActivity, (result) =>
+            {
+                if (result == Discord.Result.Ok)
+                {
+                    Console.WriteLine("Connected!");
+                    hasUpdated = result;
+                }
+            });
+            while ((hasUpdated != Discord.Result.Ok) && (hasUpdated != Discord.Result.LobbyFull))
+            {
+                discord.RunCallbacks();
+            }
+            if (hasUpdated == Discord.Result.NotInstalled)
+            {
+                isDiscordClientInstalled = false;
+                isDiscordClientRunning = false;
+            }
+            if (hasUpdated == Discord.Result.NotRunning)
+            {
+                isDiscordClientInstalled = true;
+                isDiscordClientRunning = false;
+            }
+            return hasUpdated;
+        }
+        public static Discord.Result UpdateActivity(string state)
+        {
+            if (!isDiscordClientInstalled) return Discord.Result.NotInstalled;
+            if (!isDiscordClientRunning) return Discord.Result.NotRunning;
+
+            Discord.Activity activity = templateActivity;
+            activity.State = state;
+            activity.Details = Program.ActiveShift.Name;
+
+            return UpdateActivity(activity);
+        }
+
+        public static void Setup()
+        {
+            System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
+            var result = UpdateActivity(startupActivity);
+            if (result == Discord.Result.Ok)
+            {
+                Console.WriteLine("Connected!");
+            }
+            else
+            {
+                Console.WriteLine("Failed to connect");
+            }
         }
     }
 }

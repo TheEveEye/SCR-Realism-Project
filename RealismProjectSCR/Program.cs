@@ -16,12 +16,15 @@ class Program
     public static Shift ActiveShift;
 
     public static List<string> CommandHistory = new List<string>();
+    public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
 
     static void Main()
     {
         Console.Title = "Realism Project Network Planner Build 59";
+
+        ProgramStartUnix = Time.UnixNow();
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -103,6 +106,7 @@ class Program
         // This code is experimental
 
         Console.WriteLine("Connecting with Discord RPC...");
+        /*
         long application_Id = 1035200601254023208;
         
         // This makes the SDK connect to Canary
@@ -126,8 +130,8 @@ class Program
             },
             Instance = false,
         };
-
         
+
         Discord.Result hasUpdated = Discord.Result.InsufficientBuffer;
         discordActivityManager.UpdateActivity(discordActivity, (result) =>
         {
@@ -141,6 +145,9 @@ class Program
         {
             discord.RunCallbacks();
         }
+        */
+
+        RichPresenceHandler.Setup();
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 59            ");
