@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 60";
+        Console.Title = "Realism Project Network Planner Build 63";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -150,7 +150,7 @@ class Program
         //RichPresenceHandler.Setup(); // This does nto work yet. Fix ASAP
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 60            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 63            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -265,6 +265,34 @@ class Program
                     }
                     switch (EnteredCommand[1])
                     {
+                        case "driver":
+                            if (EnteredCommand.Length < 6)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            if (ActiveShift == null)
+                            {
+                                Console.WriteLine("Please select a shift first...");
+                                break;
+                            }
+                            try
+                            {
+                                Convert.ToInt32(EnteredCommand[2]); // Route
+                                Convert.ToInt32(EnteredCommand[3]); // Spawning Frame
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Invalid Argument given. Please try again...");
+                                break;
+                            }
+                            Route driverRoute = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
+                            int spawningFrame = Convert.ToInt32(EnteredCommand[3]);
+                            string driverName = EnteredCommand[4];
+                            Driver output = new Driver(driverRoute, spawningFrame, new List<Leg>, driverName);
+                            ActiveShift.Drivers.Add(output);
+                            break;
+
                         case "leg":
                             if (EnteredCommand.Length < 6)
                             {
@@ -278,9 +306,9 @@ class Program
                             }
                             try
                             {
-                                Convert.ToInt32(EnteredCommand[2]);
-                                Convert.ToInt32(EnteredCommand[3]);
-                                Convert.ToInt32(EnteredCommand[4]);
+                                Convert.ToInt32(EnteredCommand[2]); // Driver Number
+                                Convert.ToInt32(EnteredCommand[3]); // Route
+                                Convert.ToInt32(EnteredCommand[4]); // Starting Frame
                             }
                             catch (Exception)
                             {
@@ -288,15 +316,6 @@ class Program
                                 break;
                             }
                             Route route = Routes[Convert.ToInt32(EnteredCommand[3]) - 1];
-                            try
-                            {
-                                Convert.ToInt32(EnteredCommand[4]);
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("Invalid Argument given. Please try again...");
-                                break;
-                            }
                             Driver driver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])];
                             int StartingFrame = Convert.ToInt32(EnteredCommand[4]);
                             Station startingStation = Station.FromArgument(EnteredCommand[5]);
