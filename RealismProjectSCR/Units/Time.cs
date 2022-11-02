@@ -32,6 +32,7 @@ namespace RealismProjectSCR.Units
         public static DateTime ScheduleFramesToDateTime(int Frames)
         {
             TimeSpan ts = TimeSpan.FromSeconds(Frames * 15);
+            if ((double)ts.TotalDays >= 1) throw new FormatException("TimeSpan crossed limit of 24 hours: " + Math.Round((double)Frames / 4 / 60, 2) + "h");
             return Convert.ToDateTime(ts.ToString());
         }
         public static DateTime SecondsToDateTime(int Frames)
