@@ -226,6 +226,20 @@ namespace RealismProjectSCR.SCRObjects
             return output;
         }
 
+        public static Leg LastCreatedLeg()
+        {
+            List<Leg> legs = Program.ActiveShift.Legs;
+            List<long> creationUnixes = new List<long>();
+            List<long> sortedCreationUnixes = new List<long>();
+            for (int i = 0; i < legs.Count; i++)
+            {
+                creationUnixes[i] = new DateTimeOffset(Convert.ToDateTime(legs[i].CreationTime)).ToUnixTimeSeconds();
+                sortedCreationUnixes[i] = new DateTimeOffset(Convert.ToDateTime(legs[i].CreationTime)).ToUnixTimeSeconds();
+            }
+            sortedCreationUnixes.Sort();
+            return legs[Array.IndexOf(creationUnixes.ToArray(), sortedCreationUnixes[sortedCreationUnixes.Count - 1])];
+        }
+
         public static Leg Import(string input)
         {
             string[] split = input.Split(';');

@@ -21,7 +21,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 58";
+        Console.Title = "Realism Project Network Planner Build 59";
 
         // This is just for testing Operator Colors, that might or might not be used later.
         /*
@@ -100,7 +100,7 @@ class Program
         */
 
         // Starting up Discord Rich Presence Client
-        // This code it experimental
+        // This code is experimental
 
         Console.WriteLine("Connecting with Discord RPC...");
         long application_Id = 1035200601254023208;
@@ -143,7 +143,7 @@ class Program
         }
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 58            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 59            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
