@@ -91,6 +91,10 @@ namespace RealismProjectSCR.SCRObjects
         }
         public void SortDepartures()
         {
+            if (this.Departures.Count == 0)
+            {
+                return this.Departures;
+            }
             int[] rawDepartureFrames = new int[this.Departures.Count];
             for (int i = 0; i < rawDepartureFrames.Length; i++)
             {
