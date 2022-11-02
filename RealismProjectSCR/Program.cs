@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 64";
+        Console.Title = "Realism Project Network Planner Build 65";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -150,7 +150,7 @@ class Program
         //RichPresenceHandler.Setup(); // This does nto work yet. Fix ASAP
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 64            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 65            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -266,7 +266,7 @@ class Program
                     switch (EnteredCommand[1])
                     {
                         case "driver":
-                            if (EnteredCommand.Length < 6)
+                            if (EnteredCommand.Length < 5)
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");
                                 break;
