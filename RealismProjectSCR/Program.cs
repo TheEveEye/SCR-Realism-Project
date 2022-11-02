@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 59";
+        Console.Title = "Realism Project Network Planner Build 60";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -106,7 +106,7 @@ class Program
         // This code is experimental
 
         Console.WriteLine("Connecting with Discord RPC...");
-        /*
+        
         long application_Id = 1035200601254023208;
         
         // This makes the SDK connect to Canary
@@ -145,12 +145,12 @@ class Program
         {
             discord.RunCallbacks();
         }
-        */
+        
 
-        RichPresenceHandler.Setup();
+        //RichPresenceHandler.Setup(); // This does nto work yet. Fix ASAP
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 59            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 60            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
