@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 63";
+        Console.Title = "Realism Project Network Planner Build 64";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -150,7 +150,7 @@ class Program
         //RichPresenceHandler.Setup(); // This does nto work yet. Fix ASAP
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 63            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 64            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -289,7 +289,7 @@ class Program
                             Route driverRoute = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
                             int spawningFrame = Convert.ToInt32(EnteredCommand[3]);
                             string driverName = EnteredCommand[4];
-                            Driver output = new Driver(driverRoute, spawningFrame, new List<Leg>, driverName);
+                            Driver output = new Driver(driverRoute, spawningFrame, new List<Leg>(), driverName);
                             ActiveShift.Drivers.Add(output);
                             break;
 
