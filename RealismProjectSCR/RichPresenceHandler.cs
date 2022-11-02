@@ -15,7 +15,8 @@ namespace RealismProjectSCR
         static readonly long ApplicationId = 1035200601254023208;
         static Discord.Discord discord = new Discord.Discord(ApplicationId, (UInt64)Discord.CreateFlags.Default);
         static Discord.ActivityManager discordActivityManager = discord.GetActivityManager();
-        
+
+        public static Discord.Activity currentActivity;
 
         public static Discord.Activity templateActivity = new Discord.Activity()
         {
@@ -91,6 +92,7 @@ namespace RealismProjectSCR
         {
             System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
             var result = UpdateActivity(startupActivity);
+            currentActivity = startupActivity;
             if (result == Discord.Result.Ok)
             {
                 Console.WriteLine("Connected!");

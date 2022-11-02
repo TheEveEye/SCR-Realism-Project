@@ -205,8 +205,6 @@ namespace RealismProjectSCR
                     Convert.ToString(shift.TimeFrame.Start) + ";" + Convert.ToString(shift.TimeFrame.End),
                     shift.Description
                 };
-                Thread.Sleep(10000);
-                string[] tempRead = File.ReadAllLines(tempShiftPath + "Info.shift");
                 File.WriteAllLines(tempShiftPath + "Info.shift", infoContents);
                 return shift;
             }
