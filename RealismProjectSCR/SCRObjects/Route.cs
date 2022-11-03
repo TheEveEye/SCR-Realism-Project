@@ -195,7 +195,7 @@ namespace RealismProjectSCR.SCRObjects
                     break;
 
                 default:
-                    throw new ArgumentException(String.Format("\"{0}\" is not a valid object to change.", whatShallBeChanged));
+                    throw new ArgumentException(String.Format("\"{0}\" is not a valid parameter to change.", whatShallBeChanged));
             }
         }
         public bool IsTerminus(Station station)

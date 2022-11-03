@@ -51,16 +51,21 @@ namespace RealismProjectSCR
 
         public static Discord.Result UpdateActivity(Discord.Activity discordActivity)
         {
+            if (!isDiscordClientInstalled) return Discord.Result.NotInstalled;
+            if (!isDiscordClientRunning) return Discord.Result.NotRunning;
+            if (currentActivity.Equals(discordActivity)) return Discord.Result.Ok;
+            
+            currentActivity = discordActivity;
+
             Discord.Result hasUpdated = Discord.Result.LobbyFull;
             discordActivityManager.UpdateActivity(discordActivity, (result) =>
             {
                 if (result == Discord.Result.Ok)
                 {
-                    Console.WriteLine("Connected!");
                     hasUpdated = result;
                 }
             });
-            while ((hasUpdated != Discord.Result.Ok) && (hasUpdated != Discord.Result.LobbyFull))
+            while ((hasUpdated != Discord.Result.Ok) && (hasUpdated == Discord.Result.LobbyFull))
             {
                 discord.RunCallbacks();
             }
@@ -91,6 +96,9 @@ namespace RealismProjectSCR
         public static void Setup()
         {
             System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
+            isDiscordClientInstalled = true;
+            isDiscordClientRunning = true;
+
             var result = UpdateActivity(startupActivity);
             currentActivity = startupActivity;
             if (result == Discord.Result.Ok)

@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 67";
+        Console.Title = "Realism Project Network Planner Build 68";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -107,6 +107,7 @@ class Program
 
         Console.WriteLine("Connecting with Discord RPC...");
         
+        /* This code was moved into the RichPresenceHandler
         long application_Id = 1035200601254023208;
         
         // This makes the SDK connect to Canary
@@ -145,12 +146,12 @@ class Program
         {
             discord.RunCallbacks();
         }
-        
+        */
 
-        //RichPresenceHandler.Setup(); // This does nto work yet. Fix ASAP
+        RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 67            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 68            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -182,12 +183,14 @@ class Program
                     if (selectedShiftIndex == ShiftNames.Count + 1)
                     {
                         ActiveShift = Shift.Create(Shift.Collect());
+                        RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", ActiveShift.Name));
                         ShiftNames.Add(ActiveShift.Name);
                         ShiftPaths.Add(ActiveShift.Path);
                     }
                     else
                     {
                         ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                        RichPresenceHandler.UpdateActivity("Idle");
                         ActiveShift.PredictHeadcodes();
                         selectedShift = true;
                     }
@@ -286,6 +289,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            RichPresenceHandler.UpdateActivity(String.Format("Created new driver on {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
                             Route driverRoute = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
                             int spawningFrame = Convert.ToInt32(EnteredCommand[3]);
                             string driverName = EnteredCommand[4];
@@ -316,6 +320,7 @@ class Program
                                 break;
                             }
                             Route route = Routes[Convert.ToInt32(EnteredCommand[3]) - 1];
+                            RichPresenceHandler.UpdateActivity(String.Format("Created new leg on {0}", Route.RouteNumberString(route.RouteNumber)));
                             Driver driver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])];
                             int StartingFrame = Convert.ToInt32(EnteredCommand[4]);
                             Station startingStation = Station.FromArgument(EnteredCommand[5]);
@@ -332,6 +337,7 @@ class Program
                         case "shift":
 
                             Shift tempShift = Shift.Create(Shift.Collect());
+                            RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", tempShift.Name));
                             ShiftNames.Add(ActiveShift.Name);
                             ShiftPaths.Add(ActiveShift.Path);
                             Console.WriteLine("Do you want to set it as your Active Shift?");
@@ -362,15 +368,18 @@ class Program
                     {
                         case "elapsedseconds": // Gets the amount of seconds that have passed today
                             Console.WriteLine(Time.ElapsedSeconds());
+                            RichPresenceHandler.UpdateActivity("Viewing the time");
                             break;
 
                         case "elapsedframes":
                         case "elapsedscheduleframes":
                             Console.WriteLine(Time.ElapsedFrames()); // Gets the amount of schedule frames that have passed today
+                            RichPresenceHandler.UpdateActivity("Viewing the time");
                             break;
 
                         case "drivers":
                             Console.WriteLine(BuildString(Driver.ToCompacts(ActiveShift.Drivers.ToArray()), "\n"));
+                            RichPresenceHandler.UpdateActivity("Looking at the Drivers List");
                             break;
 
                         case "stationtable":
@@ -381,6 +390,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            RichPresenceHandler.UpdateActivity(String.Format("Looking at the timetable of {0}", searchedStation.Name));
                             searchedStation.SortDepartures();
                             Console.WriteLine(searchedStation.ToStationTable());
                             /*
@@ -434,13 +444,13 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            RichPresenceHandler.UpdateActivity(String.Format("Looking at Route data of {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
                             Route.PrintData(Convert.ToInt32(EnteredCommand[2]));
                             break;
 
                         case "leg":
                         case "legtimings":
                         case "legdata":
-                            ActiveShift.PredictHeadcodes();
                             if (EnteredCommand.Length < 3)
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");
@@ -460,6 +470,8 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            ActiveShift.PredictHeadcodes();
+                            RichPresenceHandler.UpdateActivity(String.Format("Looking at leg data of a {0} leg", Route.RouteNumberString(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].Route.RouteNumber)));
                             Console.WriteLine(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver());
 
                             break;
@@ -468,6 +480,7 @@ class Program
                         case "leglist":
                             string[] compactLegs = ActiveShift.LegsToDebug();
                             ActiveShift.PredictHeadcodes();
+                            RichPresenceHandler.UpdateActivity(String.Format("Looking at a list of {0} legs", ActiveShift.Legs.Count));
                             Console.WriteLine("----------------------------------------------------------------");
                             foreach (string item in compactLegs)
                             {
@@ -489,11 +502,11 @@ class Program
                         Console.WriteLine("Not enough Arguments given. Please try again...");
                         break;
                     }
-
+                    RichPresenceHandler.UpdateActivity("Converting Units");
                     switch (EnteredCommand[1]) // Looks at the second argument given
                     {
                         case "seconds":
-                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatSeconds)
+                            if ((Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatSeconds) && (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatFrames))
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -588,7 +601,8 @@ class Program
                             }
                             try
                             {
-                                Routes[Convert.ToInt32(EnteredCommand[2])].EditRoute(EnteredCommand[3], EnteredCommand[4]);
+                                RichPresenceHandler.UpdateActivity(String.Format("Editing Data for {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
+                                Routes[Convert.ToInt32(EnteredCommand[2]) - 1].EditRoute(EnteredCommand[3], EnteredCommand[4]);
                                 Console.WriteLine(String.Format("Successfully modified \"{0}\" in {1} to \"{2}\".", EnteredCommand[3], Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2])), EnteredCommand[4]));
                             }
                             catch (Exception)
