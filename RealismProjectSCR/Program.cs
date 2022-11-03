@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 74;
+    public static int BuildNumber = 75;
 
     static void Main()
     {
@@ -192,7 +192,7 @@ class Program
                     {
                         try
                         {
-                            ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                            ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1], ShiftNames[selectedShiftIndex - 1]);
                             RichPresenceHandler.UpdateActivity("Idle");
                             ActiveShift.PredictHeadcodes();
                             selectedShift = true;
