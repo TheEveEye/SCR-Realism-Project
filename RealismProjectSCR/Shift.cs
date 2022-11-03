@@ -192,13 +192,13 @@ namespace RealismProjectSCR
             string tempShiftPath = Program.ProjectDirectoryPath + @"Shifts\" + shift.Name + @"\";
             if (Directory.Exists(tempShiftPath))
             {
-                throw new IOException();
+                throw new IOException("Folder already exists.");
             }
             else
             {
                 Directory.CreateDirectory(tempShiftPath);
-                File.Create(tempShiftPath + "Info.shift");
-                File.Create(tempShiftPath + "Legs.shift");
+                //File.Create(tempShiftPath + "Info.shift");
+                //File.Create(tempShiftPath + "Legs.shift");
 
                 string[] infoContents =
                 {
@@ -206,6 +206,8 @@ namespace RealismProjectSCR
                     shift.Description
                 };
                 File.WriteAllLines(tempShiftPath + "Info.shift", infoContents);
+                File.WriteAllLines(tempShiftPath + "Legs.shift", new string[] { "" });
+                File.WriteAllLines(tempShiftPath + "Drivers.shift", new string[] { "" });
                 return shift;
             }
         }

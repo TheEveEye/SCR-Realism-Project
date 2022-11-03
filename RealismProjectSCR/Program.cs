@@ -19,10 +19,11 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
+    public static int BuildNumber = 70;
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 69";
+        Console.Title = "Realism Project Network Planner Build " + BuildNumber;
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -151,7 +152,7 @@ class Program
         RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 69            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build " + BuildNumber);
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -310,8 +311,8 @@ class Program
                             }
                             try
                             {
-                                Convert.ToInt32(EnteredCommand[2]); // Driver Number
-                                Convert.ToInt32(EnteredCommand[3]); // Route
+                                var tempDriver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])]; // Driver Number
+                                var tempRoute = Routes[Convert.ToInt32(EnteredCommand[3]) - 1]; // Route
                                 Time.ScheduleFramesToDateTime(Convert.ToInt32(EnteredCommand[4]) + ActiveShift.TimeFrame.Start); // Starting Frame
                             }
                             catch (Exception)
@@ -380,6 +381,16 @@ class Program
                         case "drivers":
                             Console.WriteLine(BuildString(Driver.ToCompacts(ActiveShift.Drivers.ToArray()), "\n"));
                             RichPresenceHandler.UpdateActivity("Looking at the Drivers List");
+                            break;
+
+                        case "commandhistory":
+                            if (CommandHistory.Count == 0)
+                            {
+                                Console.WriteLine("You have not executed any commands yet.");
+                                break;
+                            }
+                            Console.WriteLine("You have executed " + CommandHistory.Count + " commands this session:");
+                            Console.WriteLine(BuildString(CommandHistory.ToArray(), "\n"));
                             break;
 
                         case "stationtable":
