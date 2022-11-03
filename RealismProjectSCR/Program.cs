@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 71;
+    public static int BuildNumber = 72;
 
     static void Main()
     {
@@ -160,8 +160,8 @@ class Program
         bool selectedShift = false;
         while (!selectedShift)
         {
-            //try
-            //{
+            try
+            {
                 if (ShiftNames.Count == 0)
                 {
                     ActiveShift = Shift.Create(Shift.Collect());
@@ -190,17 +190,25 @@ class Program
                     }
                     else
                     {
-                        ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
-                        RichPresenceHandler.UpdateActivity("Idle");
-                        ActiveShift.PredictHeadcodes();
-                        selectedShift = true;
+                        try
+                        {
+                            ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1]);
+                            RichPresenceHandler.UpdateActivity("Idle");
+                            ActiveShift.PredictHeadcodes();
+                            selectedShift = true;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("This shift does not exist. Please try again...");
+                        }    
+                    
                     }
                 }
-            //}
-            /*catch (Exception)
+            }
+            catch (Exception)
             {
                 Console.WriteLine("Some error occured, please try again...");
-            }*/
+            }
         }
 
         Console.WriteLine("Waiting for input...");
