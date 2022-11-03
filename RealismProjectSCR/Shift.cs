@@ -96,9 +96,9 @@ namespace RealismProjectSCR
             return Program.ProjectDirectoryPath + @"Shifts\" + Name + @"\";
         }
 
-        public static Shift Import(string Path)
+        public static Shift Import(string Path, string Name)
         {
-            Shift output = new(NameFromPath(Path), new TimeFrame(0, 0), "", new List<Driver>(), new List<Leg>());
+            Shift output = new(Name, new TimeFrame(0, 0), "", new List<Driver>(), new List<Leg>());
 
             string[] shiftInfo = File.ReadAllLines(Path + @"\Info.shift");
             output.Description = shiftInfo[1];
