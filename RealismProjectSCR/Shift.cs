@@ -206,8 +206,8 @@ namespace RealismProjectSCR
                     shift.Description
                 };
                 File.WriteAllLines(tempShiftPath + "Info.shift", infoContents);
-                File.WriteAllLines(tempShiftPath + "Legs.shift", new string[] { "" });
-                File.WriteAllLines(tempShiftPath + "Drivers.shift", new string[] { "" });
+                File.WriteAllLines(tempShiftPath + "Legs.shift", new string[0]);
+                File.WriteAllLines(tempShiftPath + "Drivers.shift", new string[0]);
                 return shift;
             }
         }
