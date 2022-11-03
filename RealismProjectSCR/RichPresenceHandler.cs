@@ -10,8 +10,9 @@ namespace RealismProjectSCR
 {
     public class RichPresenceHandler
     {
-        static bool isDiscordClientRunning;
-        static bool isDiscordClientInstalled;
+        public static bool isDiscordClientRunning;
+        public static bool isDiscordClientInstalled;
+        public static bool customStatusSet;
         static readonly long ApplicationId = 1035200601254023208;
         static Discord.Discord discord = new Discord.Discord(ApplicationId, (UInt64)Discord.CreateFlags.Default);
         static Discord.ActivityManager discordActivityManager = discord.GetActivityManager();
@@ -49,12 +50,13 @@ namespace RealismProjectSCR
             Instance = false,
         };
 
-        public static Discord.Result UpdateActivity(Discord.Activity discordActivity)
+        public static Discord.Result UpdateActivity(Discord.Activity discordActivity, bool? overwriteCustomStatus = false)
         {
             if (!isDiscordClientInstalled) return Discord.Result.NotInstalled;
             if (!isDiscordClientRunning) return Discord.Result.NotRunning;
             if (currentActivity.Equals(discordActivity)) return Discord.Result.Ok;
-            
+            if (customStatusSet) return Discord.Result.Ok;
+
             currentActivity = discordActivity;
 
             Discord.Result hasUpdated = Discord.Result.LobbyFull;
@@ -81,16 +83,17 @@ namespace RealismProjectSCR
             }
             return hasUpdated;
         }
-        public static Discord.Result UpdateActivity(string state)
+        public static Discord.Result UpdateActivity(string state, bool? overwriteCustomStatus = false)
         {
             if (!isDiscordClientInstalled) return Discord.Result.NotInstalled;
             if (!isDiscordClientRunning) return Discord.Result.NotRunning;
+            if (customStatusSet) return Discord.Result.Ok;
 
             Discord.Activity activity = templateActivity;
             activity.State = state;
             activity.Details = Program.ActiveShift.Name;
 
-            return UpdateActivity(activity);
+            return UpdateActivity(activity, overwriteCustomStatus);
         }
 
         public static void Setup()
@@ -98,6 +101,7 @@ namespace RealismProjectSCR
             System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
             isDiscordClientInstalled = true;
             isDiscordClientRunning = true;
+            customStatusSet = false;
 
             var result = UpdateActivity(startupActivity);
             currentActivity = startupActivity;

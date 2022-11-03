@@ -22,7 +22,7 @@ class Program
 
     static void Main()
     {
-        Console.Title = "Realism Project Network Planner Build 68";
+        Console.Title = "Realism Project Network Planner Build 69";
 
         ProgramStartUnix = Time.UnixNow();
 
@@ -151,7 +151,7 @@ class Program
         RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 68            ");
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build 69            ");
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
@@ -585,6 +585,7 @@ class Program
                 case "edit":
                 case "change":
                 case "modify":
+                case "set":
 
                     if (EnteredCommand.Length < 3)
                     {
@@ -610,7 +611,46 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            
+                            break;
+
+                        case "status":
+                        case "customstatus":
+                            if (EnteredCommand.Length < 3)
+                            {
+                                Console.WriteLine("Not enough Arguments given. Please try again...");
+                                break;
+                            }
+                            if (!RichPresenceHandler.isDiscordClientRunning)
+                            {
+                                Console.WriteLine("Discord Client is either not running or not installed.");
+                                break;
+                            }
+                            switch (EnteredCommand[2])
+                            {
+                                case "off":
+                                case "disable":
+                                    RichPresenceHandler.customStatusSet = false;
+                                    Console.WriteLine("Turned off custom status.");
+                                    break;
+
+                                case "idle":
+                                case "afk":
+                                    RichPresenceHandler.UpdateActivity("Idle");
+                                    break;
+
+                                case "": // No input
+                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                    break;
+
+                                default:
+                                    var result = RichPresenceHandler.UpdateActivity(EnteredCommand[2], true);
+                                    if (result != Discord.Result.Ok)
+                                    {
+                                        Console.WriteLine("There seems to be some issue with setting your Custom Status.");
+                                    }
+                                    Console.WriteLine(String.Format("Successfully changed your status to {0}", EnteredCommand[2]));
+                                    break;
+                            }
                             break;
 
                         default: // Not an existing command
