@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 73;
+    public static int BuildNumber = 74;
 
     static void Main()
     {
@@ -304,6 +304,7 @@ class Program
                             string driverName = EnteredCommand[4];
                             Driver output = new Driver(driverRoute, spawningFrame, new List<Leg>(), driverName);
                             ActiveShift.Drivers.Add(output);
+                            Driver.Export(ActiveShift.Drivers);
                             break;
 
                         case "leg":

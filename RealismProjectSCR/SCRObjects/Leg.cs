@@ -106,13 +106,18 @@ namespace RealismProjectSCR.SCRObjects
                 }
             }
         }
-
-        public static List<Leg> Sort(List<Leg> input, string type)
+        public enum SortType
+        {
+            StartTime = 1,
+            EndTime = 2,
+            Route = 3,
+        }
+        public static List<Leg> Sort(List<Leg> input, SortType type)
         {
             List<Leg> output = new List<Leg>();
             switch (type)
             {
-                case "starttime": // Sorts Legs by starting time
+                case SortType.StartTime: // Sorts Legs by starting time
                     List<int> startingTimes = new List<int>();
                     List<int> sortedStartingTimes = new List<int>();
                     for (int i = 0; i < input.Count; i++)
@@ -127,7 +132,7 @@ namespace RealismProjectSCR.SCRObjects
                     }
                     break;
 
-                case "endtime": // Sorts Legs by ending time
+                case SortType.EndTime: // Sorts Legs by ending time
                     List<int> endingTimes = new List<int>();
                     List<int> sortedEndingTimes = new List<int>();
                     for (int i = 0; i < input.Count; i++)
@@ -142,7 +147,7 @@ namespace RealismProjectSCR.SCRObjects
                     }
                     break;
 
-                case "route": // Sorts Legs by route number
+                case SortType.Route: // Sorts Legs by route number
                     List<int> routeNumbers = new List<int>();
                     List<int> sortedRouteNumbers = new List<int>();
                     for (int i = 0; i < input.Count; i++)
@@ -209,7 +214,7 @@ namespace RealismProjectSCR.SCRObjects
 
         public static string ToExport(Leg leg)
         {
-            string output = Convert.ToString(leg.Route.RouteNumber) + ";" + Convert.ToString(leg.TimeFrame.Start) + "," + Convert.ToString(leg.TimeFrame.End) + ";" + leg.StartingStation.Name + "," + leg.EndingStation.Name + ";" + leg.Departures[0].Station.Name + ":" + Convert.ToString(leg.Departures[0].Frame);
+            string output = Convert.ToString(leg.Route.RouteNumber) + ";" + Array.IndexOf(Program.ActiveShift.Drivers.ToArray(), leg.Driver) + ";" + Convert.ToString(leg.TimeFrame.Start) + "," + Convert.ToString(leg.TimeFrame.End) + ";" + leg.StartingStation.Name + "," + leg.EndingStation.Name + ";" + leg.Departures[0].Station.Name + ":" + Convert.ToString(leg.Departures[0].Frame);
             for (int i = 1; i < leg.Departures.Length; i++)
             {
                 output += "," + leg.Departures[i].Station.Name + ":" + Convert.ToString(leg.Departures[i].Frame);
@@ -254,19 +259,20 @@ namespace RealismProjectSCR.SCRObjects
             return legs[Array.IndexOf(creationUnixes.ToArray(), sortedCreationUnixes[sortedCreationUnixes.Count - 1])];
         }
 
-        public static Leg Import(string input)
+        public static Leg Import(string input, List<Driver> drivers)
         {
             string[] split = input.Split(';');
             Leg output = new Leg(null, 0, 0, new Departure[0], null, null, null, null);
             output.Route = Program.Routes[Convert.ToInt32(split[0]) - 1];
-            string[] timeframe = split[1].Split(',');
+            output.Driver = drivers[Convert.ToInt32(split[1])];
+            string[] timeframe = split[2].Split(',');
             output.TimeFrame = new(Convert.ToInt32(timeframe[0]), Convert.ToInt32(timeframe[1]));
             output.TotalFrames = output.TimeFrame.ToFrames();
-            string[] terminus = split[2].Split(',');
+            string[] terminus = split[3].Split(',');
             output.StartingStation = Station.NameToStation(terminus[0]);
             output.EndingStation = Station.NameToStation(terminus[1]);
 
-            string[] rawdepartures = split[3].Split(',');
+            string[] rawdepartures = split[4].Split(',');
             Departure[] departures = new Departure[rawdepartures.Length];
             for (int i = 0; i < departures.Length; i++)
             {

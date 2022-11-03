@@ -31,5 +31,43 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
+
+        public string ToExport()
+        {
+            // cvlai:1:4560
+            return String.Format("{0}:{1}:{2}", PlayerName, Route.RouteNumber, SpawningFrame);
+        }
+        public static void Export(List<Driver> drivers)
+        {
+            string[] exportedDrivers = new string[drivers.Count];
+            for (int i = 0; i < exportedDrivers.Length; i++)
+            {
+                exportedDrivers[i] = drivers[i].ToExport();
+            }
+            File.WriteAllLines(Program.ProjectDirectoryPath + @"Shifts\" + Program.ActiveShift.Name + @"\Drivers.shift", exportedDrivers);
+        }
+        public static Driver Import(string input)
+        {
+            try
+            {
+                string[] parameters = input.Split(':');
+                Driver output = new Driver(Program.Routes[Convert.ToInt32(parameters[1]) - 1], Convert.ToInt32(parameters[2]), new List<Leg>(), parameters[0]);
+                return output;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Fatal error whilst importing Drivers.");
+            }
+        }
+        public static List<Driver> ImportAll(string activeShiftName)
+        {
+            List<Driver> drivers = new List<Driver>();
+            string[] importedDrivers = File.ReadAllLines(Program.ProjectDirectoryPath + @"Shifts\" + activeShiftName + @"\Drivers.shift");
+            foreach (string driver in importedDrivers)
+            {
+                drivers.Add(Import(driver));
+            }
+            return drivers;
+        }
     }
 }

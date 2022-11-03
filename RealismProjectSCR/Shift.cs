@@ -42,7 +42,7 @@ namespace RealismProjectSCR
 
         public void PredictHeadcodes() // Get this done before platform allocations
         {
-            Leg[] currentLegs = Leg.Sort(this.Legs, "starttime").ToArray();
+            Leg[] currentLegs = Leg.Sort(this.Legs, Leg.SortType.StartTime).ToArray();
             StationCodeCounter stationCodeCounter = new StationCodeCounter();
             for (int i = 0; i < currentLegs.Length; i++)
             {
@@ -104,11 +104,13 @@ namespace RealismProjectSCR
             output.Description = shiftInfo[1];
             string[] timeFrameRaw = shiftInfo[0].Split(';');
             output.TimeFrame = new TimeFrame(Convert.ToInt32(timeFrameRaw[0]), Convert.ToInt32(timeFrameRaw[1]));
+            output.Drivers = Driver.ImportAll(output.Name);
             string[] legsRaw = File.ReadAllLines(Path + @"\Legs.shift");
             Leg[] legs = new Leg[legsRaw.Length];
             for (int i = 0; i < legs.Length; i++)
             {
-                legs[i] = Leg.Import(legsRaw[i]);
+                legs[i] = Leg.Import(legsRaw[i], output.Drivers);
+                legs[i].Driver.Legs.Add(legs[i]);
             }
             output.Legs = legs.ToList<Leg>();
             return output;
@@ -224,7 +226,7 @@ namespace RealismProjectSCR
 
         public string[] LegsToDebug()
         {
-            List<Leg> sortedLegs = Leg.Sort(Legs, "starttime");
+            List<Leg> sortedLegs = Leg.Sort(Legs, Leg.SortType.StartTime);
             List<string> output = new List<string>();
             for (int i = 0; i < Legs.Count; i++)
             {
