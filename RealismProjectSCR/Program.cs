@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 72;
+    public static int BuildNumber = 73;
 
     static void Main()
     {
@@ -340,6 +340,7 @@ class Program
                                 break;
                             }
                             Leg createdLeg = Leg.Create(route, StartingFrame + ActiveShift.TimeFrame.Start, startingStation, endingStation, driver);
+                            driver.Legs.Add(createdLeg);
                             ActiveShift.AddLeg(createdLeg);
                             break;
 
