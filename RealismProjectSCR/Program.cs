@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 75;
+    public static int BuildNumber = 76;
 
     static void Main()
     {
@@ -222,7 +222,7 @@ class Program
             Tab();
             while (!proceed)
             {
-                EnteredCommandRaw = Console.ReadLine().ToLower();
+                EnteredCommandRaw = Console.ReadLine();
 
                 if (EnteredCommandRaw != null) // Check if entered command isn't null
                 {
@@ -235,7 +235,7 @@ class Program
             }
             proceed = false;
 
-            string[] EnteredCommand = EnteredCommandRaw.Split(' '); // Splitting up entered command into each arguement
+            string[] EnteredCommand = EnteredCommandRaw.ToLower().Split(' '); // Splitting up entered command into each arguement
             CommandHistory.Add(EnteredCommandRaw);
 
             switch (EnteredCommand[0])
@@ -664,7 +664,7 @@ class Program
                                     break;
 
                                 default:
-                                    var result = RichPresenceHandler.UpdateActivity(EnteredCommand[2], true);
+                                    var result = RichPresenceHandler.UpdateActivity(BuildString(EnteredCommandRaw.Split(' ').ToList().GetRange(2, EnteredCommandRaw.Split(' ').Length - 2).ToArray(), " "), true);
                                     if (result != Discord.Result.Ok)
                                     {
                                         Console.WriteLine("There seems to be some issue with setting your Custom Status.");
