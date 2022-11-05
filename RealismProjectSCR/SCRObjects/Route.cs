@@ -273,7 +273,7 @@ namespace RealismProjectSCR.SCRObjects
                     string[] tempStationData = StationData[j].Split(':');
                     tempRoute.CallingStations[j] = Station.NameToStation(tempStationData[0]);
 
-                    Timing tempTiming = new Timing(0, 3, null);
+                    Timing tempTiming = new Timing(0, Timing.Type.Invalid, null);
                     try
                     {
                         tempTiming.TimingFrames = Convert.ToInt32(tempStationData[1]) / 15;
@@ -283,11 +283,11 @@ namespace RealismProjectSCR.SCRObjects
                         tempTiming.TimingFrames = 0;
                     }
                     
-                    tempTiming.Type = Timing.Departure;
+                    tempTiming.TimingType = Timing.Type.Departure;
                     tempTiming.Station = tempRoute.CallingStations[j];
                     if ((j == StationData.Length / 2) || (j == StationData.Length - 1))
                     {
-                        tempTiming.Type = Timing.Arrival;   
+                        tempTiming.TimingType = Timing.Type.Arrival;   
                     }
                     tempRoute.Timings[j] = tempTiming;
                 }
