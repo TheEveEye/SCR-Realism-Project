@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 76;
+    public static int BuildNumber = 77;
 
     static void Main()
     {
@@ -222,7 +222,7 @@ class Program
             Tab();
             while (!proceed)
             {
-                EnteredCommandRaw = Console.ReadLine();
+                EnteredCommandRaw = Console.ReadLine().ToLower();
 
                 if (EnteredCommandRaw != null) // Check if entered command isn't null
                 {
@@ -235,7 +235,7 @@ class Program
             }
             proceed = false;
 
-            string[] EnteredCommand = EnteredCommandRaw.ToLower().Split(' '); // Splitting up entered command into each arguement
+            string[] EnteredCommand = EnteredCommandRaw.Split(' '); // Splitting up entered command into each arguement
             CommandHistory.Add(EnteredCommandRaw);
 
             switch (EnteredCommand[0])
@@ -527,7 +527,7 @@ class Program
                     switch (EnteredCommand[1]) // Looks at the second argument given
                     {
                         case "seconds":
-                            if ((Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatSeconds) && (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatFrames))
+                            if ((Time.GetTimeFormat(EnteredCommand[3]) != Time.Format.Seconds) && (Time.GetTimeFormat(EnteredCommand[3]) != Time.Format.Frames))
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -551,7 +551,7 @@ class Program
 
                         case "frames":
                         case "scheduleframes":
-                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatFrames)
+                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.Format.Frames)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -574,7 +574,7 @@ class Program
                             break;
 
                         case "time":
-                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.FormatTime)
+                            if (Time.GetTimeFormat(EnteredCommand[3]) != Time.Format.Time)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
@@ -664,7 +664,7 @@ class Program
                                     break;
 
                                 default:
-                                    var result = RichPresenceHandler.UpdateActivity(BuildString(EnteredCommandRaw.Split(' ').ToList().GetRange(2, EnteredCommandRaw.Split(' ').Length - 2).ToArray(), " "), true);
+                                    var result = RichPresenceHandler.UpdateActivity(EnteredCommand[2], true);
                                     if (result != Discord.Result.Ok)
                                     {
                                         Console.WriteLine("There seems to be some issue with setting your Custom Status.");
