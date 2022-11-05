@@ -11,11 +11,14 @@ namespace RealismProjectSCR.Units
 {
     public class Time
     {
-        public static readonly int FormatFrames = 0;
-        public static readonly int FormatTime = 1;
-        public static readonly int FormatSeconds = 2;
-        public static readonly int FormatInvalid = 3;
-        
+        public enum Format
+        {
+            Frames = 0,
+            Time = 1,
+            Seconds = 2,
+            Invalid = 3
+        }
+
         public static int ElapsedSeconds()
         {
             int seconds = DateTime.UtcNow.Second;
@@ -61,9 +64,9 @@ namespace RealismProjectSCR.Units
             }
         }
         
-        public static int GetTimeFormat(string time)
+        public static Format GetTimeFormat(string time)
         {
-            int type = 3;
+            Format type = Format.Invalid;
             
             string[] StringTimeCheck = time.Split(':');
             if (StringTimeCheck.Length != 3)
@@ -73,18 +76,18 @@ namespace RealismProjectSCR.Units
                     int Time = Convert.ToInt32(time); 
                     if ((Time >= 5760) && (Time < 86400))
                     {
-                        type = 2;
+                        type = Format.Seconds;
                     }
                     if ((Time >= 0) && (Time < 5760))
                     {
-                        type = 1;
+                        type = Format.Frames;
                     }
                     else
                     {
-                        type = 3;
+                        type = Format.Invalid;
                     }
                 }
-                catch (System.FormatException) {type = 3;}
+                catch (System.FormatException) { type = Format.Invalid; }
             }
             else
             {
@@ -93,9 +96,9 @@ namespace RealismProjectSCR.Units
                     Convert.ToInt32(StringTimeCheck[0]);
                     Convert.ToInt32(StringTimeCheck[1]);
                     Convert.ToInt32(StringTimeCheck[2]);
-                    type = 1;
+                    type = Format.Time;
                 }
-                catch (System.FormatException) {type = 3;}
+                catch (System.FormatException) { type = Format.Invalid; }
             }
             return type;
         }

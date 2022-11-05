@@ -147,7 +147,7 @@ namespace RealismProjectSCR
             {
                 Console.WriteLine("Enter Starting Time:");
                 tempInput = Console.ReadLine();
-                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.FormatTime))
+                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.Format.Time))
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }
@@ -162,7 +162,7 @@ namespace RealismProjectSCR
             {
                 Console.WriteLine("Enter Ending Time:");
                 tempInput = Console.ReadLine();
-                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.FormatTime))
+                if ((String.IsNullOrEmpty(tempInput)) || (Time.GetTimeFormat(tempInput) != Time.Format.Time))
                 {
                     Console.WriteLine("Invalid Input. Please try again...");
                 }
