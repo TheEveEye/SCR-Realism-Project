@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <Folder Include="DiscordGameSDK\ActivityAssets\" />
-    <Folder Include="SCRObjects\SignallerMap\" />
   </ItemGroup>
 
 </Project>
