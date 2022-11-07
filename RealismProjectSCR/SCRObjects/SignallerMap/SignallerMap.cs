@@ -12,7 +12,19 @@ using RealismProjectSCR.SCRObjects.SignallerMap;
 
 namespace RealismProjectSCR.SCRObjects.SignallerMap
 {
-    internal class SignallerMap
+    public class SignallerMap
     {
+        public SignalNode[] SignalNodes { get; set; }
+        public TrackNode[] TrackNodes { get; set; }
+        public Segment[] TrackSegments { get; set; }
+        
+        public SignallerMap()
+        {
+            return Import()
+        }
+        static SignallerMap Import()
+        {
+            
+        }
     }
 }
