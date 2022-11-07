@@ -15,16 +15,20 @@ namespace RealismProjectSCR.SCRObjects.SignallerMap
     public class SignallerMap
     {
         public SignalNode[] SignalNodes { get; set; }
-        public TrackNode[] TrackNodes { get; set; }
+        public MergeNode[] MergeNodes { get; set; }
+        public SplitNode[] SplitNodes { get; set; }
+        public CrossNode[] CrossNodes { get; set; }
+        public JunctionNode[] JunctionNodes { get; set; }
+        public TerminusNode[] TerminusNodes { get; set; }
         public Segment[] TrackSegments { get; set; }
         
         public SignallerMap()
         {
-            return Import()
+           Import();
         }
         static SignallerMap Import()
         {
-            
+            return null;
         }
     }
 }

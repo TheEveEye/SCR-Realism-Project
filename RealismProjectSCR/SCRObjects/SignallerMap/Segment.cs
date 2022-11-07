@@ -12,7 +12,9 @@ using RealismProjectSCR.SCRObjects.SignallerMap;
 
 namespace RealismProjectSCR.SCRObjects.SignallerMap
 {
-    internal class Segment
+    public class Segment
     {
+        public int ID { get; set; }
+        public int SpeedLimit { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using RealismProjectSCR.SCRObjects.SignallerMap;
 
 namespace RealismProjectSCR.SCRObjects.SignallerMap
 {
-    internal class Train
+    public class Train
     {
     }
 }

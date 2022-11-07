@@ -19,7 +19,7 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
-    public static int BuildNumber = 79;
+    public static int BuildNumber = 80;
 
     static void Main()
     {
