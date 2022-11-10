@@ -50,7 +50,6 @@ class Program
         {
             _Stations.Add(new Station(StationNames[i], null, null, new List<Departure>())); // Fills in the name of the station
             _Stations[i].GetSetShortcuts();
-            // string[] StationInfo = File.ReadAllLines(_Stations[i].stblPath); // Gets all information from the .stbl station file   
         }
         Stations = _Stations.ToArray();
         for (int i = 0; i < Stations.Length; i++)
@@ -83,7 +82,7 @@ class Program
         RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build " + BuildNumber);
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.2 Build " + BuildNumber);
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
