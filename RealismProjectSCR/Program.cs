@@ -4,6 +4,8 @@ using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
 
 using System.Diagnostics;
+using System.IO;
+using System.IO.Pipes;
 
 class Program
 {
@@ -74,18 +76,6 @@ class Program
             Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStations[i].Split(':')[1].Split(';'));
         }
 
-
-        // Temporary code to automatically enter adjacent stations
-        /*
-        string[] AdjacentStations = File.ReadAllLines(StartupFilePath + @"SCRObjects\AdjacentStations.txt");
-        foreach (var station in AdjacentStations)
-        {
-            string[] temp = station.Split(':');
-            Console.WriteLine("Importing Adjacent Station for: " + temp[0]);
-            File.WriteAllLines(Station.NameToStation(temp[0]).stblPath, new string[] { temp[1] });
-        }
-        */
-
         Console.WriteLine("Importing Route Data...");
         Routes = Route.Import();
 
@@ -94,14 +84,12 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         // Temporary for testing the Window Extensions
-        /*
-        Process windowExtension1 = new Process();
-        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
-        windowExtension1.StartInfo.Arguments = "";
-        windowExtension1.StartInfo.CreateNoWindow = false;
 
-        Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
-        */
+        var extension1StartInfo = new ProcessStartInfo()
+        {
+            FileName = 
+        };
+        Process.Start(extension1StartInfo);
 
         // Starting up Discord Rich Presence Client
         // This code is experimental
