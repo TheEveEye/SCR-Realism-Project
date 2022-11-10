@@ -64,14 +64,6 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         // Temporary for testing the Window Extensions
-        /*
-        Process windowExtension1 = new Process();
-        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
-        windowExtension1.StartInfo.Arguments = "";
-        windowExtension1.StartInfo.CreateNoWindow = false;
-
-        Process.Start(RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe", "");
-        */
 
         // Starting up Discord Rich Presence Client
         Console.WriteLine("Connecting with Discord RPC...");
