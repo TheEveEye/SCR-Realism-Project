@@ -409,6 +409,11 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
+                            if (Convert.ToInt32(EnteredCommand[2]) < 1)
+                            {
+                                Console.WriteLine("Invalid leg given. Please enter a different leg index.");
+                                break;
+                            }
                             ActiveShift.PredictHeadcodes();
                             RichPresenceHandler.UpdateActivity(String.Format("Looking at leg data of a {0} leg", Route.RouteNumberString(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].Route.RouteNumber)));
                             Console.WriteLine(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver());
