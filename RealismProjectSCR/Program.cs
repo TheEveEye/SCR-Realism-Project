@@ -23,9 +23,9 @@ class Program
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
-    public static int BuildNumber = 85;
+    public static int BuildNumber = 86;
 
-    static void Main()
+    static void Main(string[] args)
     {
         Console.Title = "Realism Project Network Planner Build " + BuildNumber;
 
@@ -41,6 +41,7 @@ class Program
             .Split('\\').Length - 1);
         exePathRaw.Add("RealismProjectSCR.exe");
         ExePath = BuildString(exePathRaw.ToArray(), "\\");
+
         Console.WriteLine("Importing Station Data...");
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
         StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
