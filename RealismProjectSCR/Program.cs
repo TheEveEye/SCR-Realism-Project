@@ -21,7 +21,7 @@ class Program
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
-    public static int BuildNumber = 80;
+    public static int BuildNumber = 83;
 
     static void Main(string[] args)
     {
@@ -70,7 +70,7 @@ class Program
         RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
-        Console.WriteLine("SCR Realism Project Network Planner v1.10.1 Build " + BuildNumber);
+        Console.WriteLine("SCR Realism Project Network Planner v1.10.2 Build " + BuildNumber);
         Console.WriteLine("Developed by Eve                                                ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
