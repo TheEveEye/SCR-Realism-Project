@@ -23,7 +23,7 @@ class Program
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
-    public static int BuildNumber = 82;
+    public static int BuildNumber = 85;
 
     static void Main()
     {
@@ -63,19 +63,6 @@ class Program
         Console.WriteLine("Importing Shift Data...");
         ShiftPaths = GetShiftPaths();
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
-
-        // Temporary for testing the Window Extensions
-        /*
-        Process windowExtension1 = new Process();
-        windowExtension1.StartInfo.FileName = (RepositoryDirectoryPath + @"RealismProjectWindowExtension\bin\Release\net6.0\RealismProjectWindowExtension.exe");
-        windowExtension1.StartInfo.Arguments = "";
-        windowExtension1.StartInfo.CreateNoWindow = false;
-
-        var extension1StartInfo = new ProcessStartInfo()
-        {
-            FileName = 
-        };
-        Process.Start(extension1StartInfo);
 
         // Starting up Discord Rich Presence Client
         Console.WriteLine("Connecting with Discord RPC...");
