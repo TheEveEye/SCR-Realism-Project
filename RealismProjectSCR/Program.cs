@@ -19,45 +19,27 @@ class Program
     public static long ProgramStartUnix;
 
     public static string ProjectDirectoryPath;
+    public static string ExePath;
+
     public static int BuildNumber = 80;
 
-    static void Main()
+    static void Main(string[] args)
     {
         Console.Title = "Realism Project Network Planner Build " + BuildNumber;
 
         ProgramStartUnix = Time.UnixNow();
 
-        // This is just for testing Operator Colors, that might or might not be used later.
-        /*
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("################################################################");
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.WriteLine("################################################################");
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("################################################################");
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("################################################################");
-        */
 
         Console.WriteLine("Importing Program Data...");
-
         ProjectDirectoryPath = Path.GetFullPath(@"resources\");
-
-        //string rawProjectDirectoryPath = Path.GetFullPath(@"objects\");
-        //string[] splittedProjectDirectoryPath = rawProjectDirectoryPath.Split('\\');
-        //Console.WriteLine(rawProjectDirectoryPath);
-        //Console.WriteLine(projectDirectoryPath);
-        //
-        // This was originally used to build the projectDirectoryPath, before BuildString() was used.
-        //for (int i = 0; i < splittedProjectDirectoryPath.Length - 4; i++)
-        //{
-        //    projectDirectoryPath += splittedProjectDirectoryPath[i] + @"\";
-        //}
-        // ProjectDirectoryPath = BuildString(splittedProjectDirectoryPath.ToList<string>().GetRange(0, splittedProjectDirectoryPath.Length - 1).ToArray(), @"\") + @"\";
-
-
+        List<string> exePathRaw = ProjectDirectoryPath
+            .Split('\\')
+            .ToList()
+            .GetRange(0, ProjectDirectoryPath
+            .Split('\\').Length - 1);
+        exePathRaw.Add("RealismProjectSCR.exe");
+        ExePath = BuildString(exePathRaw.ToArray(), "\\");
         Console.WriteLine("Importing Station Data...");
-
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
         StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
 
@@ -73,18 +55,6 @@ class Program
         {
             Stations[i].AdjacentStations = Station.NamesToStations(AdjacentStations[i].Split(':')[1].Split(';'));
         }
-
-
-        // Temporary code to automatically enter adjacent stations
-        /*
-        string[] AdjacentStations = File.ReadAllLines(StartupFilePath + @"SCRObjects\AdjacentStations.txt");
-        foreach (var station in AdjacentStations)
-        {
-            string[] temp = station.Split(':');
-            Console.WriteLine("Importing Adjacent Station for: " + temp[0]);
-            File.WriteAllLines(Station.NameToStation(temp[0]).stblPath, new string[] { temp[1] });
-        }
-        */
 
         Console.WriteLine("Importing Route Data...");
         Routes = Route.Import();
@@ -104,51 +74,7 @@ class Program
         */
 
         // Starting up Discord Rich Presence Client
-        // This code is experimental
-
         Console.WriteLine("Connecting with Discord RPC...");
-        
-        /* This code was moved into the RichPresenceHandler
-        long application_Id = 1035200601254023208;
-        
-        // This makes the SDK connect to Canary
-        System.Environment.SetEnvironmentVariable("DISCORD_INSTANCE_ID", "0");
-        var discord = new Discord.Discord(application_Id, (UInt64)Discord.CreateFlags.Default);
-        var discordActivityManager = discord.GetActivityManager();
-        Discord.Activity discordActivity;
-        discordActivity = new Discord.Activity()
-        {
-            ApplicationId = application_Id, // Application ID
-            Name = "Realism Project Network Planner", // Name of the Application
-            State = "Idle", // Last command executed (e. g. Created new leg (R054))
-            Details = "Opening Project", // Name of active Shift (this.ActiveShift.Name)
-            Timestamps = new Discord.ActivityTimestamps()
-            {
-                Start = Time.UnixNow()
-            },
-            Assets = new Discord.ActivityAssets()
-            {
-                LargeImage = "networkplannericon"
-            },
-            Instance = false,
-        };
-        
-
-        Discord.Result hasUpdated = Discord.Result.InsufficientBuffer;
-        discordActivityManager.UpdateActivity(discordActivity, (result) =>
-        {
-            if (result == Discord.Result.Ok)
-            {
-                Console.WriteLine("Connected!");
-                hasUpdated = result;
-            }
-        });
-        while (hasUpdated != Discord.Result.Ok)
-        {
-            discord.RunCallbacks();
-        }
-        */
-
         RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
