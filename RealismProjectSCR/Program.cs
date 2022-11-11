@@ -610,83 +610,111 @@ class Program
                 switch (EnteredCommand[1])
                 {
                     case "leg":
-                    Leg selectedLeg = null;
-                    int input = -1;
-                    if (EnteredCommand.Length < 2)
-                    {
-                        Console.WriteLine("Not enough Arguments given. Please try again...");
-                        break;
-                    }
-
-                    if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
-                    {
-                        ActiveShift.PredictHeadcodes();
-                        for (int i = 0; i < ActiveShift.Legs.Count; i++)
+                        Leg selectedLeg = null;
+                        int input = -1;
+                        if (EnteredCommand.Length < 2)
                         {
-                            Console.WriteLine(String.Format("{0} - {1}", i + 1, ActiveShift.Legs[i].ToCompact(i + 1, " - "))); // Prints legs with index
+                            Console.WriteLine("Not enough Arguments given. Please try again...");
+                            break;
                         }
-                        bool validInput = false;
-                        
-                        while (!validInput)
+                        if (ActiveShift.Legs.Count == 0)
                         {
-                            Console.WriteLine("Select leg: ");
-                            string rawInput = Console.ReadLine();
-                            if (rawInput == "cancel")
+                            Console.WriteLine("There are no legs to delete...");
+                        }
+                        RichPresenceHandler.UpdateActivity("Deleting legs");
+                        if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
+                        {
+                            ActiveShift.PredictHeadcodes();
+                            for (int i = 0; i < ActiveShift.Legs.Count; i++)
                             {
-                                Console.WriteLine("Okay, cancelled");
-                                break;
+                                Console.WriteLine(String.Format("{0} - {1}", i + 1, ActiveShift.Legs[i].ToCompact(i + 1, " - "))); // Prints legs with index
                             }
+                            bool validInput = false;
+                        
+                            while (!validInput)
+                            {
+                                Console.WriteLine("Select leg: ");
+                                string rawInput = Console.ReadLine();
+                                if (rawInput == "cancel")
+                                {
+                                    Console.WriteLine("Okay, cancelled");
+                                    break;
+                                }
+                                try
+                                {
+                                    input = Convert.ToInt32(rawInput) - 1;
+                                    selectedLeg = ActiveShift.Legs[input];
+                                    validInput = true;
+                                }
+                                catch (System.FormatException)
+                                {
+                                    Console.WriteLine("Invalid leg index entered. Please enter a valid number...");
+                                }
+                                catch(System.Exception)
+                                {
+                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                }
+                                if (ActiveShift.Legs.Count < input)
+                                {
+                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                }
+                                if (input < 1)
+                                {
+                                   Console.WriteLine("Invalid leg given. Please enter a different leg index.");
+                                }
+                            }
+                        }
+                        else
+                        {
                             try
                             {
-                                input = Convert.ToInt32(rawInput) - 1;
-                                selectedLeg = ActiveShift.Legs[input];
-                                validInput = true;
+                                input = Convert.ToInt32(EnteredCommand[2]) - 1;
                             }
-                            catch (System.FormatException)
-                            {
-                                Console.WriteLine("Invalid leg index entered. Please enter a valid number...");
-                            }
-                            catch(System.Exception)
+                            catch (Exception)
                             {
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                             }
-                            if (ActiveShift.Legs.Count < input)
-                            {
-                                Console.WriteLine("Invalid Argument given. Please try again...");
-                            }
-                            if (input < 1)
-                            {
-                               Console.WriteLine("Invalid leg given. Please enter a different leg index.");
-                            }
+                            selectedLeg = ActiveShift.Legs[input];
                         }
-                    }
-                    else
-                    {
-                        try
+                        Console.WriteLine("Are you sure that you want to remove leg " + (input + 1) + "?");
+                        Console.WriteLine(selectedLeg.ToDriver());
+                        bool? confirm = null;
+                        while (confirm == null)
                         {
-                            input = Convert.ToInt32(EnteredCommand[2]) - 1;
+                            string? confirmation = Console.ReadLine();
+                            confirm = BoolFromInput(confirmation);
+                            if (confirm == null)
+                            {
+                                Console.WriteLine("Enter \"yes\" or \"no\"...");
+                            }
                         }
-                        catch (Exception)
+                        
+                        if (confirm == true)
                         {
-                            Console.WriteLine("Invalid Argument given. Please try again...");
+                            Console.WriteLine("Okay, removing...");
+                            ActiveShift.Legs.Remove(selectedLeg);
+                            ActiveShift.Push();
+                            Console.WriteLine("Removed leg successfully!");
                         }
-                        selectedLeg = ActiveShift.Legs[input];
-                    }
-                    Console.WriteLine("Are you sure that you want to remove leg " + (input + 1) + "?");
-                    Console.WriteLine(selectedLeg.ToDriver());
-                    string? confirmation = Console.ReadLine();
-                    bool? confirm = BoolFromInput(confirmation);
-                    if (confirm == true)
-                    {
-                        Console.WriteLine("Okay, removing...");
-                        ActiveShift.Legs.Remove(selectedLeg);
-                        ActiveShift.Push();
-                    }
-                    break;
+                        else
+                        {
+                            Console.WriteLine("Okay, cancelled");
+                        }
+                        break;
 
-                    default: // Not an existing command
-                    Console.WriteLine("Invalid Command. Please try again...");
-                    break;
+                    /*case "driver":
+                        Driver selectedDriver = null;
+                        int inputIndex = -1;
+                        if (EnteredCommand.Length < 2)
+                        {
+                            Console.WriteLine("Not enough Arguments given. Please try again...");
+                            break;
+                        }
+                        break;*/
+
+                        default: // Not an existing command
+                        Console.WriteLine("Invalid Command. Please try again...");
+                        break;
                 }
 
 
@@ -765,14 +793,18 @@ class Program
             "yes",
             "true",
             "y",
-            "positive"
+            "positive",
+            "+",
+            "affirmative",
         };
         string[] falseList = new string[]
         {
             "no",
             "false",
             "n",
-            "negative"
+            "negative",
+            "-",
+            "dissident",
         };
         if (String.IsNullOrEmpty(input))
         {
