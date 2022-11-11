@@ -222,7 +222,7 @@ namespace RealismProjectSCR.SCRObjects
             return output;
         }
 
-        public string ToCompact(int LegNumber)
+        public string ToCompact(int LegNumber, string indexSeperator = "    ")
         {
             if (this.Headcode == null)
             {
