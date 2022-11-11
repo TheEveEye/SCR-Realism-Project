@@ -622,8 +622,8 @@ class Program
                         if (ActiveShift.Legs.Count == 0)
                         {
                             Console.WriteLine("There are no legs to delete...");
-                            break;
                             hasCancelled = true;
+                            break;
                         }
                         RichPresenceHandler.UpdateActivity("Deleting legs");
                         if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
