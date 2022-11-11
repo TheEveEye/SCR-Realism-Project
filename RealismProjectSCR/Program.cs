@@ -712,7 +712,9 @@ class Program
                         }
                         break;
 
-                    /*case "driver":
+                    case "driver":
+                        throw new System.NotImplementedException("\"remove driver\" command has not been implemented yet");
+                        /*
                         Driver selectedDriver = null;
                         int inputIndex = -1;
                         if (EnteredCommand.Length < 2)
@@ -720,7 +722,8 @@ class Program
                             Console.WriteLine("Not enough Arguments given. Please try again...");
                             break;
                         }
-                        break;*/
+                        break; // remove driver command has not been implemented yet.
+                        */
 
                         default: // Not an existing command
                         Console.WriteLine("Invalid Command. Please try again...");
