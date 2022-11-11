@@ -699,6 +699,10 @@ class Program
                         else
                         {
                             Console.WriteLine("Okay, cancelled");
+<<<<<<< HEAD
+                            break;
+=======
+>>>>>>> b1bfc483c20360cf4f34d04bf6105e626175a70a
                         }
                         break;
 
@@ -796,6 +800,10 @@ class Program
             "positive",
             "+",
             "affirmative",
+<<<<<<< HEAD
+            "confirm",
+=======
+>>>>>>> b1bfc483c20360cf4f34d04bf6105e626175a70a
         };
         string[] falseList = new string[]
         {
@@ -805,6 +813,10 @@ class Program
             "negative",
             "-",
             "dissident",
+<<<<<<< HEAD
+            "cancel",
+=======
+>>>>>>> b1bfc483c20360cf4f34d04bf6105e626175a70a
         };
         if (String.IsNullOrEmpty(input))
         {
