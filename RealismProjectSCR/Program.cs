@@ -612,6 +612,8 @@ class Program
                     case "leg":
                         Leg selectedLeg = null;
                         int input = -1;
+                        bool hasCancelled = false;
+
                         if (EnteredCommand.Length < 2)
                         {
                             Console.WriteLine("Not enough Arguments given. Please try again...");
@@ -620,6 +622,8 @@ class Program
                         if (ActiveShift.Legs.Count == 0)
                         {
                             Console.WriteLine("There are no legs to delete...");
+                            break;
+                            hasCancelled = true;
                         }
                         RichPresenceHandler.UpdateActivity("Deleting legs");
                         if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
@@ -638,21 +642,21 @@ class Program
                                 if (rawInput == "cancel")
                                 {
                                     Console.WriteLine("Okay, cancelled");
+                                    hasCancelled = true;
                                     break;
                                 }
-                                try
+                                else
                                 {
-                                    input = Convert.ToInt32(rawInput) - 1;
-                                    selectedLeg = ActiveShift.Legs[input];
-                                    validInput = true;
-                                }
-                                catch (System.FormatException)
-                                {
-                                    Console.WriteLine("Invalid leg index entered. Please enter a valid number...");
-                                }
-                                catch(System.Exception)
-                                {
-                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                    try
+                                    {
+                                        input = Convert.ToInt32(rawInput) - 1;
+                                        selectedLeg = ActiveShift.Legs[input];
+                                        validInput = true;
+                                    }
+                                    catch (System.FormatException)
+                                    {
+                                        Console.WriteLine("Invalid leg index entered. Please enter a valid number...");
+                                    }
                                 }
                                 if (ActiveShift.Legs.Count < input)
                                 {
@@ -675,6 +679,10 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                             }
                             selectedLeg = ActiveShift.Legs[input];
+                        }
+                        if (hasCancelled)
+                        {
+                            break;
                         }
                         Console.WriteLine("Are you sure that you want to remove leg " + (input + 1) + "?");
                         Console.WriteLine(selectedLeg.ToDriver());
@@ -699,6 +707,7 @@ class Program
                         else
                         {
                             Console.WriteLine("Okay, cancelled");
+                            hasCancelled = true;
                             break;
                         }
                         break;
@@ -717,8 +726,6 @@ class Program
                         Console.WriteLine("Invalid Command. Please try again...");
                         break;
                 }
-
-
                 break;
 
                 default: // Not an existing command
