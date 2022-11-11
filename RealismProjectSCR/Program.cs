@@ -1,4 +1,4 @@
-﻿using RealismProjectSCR;
+using RealismProjectSCR;
 using RealismProjectSCR.SCRObjects;
 using RealismProjectSCR.SCRObjects.TimeTables;
 using RealismProjectSCR.Units;
@@ -602,6 +602,70 @@ class Program
                             break;
                     }
                     break;
+
+                case "delete":
+                case "remove":
+                case "void":
+
+                switch (EnteredCommand[1])
+                {
+                    case "leg":
+                    if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
+                            {
+                                ActiveShift.PredictHeadcodes();
+                                for (int i = 0; i < ActiveShift.Legs.Length; i++)
+                                {
+                                    Console.WriteLine(String.Format("{0} - {1}", i + 1, ActiveShift.Legs[i].ToCompact())); // Prints legs with index
+                                }
+                                bool validInput = false;
+                                int? input = null; 
+                                Leg selectedLeg = null;
+                                while (!validInput)
+                                {
+                                    Console.WriteLine("Select leg: ");
+                                    string rawInput = Console.ReadLine();
+                                    if (rawInput == "cancel")
+                                    {
+                                        Console.WriteLine("Okay, cancelled");
+                                        break;
+                                    }
+                                    try
+                                    {
+                                        input = Convert.ToInt32?(rawInput) - 1;
+                                        selectedLeg = ActiveShift.Legs[input];
+                                        validInput = true;
+                                    }
+                                    catch (System.FormatException)
+                                    {
+                                        Console.WriteLine("Invalid leg index entered. Please enter a valid number...");
+                                    }
+                                    catch(System.Exception)
+                                    {
+                                        Console.WriteLine("Invalid Argument given. Please try again...");
+                                    }
+                                    if (ActiveShift.Legs.Count < input)
+                                    {
+                                        Console.WriteLine("Invalid Argument given. Please try again...");
+                                    }
+                                    if (Convert.ToInt32(EnteredCommand[2]) < 1)
+                                    {
+                                        Console.WriteLine("Invalid leg given. Please enter a different leg index.");
+                                    }
+                                }
+                                Console.WriteLine("Are you sure that you want to remove leg " + (input + 1) + "?");
+                                Console.WriteLine(selectedLeg.ToDriver());
+                                string confirmation = Console.ReadLine();
+                                // Not done
+                            }
+                    break;
+
+                    default: // Not an existing command
+                    Console.WriteLine("Invalid Command. Please try again...");
+                    break;
+                }
+
+
+                break;
 
                 default: // Not an existing command
                     Console.WriteLine("Invalid Command. Please try again...");
