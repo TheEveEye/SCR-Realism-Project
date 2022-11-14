@@ -587,12 +587,13 @@ class Program
                                     break;
 
                                 default:
-                                    var result = RichPresenceHandler.UpdateActivity(BuildString(EnteredCommandRaw.Split(' ').ToList().GetRange(2, EnteredCommandRaw.Split(' ').Length - 2).ToArray(), " "), true);
+                                    string message = BuildString(EnteredCommandRaw.Split(' ').ToList().GetRange(2, EnteredCommandRaw.Split(' ').Length - 2).ToArray(), " ");
+                                    var result = RichPresenceHandler.UpdateActivity(message, true);
                                     if (result != Discord.Result.Ok)
                                     {
                                         Console.WriteLine("There seems to be some issue with setting your Custom Status.");
                                     }
-                                    Console.WriteLine(String.Format("Successfully changed your status to {0}", EnteredCommand[2]));
+                                    Console.WriteLine(String.Format("Successfully changed your status to \"{0}\"", message));
                                     break;
                             }
                             break;
@@ -714,16 +715,107 @@ class Program
                             break;
 
                         case "driver":
-
-                            throw new System.NotImplementedException("\"remove driver\" command has not been implemented yet");
                             
                             Driver selectedDriver = null;
                             int inputIndex = -1;
+                            bool _hasCancelled = false;
+
                             if (EnteredCommand.Length < 2)
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");
                                 break;
                             }
+                            if (ActiveShift.Drivers.Count == 0)
+                            {
+                                Console.WriteLine("There are no drivers to delete...");
+                                _hasCancelled = true;
+                                break;
+                            }
+                            RichPresenceHandler.UpdateActivity("Deleting drivers");
+                            if (EnteredCommand.Length == 2) // if no index is specified, print all drivers and then choose an index
+                            {
+                                Console.WriteLine(Driver.ToCompacts(ActiveShift.Drivers.ToArray()));
+                                bool validInput = false;
+
+                                while (!validInput)
+                                {
+                                    Console.WriteLine("Select leg: ");
+                                    string rawInput = Console.ReadLine();
+                                    if (rawInput == "cancel")
+                                    {
+                                        Console.WriteLine("Okay, cancelled");
+                                        _hasCancelled = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            inputIndex = Convert.ToInt32(rawInput);
+                                            selectedDriver = ActiveShift.Drivers[inputIndex];
+                                            validInput = true;
+                                        }
+                                        catch (System.FormatException)
+                                        {
+                                            Console.WriteLine("Invalid driver index entered. Please enter a valid number...");
+                                        }
+                                    }
+                                    if (ActiveShift.Drivers.Count < inputIndex)
+                                    {
+                                        Console.WriteLine("Invalid Argument given. Please try again...");
+                                    }
+                                    if (inputIndex < 1)
+                                    {
+                                        Console.WriteLine("Invalid driver given. Please enter a different driver index.");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    inputIndex = Convert.ToInt32(EnteredCommand[2]);
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine("Invalid Argument given. Please try again...");
+                                }
+                                selectedDriver = ActiveShift.Drivers[inputIndex];
+                            }
+                            if (_hasCancelled)
+                            {
+                                break;
+                            }
+                            Console.WriteLine("Are you sure that you want to remove driver " + (inputIndex) + "(" + selectedDriver.PlayerName + ") and all " + selectedDriver.Legs.Count + "legs?");
+                            bool? _confirm = null;
+                            while (_confirm == null)
+                            {
+                                string? confirmation = Console.ReadLine();
+                                confirm = BoolFromInput(confirmation);
+                                if (confirm == null)
+                                {
+                                    Console.WriteLine("Enter \"yes\" or \"no\"...");
+                                }
+                            }
+
+                            if (_confirm == true)
+                            {
+                                Console.WriteLine("Okay, removing...");
+                                foreach (Leg driverLeg in selectedDriver.Legs)
+                                {
+                                    ActiveShift.Legs.Remove(driverLeg);
+                                }
+                                ActiveShift.Drivers.Remove(selectedDriver);
+                                ActiveShift.Push();
+                                Console.WriteLine("Removed driver and legs successfully!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Okay, cancelled");
+                                hasCancelled = true;
+                                break;
+                            }
+                            break;
 
                             break; // remove driver command has not been implemented yet.
                             
