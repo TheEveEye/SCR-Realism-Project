@@ -734,12 +734,12 @@ class Program
                             RichPresenceHandler.UpdateActivity("Deleting drivers");
                             if (EnteredCommand.Length == 2) // if no index is specified, print all drivers and then choose an index
                             {
-                                Console.WriteLine(Driver.ToCompacts(ActiveShift.Drivers.ToArray()));
+                                Console.WriteLine(BuildString(Driver.ToCompacts(ActiveShift.Drivers.ToArray()), "\n"));
                                 bool validInput = false;
 
                                 while (!validInput)
                                 {
-                                    Console.WriteLine("Select leg: ");
+                                    Console.WriteLine("Select driver: ");
                                     string rawInput = Console.ReadLine();
                                     if (rawInput == "cancel")
                                     {
@@ -764,9 +764,9 @@ class Program
                                     {
                                         Console.WriteLine("Invalid Argument given. Please try again...");
                                     }
-                                    if (inputIndex < 1)
+                                    if (inputIndex < 0)
                                     {
-                                        Console.WriteLine("Invalid driver given. Please enter a different driver index.");
+                                        Console.WriteLine("Invalid driver index given. Please enter a different driver index.");
                                     }
                                 }
                             }
@@ -786,13 +786,13 @@ class Program
                             {
                                 break;
                             }
-                            Console.WriteLine("Are you sure that you want to remove driver " + (inputIndex) + "(" + selectedDriver.PlayerName + ") and all " + selectedDriver.Legs.Count + "legs?");
+                            Console.WriteLine("Are you sure that you want to remove driver " + (inputIndex) + " (" + selectedDriver.PlayerName + ") and all " + selectedDriver.Legs.Count + " legs?");
                             bool? _confirm = null;
                             while (_confirm == null)
                             {
-                                string? confirmation = Console.ReadLine();
-                                confirm = BoolFromInput(confirmation);
-                                if (confirm == null)
+                                string? _confirmation = Console.ReadLine();
+                                _confirm = BoolFromInput(_confirmation);
+                                if (_confirm == null)
                                 {
                                     Console.WriteLine("Enter \"yes\" or \"no\"...");
                                 }
@@ -815,10 +815,7 @@ class Program
                                 hasCancelled = true;
                                 break;
                             }
-                            break;
-
-                            break; // remove driver command has not been implemented yet.
-                            
+                            break;                
 
                         default: // Not an existing command
                             Console.WriteLine("Invalid Command. Please try again...");
