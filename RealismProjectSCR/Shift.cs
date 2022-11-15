@@ -68,12 +68,14 @@ namespace RealismProjectSCR
 
         public void Push()
         {
-            string[] vs = new string[Legs.Count];
-            for (int i = 0; i < vs.Length; i++)
+            string[] exportLegs = new string[Legs.Count];
+            for (int i = 0; i < exportLegs.Length; i++)
             {
-                vs[i] = Leg.ToExport(Legs[i]);
+                exportLegs[i] = Leg.ToExport(Legs[i]);
             }
-            File.WriteAllLines(GetPath(this.Name) + @"Legs.shift", vs);
+            File.WriteAllLines(GetPath(this.Name) + @"Legs.shift", exportLegs);
+
+            Driver.Export(Drivers);
         }
 
         public static string[] NamesFromPaths(string[] paths)

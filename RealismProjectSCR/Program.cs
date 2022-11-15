@@ -23,7 +23,7 @@ class Program
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
-    public static int BuildNumber = 86;
+    public static int BuildNumber = 87;
 
     static void Main(string[] args)
     {
@@ -633,7 +633,7 @@ class Program
                                 ActiveShift.PredictHeadcodes();
                                 for (int i = 0; i < ActiveShift.Legs.Count; i++)
                                 {
-                                    Console.WriteLine(String.Format("{0} - {1}", i + 1, ActiveShift.Legs[i].ToCompact(i + 1, " - "))); // Prints legs with index
+                                    Console.WriteLine(String.Format("{0} - {1}", i + 1, ActiveShift.Legs[i].ToCompact(i + 1))); // Prints legs with index
                                 }
                                 bool validInput = false;
                         
