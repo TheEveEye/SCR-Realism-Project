@@ -888,7 +888,7 @@ class Program
     {
         return current + IntToSpaces(length - current.Length);
     }
-    public static bool? BoolFromInput(string input)
+    public static bool? BoolFromInput(string? input)
     {
         bool? output = null;
         string[] trueList = new string[]
