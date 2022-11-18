@@ -681,7 +681,6 @@ class Program
                                 {
                                     Console.WriteLine("Invalid Argument given. Please try again...");
                                 }
-                                
                             }
                             if (hasCancelled)
                             {
