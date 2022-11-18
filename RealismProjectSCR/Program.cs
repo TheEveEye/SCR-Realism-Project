@@ -680,6 +680,7 @@ class Program
                                 catch (Exception)
                                 {
                                     Console.WriteLine("Invalid Argument given. Please try again...");
+                                    break;
                                 }
                             }
                             if (hasCancelled)
