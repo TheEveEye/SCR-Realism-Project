@@ -23,7 +23,7 @@ class Program
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
-    public static int BuildNumber = 88;
+    public static int BuildNumber = 90;
 
     static void Main(string[] args)
     {
@@ -776,12 +776,13 @@ class Program
                                 try
                                 {
                                     inputIndex = Convert.ToInt32(EnteredCommand[2]);
+                                    selectedDriver = ActiveShift.Drivers[inputIndex];
                                 }
                                 catch (Exception)
                                 {
                                     Console.WriteLine("Invalid Argument given. Please try again...");
+                                    break;
                                 }
-                                selectedDriver = ActiveShift.Drivers[inputIndex];
                             }
                             if (_hasCancelled)
                             {
