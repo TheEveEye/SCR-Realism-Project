@@ -776,12 +776,13 @@ class Program
                                 try
                                 {
                                     inputIndex = Convert.ToInt32(EnteredCommand[2]);
+                                    selectedDriver = ActiveShift.Drivers[inputIndex];
                                 }
                                 catch (Exception)
                                 {
                                     Console.WriteLine("Invalid Argument given. Please try again...");
+                                    break;
                                 }
-                                selectedDriver = ActiveShift.Drivers[inputIndex];
                             }
                             if (_hasCancelled)
                             {
