@@ -163,6 +163,7 @@ class Program
                     break;
 
                 case "close": // Closes the Program
+                case "exit":
                     close = true;
                     break;
 
@@ -288,6 +289,7 @@ class Program
                     break;
 
                 case "get": // Allows you to get any information
+                case "obtain":
                     if (EnteredCommand.Length < 2)
                     {
                         Console.WriteLine("Not enough Arguments given. Please try again...");
