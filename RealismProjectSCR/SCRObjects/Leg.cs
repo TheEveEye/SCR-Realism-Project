@@ -234,12 +234,18 @@ namespace RealismProjectSCR.SCRObjects
             }
         }
 
-        public static Leg CreateInteractive(Driver driver)
+        public static Leg CreateInteractive()
         {
-            Leg output = new Leg(null, new TimeFrame(0, 0), null, null, null, driver, DateTime.UtcNow);
+            Leg output = new Leg(null, new TimeFrame(0, 0), null, null, null, null, DateTime.UtcNow);
+            
             // Collect DriverID, Route, Starting Station, Ending Station, First Station Start
             // Don't forget to include TCAS, Driver System
             // Eventually add automatically created timings based on frequencies
+            // Throw an exception with error message
+            bool cancelled = false;
+
+            Console.WriteLine("Creating new leg...");
+            output.Driver = Driver.GetDriverInteractive(); // Gets driver
 
 
             return output;

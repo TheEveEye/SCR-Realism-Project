@@ -69,5 +69,33 @@ namespace RealismProjectSCR.SCRObjects
             }
             return drivers;
         }
+
+        public static Driver GetDriverInteractive(bool cancelOption = false)
+        {
+            Console.WriteLine(Program.BuildString(ToCompacts(Program.ActiveShift.Drivers.ToArray()), "\n"));
+            Console.WriteLine("Choose a driver index...");
+            int chosenIndex = -1;
+            string inputRaw = "";
+            bool validInput = false;
+            Driver output = null;
+            while (!validInput)
+            {
+                inputRaw = Console.ReadLine();
+                if ((inputRaw.ToLower() == "cancel") && cancelOption)
+                {
+                    throw new Exception("cancelled");
+                }
+                try
+                {
+                    chosenIndex = Convert.ToInt32(inputRaw);
+                    output = Program.ActiveShift.Drivers[chosenIndex];
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid index, please enter a valid driver index...");
+                }
+            }
+            return output;
+        }
     }
 }

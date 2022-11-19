@@ -232,7 +232,42 @@ namespace RealismProjectSCR.SCRObjects
             }
             return Longest;
         }
-
+        public static Route GetRouteInteractive(bool cancelOption = false)
+        {
+            Console.WriteLine("Select a route by entering a route number (R0xx):");
+            string inputRaw = "";
+            bool validInput = false;
+            Route output = null;
+            while (!validInput)
+            {
+                inputRaw = Console.ReadLine();
+                if ((inputRaw.ToLower() == "cancel") && cancelOption)
+                {
+                    throw new Exception("cancelled");
+                }
+                try
+                {
+                    int RouteNumber = Convert.ToInt32(Program.BuildString(inputRaw
+                        .ToCharArray()
+                        .ToList<char>()
+                        .GetRange(1, 3)
+                        .ToArray<char>()
+                    , ""));
+                    output = Program.Routes[RouteNumber - 1];
+                    if (output == null)
+                    {
+                        throw new Exception(String.Format("Invalid Route Number \"{0}\"", RouteNumber));
+                    }
+                    validInput = true;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid Route Number entered, please enter an existing route...");
+                    throw;
+                }
+            }
+            return output;
+        }
         public static Route[] Import() // Adding in Platform Allocations soon.
         {
             string[] file = File.ReadAllLines(RoutePath);

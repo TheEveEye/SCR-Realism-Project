@@ -861,6 +861,15 @@ class Program
         }
         return output;
     }
+    public static string BuildString(char[] chars, string seperator)
+    {
+        string[] charStrings = new string[chars.Length];
+        for (int i = 0; i < charStrings.Length; i++)
+        {
+            charStrings[i] = Convert.ToString(chars[i]);
+        }
+        return BuildString(charStrings, seperator);
+    }
     public static bool Contains(string obj1, string[] array)
     {
         bool output = false;
