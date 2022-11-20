@@ -459,7 +459,7 @@ class Program
                                         Console.WriteLine("There are no drivers in this shift. Create one first...");
                                         break;
                                     }
-                                    if (Convert.ToInt32(EnteredCommand[2]) > ActiveShift.Drivers.Count)
+                                    if (Convert.ToInt32(EnteredCommand[2]) > ActiveShift.Drivers.Count - 1)
                                     {
                                         throw new Exception("Higher index entered than there are drivers in the shift");
                                     }
