@@ -236,7 +236,7 @@ namespace RealismProjectSCR.SCRObjects
             }
         }
 
-        public static Leg CreateInteractive()
+        public static Leg CreateInteractive(string[] args)
         {
             Leg output = new Leg(null, new TimeFrame(0, 0), null, null, null, null, DateTime.UtcNow);
             
@@ -245,7 +245,11 @@ namespace RealismProjectSCR.SCRObjects
             // Eventually add automatically created timings based on frequencies
             // Throw an exception with error message
             bool cancelled = false;
-
+            /*
+             
+             
+             
+            */
             Console.WriteLine("Creating new leg...");
             output.Driver = Driver.GetDriverInteractive(true); // Gets driver
             output.Route = Route.GetRouteInteractive(output.Driver, true); // Gets Route

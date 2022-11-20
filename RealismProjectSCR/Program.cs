@@ -228,7 +228,19 @@ class Program
                         case "leg":
                             if (EnteredCommand[2] == "test")
                             {
-                                Leg.CreateInteractive();
+                                try
+                                {
+                                    Leg.CreateInteractive(EnteredCommand);
+                                }
+                                catch (Exception e)
+                                {
+                                    if (e.Message == "cancelled")
+                                    {
+                                        Console.WriteLine("Okay, cancelled");
+                                        break;
+                                    }
+                                }
+                                
                                 Console.WriteLine("Success!");
                                 break;
                             }
