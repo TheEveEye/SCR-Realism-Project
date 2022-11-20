@@ -226,6 +226,12 @@ class Program
                             break;
 
                         case "leg":
+                            if (EnteredCommand[2] == "test")
+                            {
+                                Leg.CreateInteractive();
+                                Console.WriteLine("Success!");
+                                break;
+                            }
                             if (EnteredCommand.Length < 6)
                             {
                                 Console.WriteLine("Not enough Arguments given. Please try again...");

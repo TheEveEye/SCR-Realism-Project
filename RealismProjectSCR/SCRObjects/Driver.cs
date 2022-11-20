@@ -89,6 +89,7 @@ namespace RealismProjectSCR.SCRObjects
                 {
                     chosenIndex = Convert.ToInt32(inputRaw);
                     output = Program.ActiveShift.Drivers[chosenIndex];
+                    validInput = true;
                 }
                 catch (Exception)
                 {
