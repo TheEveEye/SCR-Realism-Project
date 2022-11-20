@@ -593,6 +593,7 @@ class Program
                                     {
                                         Console.WriteLine("There seems to be some issue with setting your Custom Status.");
                                     }
+                                    RichPresenceHandler.customStatusSet = true;
                                     Console.WriteLine(String.Format("Successfully changed your status to \"{0}\"", message));
                                     break;
                             }
@@ -899,8 +900,12 @@ class Program
     {
         return current + IntToSpaces(length - current.Length);
     }
-    public static bool? BoolFromInput(string? input)
+    public static bool? BoolFromInput(string? input, bool cancelOption = false)
     {
+        if ((input == "cancel") && cancelOption)
+        {
+            throw new Exception("cancelled");
+        }
         bool? output = null;
         string[] trueList = new string[]
         {

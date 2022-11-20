@@ -232,10 +232,17 @@ namespace RealismProjectSCR.SCRObjects
             }
             return Longest;
         }
-        public static Route GetRouteInteractive(bool cancelOption = false)
+        public static Route GetRouteInteractive(Driver driver, bool cancelOption = false)
         {
-            Console.WriteLine("Select a route by entering a route number (R0xx):");
-            string inputRaw = "";
+            if (driver.Legs.Count > 0)
+            {
+                Console.WriteLine("Select a route by entering a route number (R0xx) or enter \"continue\" or nothing to continue with the route before (:");
+            }
+            else
+            {
+                Console.WriteLine("Select a route by entering a route number (R0xx):");
+            }
+            string inputRaw = String.Empty;
             bool validInput = false;
             Route output = null;
             while (!validInput)
@@ -247,16 +254,35 @@ namespace RealismProjectSCR.SCRObjects
                 }
                 try
                 {
-                    int RouteNumber = Convert.ToInt32(Program.BuildString(inputRaw
-                        .ToCharArray()
-                        .ToList<char>()
-                        .GetRange(1, 3)
-                        .ToArray<char>()
-                    , ""));
-                    output = Program.Routes[RouteNumber - 1];
-                    if (output == null)
+                    if ((inputRaw.ToLower() == "continue") || (inputRaw == String.Empty))
                     {
-                        throw new Exception(String.Format("Invalid Route Number \"{0}\"", RouteNumber));
+                        if (driver.Legs.Count > 0)
+                        {
+                            driver.SortLegs(Leg.SortType.EndTime);
+                            output = driver.Legs[driver.Legs.Count - 1].Route;
+                        }
+                        else if (driver.Route != null)
+                        {
+                            output = driver.Route;
+                        }
+                        else
+                        {
+                            Console.WriteLine("This driver doesn't have any legs or a route selected. Please enter a route number (R0xx):");
+                        }
+                    }
+                    else
+                    {
+                        int RouteNumber = Convert.ToInt32(Program.BuildString(inputRaw
+                            .ToCharArray()
+                            .ToList<char>()
+                            .GetRange(1, 3)
+                            .ToArray<char>()
+                        , ""));
+                        output = Program.Routes[RouteNumber - 1];
+                        if (output == null)
+                        {
+                            throw new Exception(String.Format("Invalid Route Number \"{0}\"", RouteNumber));
+                        }
                     }
                     validInput = true;
                 }

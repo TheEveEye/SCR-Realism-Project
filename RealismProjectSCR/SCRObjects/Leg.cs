@@ -245,8 +245,8 @@ namespace RealismProjectSCR.SCRObjects
             bool cancelled = false;
 
             Console.WriteLine("Creating new leg...");
-            output.Driver = Driver.GetDriverInteractive(); // Gets driver
-            output.Route = Route.GetRouteInteractive();
+            output.Driver = Driver.GetDriverInteractive(true); // Gets driver
+            output.Route = Route.GetRouteInteractive(output.Driver, true); // Gets Route
 
             return output;
         }

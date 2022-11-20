@@ -97,5 +97,15 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
+
+        public static TimeFrame GetTimeFrameInteractive(Driver driver, bool cancelOption = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SortLegs(Leg.SortType sortType)
+        {
+            this.Legs = Leg.Sort(this.Legs, sortType);
+        }
     }
 }
