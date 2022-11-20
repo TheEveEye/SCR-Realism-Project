@@ -102,6 +102,40 @@ namespace RealismProjectSCR.SCRObjects
             }
             return output;
         }
+
+        public static Route FromRouteNumberString(string input, bool cancelOption = false)
+        {
+            if ((input.ToLower() == "cancel") && cancelOption)
+            {
+                throw new Exception("cancelled");
+            }
+            int RouteNumber = 0;
+            bool isRouteString = true;
+            try
+            {
+                RouteNumber = Convert.ToInt32(input);
+                isRouteString = false;
+            }
+            catch (Exception) { }
+
+            if (isRouteString)
+            {
+                RouteNumber = Convert.ToInt32(Program.BuildString(input
+                    .ToCharArray()
+                    .ToList<char>()
+                    .GetRange(1, 3)
+                    .ToArray<char>()
+                , ""));
+            }
+
+            if (RouteNumber == 0)
+            {
+                throw new IndexOutOfRangeException("No route number was set during the Route.FromRouteNumberString() Process");
+            }
+
+            return Program.Routes[RouteNumber - 1];
+        }
+
         public string ToNumberNameOutput()
         {
             return String.Format("{0} ({1})", Route.RouteNumberString(this.RouteNumber), this.Name);
@@ -272,17 +306,7 @@ namespace RealismProjectSCR.SCRObjects
                     }
                     else
                     {
-                        int RouteNumber = Convert.ToInt32(Program.BuildString(inputRaw
-                            .ToCharArray()
-                            .ToList<char>()
-                            .GetRange(1, 3)
-                            .ToArray<char>()
-                        , ""));
-                        output = Program.Routes[RouteNumber - 1];
-                        if (output == null)
-                        {
-                            throw new Exception(String.Format("Invalid Route Number \"{0}\"", RouteNumber));
-                        }
+                        output = FromRouteNumberString(inputRaw, true)
                     }
                     validInput = true;
                 }
