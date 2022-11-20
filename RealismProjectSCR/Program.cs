@@ -573,6 +573,8 @@ class Program
                             {
                                 case "off":
                                 case "disable":
+                                case "reset":
+                                case "deactivate":
                                     RichPresenceHandler.customStatusSet = false;
                                     Console.WriteLine("Turned off custom status.");
                                     break;
