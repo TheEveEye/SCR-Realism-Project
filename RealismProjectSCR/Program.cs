@@ -422,7 +422,9 @@ class Program
                             }
                             ActiveShift.PredictHeadcodes();
                             RichPresenceHandler.UpdateActivity(String.Format("Looking at leg data of a {0} leg", Route.RouteNumberString(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].Route.RouteNumber)));
+                            Console.WriteLine("----------------------------------------------------------------");
                             Console.WriteLine(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver());
+                            Console.WriteLine("----------------------------------------------------------------");
 
                             break;
 
@@ -443,10 +445,41 @@ class Program
                         case "driverdata":
                         case "drivertable":
 
-                            if (EnteredCommand.Length < 3)
+                            Driver chosenDriver = null;
+                            try
                             {
-
+                                if (EnteredCommand.Length < 3)
+                                {
+                                    chosenDriver = Driver.GetDriverInteractive(true);
+                                }
+                                else
+                                {
+                                    if (ActiveShift.Drivers.Count == 0)
+                                    {
+                                        Console.WriteLine("There are no drivers in this shift. Create one first...");
+                                        break;
+                                    }
+                                    if (Convert.ToInt32(EnteredCommand[2]) > ActiveShift.Drivers.Count)
+                                    {
+                                        throw new Exception("Higher index entered than there are drivers in the shift");
+                                    }
+                                    chosenDriver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])];
+                                }
                             }
+                            catch (Exception e)
+                            {
+                                if (e.Message == "cancelled")
+                                {
+                                    Console.WriteLine("Okay, cancelled");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Invalid Driver Index entered, please enter a valid index...");
+                                }
+                            }
+
+                            Console.WriteLine(BuildString(chosenDriver.ToDriver(), "\n"));
 
                             break;
 

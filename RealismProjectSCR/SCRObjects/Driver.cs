@@ -32,6 +32,19 @@ namespace RealismProjectSCR.SCRObjects
             return output;
         }
 
+        public string[] ToDriver()
+        {
+            List<string> output = new List<string>();
+            this.SortLegs(Leg.SortType.StartTime);
+            output.Add(String.Format("{0}   Route: {1}    {2} Legs    Spawn Time: {3}", PlayerName, Route.ToNumberNameOutput(), Legs.Count, Time.ScheduleFramesToDateTime(SpawningFrame - Program.ActiveShift.TimeFrame.Start).ToLongTimeString()));
+            for (int i = 0; i < Legs.Count; i++)
+            {
+                output.Add("\n");
+                output.Add(Legs[i].ToDriver(i + 1));
+            }
+            return output.ToArray();
+        }
+
         public string ToExport()
         {
             // cvlai:1:4560

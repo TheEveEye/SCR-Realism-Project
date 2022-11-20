@@ -174,13 +174,17 @@ namespace RealismProjectSCR.SCRObjects
             return new TimeFrame(departures[0].Frame, departures[departures.Length - 1].Frame);
         }
 
-        public string ToDriver()
+        public string ToDriver(int legNumber = 0)
         {
             List<string> output = new List<string>();
-
-            output.Add("----------------------------------------------------------------");
-
-            output.Add("Departures for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
+            if (legNumber == 0)
+            {
+                output.Add("Departures for Leg " + (Array.IndexOf(Program.ActiveShift.Legs.ToArray(), this) + 1));
+            }
+            else
+            {
+                output.Add("Departures for Leg " + legNumber);
+            }
             if (this.Headcode == null)
             {
                 output.Add("Starting Time: " + TimeFrame.StartTime + "    Route: " + Route.RouteNumberString(Route.RouteNumber) + " (" + Route.Name + ")    Last Station: " + Departures[Departures.Length - 1].Station.Name);
@@ -200,8 +204,6 @@ namespace RealismProjectSCR.SCRObjects
             // 12:27:00 + Stepford East
             //          |
             // 12:28:45 + Stepford High Street
-
-            output.Add("----------------------------------------------------------------");
             
             string outputString = "";
             foreach (string Line in output) // Building String
