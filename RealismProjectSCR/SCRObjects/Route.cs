@@ -306,7 +306,7 @@ namespace RealismProjectSCR.SCRObjects
                     }
                     else
                     {
-                        output = FromRouteNumberString(inputRaw, true)
+                        output = FromRouteNumberString(inputRaw, true);
                     }
                     validInput = true;
                 }
