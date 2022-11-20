@@ -476,6 +476,7 @@ class Program
                                 else
                                 {
                                     Console.WriteLine("Invalid Driver Index entered, please enter a valid index...");
+                                    break;
                                 }
                             }
 
