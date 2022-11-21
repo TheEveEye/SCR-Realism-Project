@@ -246,13 +246,27 @@ namespace RealismProjectSCR.SCRObjects
             // Throw an exception with error message
             bool cancelled = false;
             /*
-             
+              Notes:
              
              
             */
             Console.WriteLine("Creating new leg...");
             output.Driver = Driver.GetDriverInteractive(true); // Gets driver
             output.Route = Route.GetRouteInteractive(output.Driver, true); // Gets Route
+
+            bool hasPreviousLegs = output.Driver.Legs.Count > 0;
+
+            if (hasPreviousLegs)
+            {
+                output.Driver.SortLegs(SortType.EndTime);
+                Console.WriteLine(String.Format("The last leg of this driver ended at {0}. Enter a frame number to add delay at the terminus, enter \"no\" to cancel", output.Driver.Legs[output.Driver.Legs.Count - 1].TimeFrame.EndTime));
+                string delay = Console.ReadLine();
+                bool? noPreviousLeg = Program.BoolFromInput(delay);
+                if (!noPreviousLeg.HasValue)
+                {
+                    // Continue leg creation with delay
+                }
+            }
 
             return output;
         }
