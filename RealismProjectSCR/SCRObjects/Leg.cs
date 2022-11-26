@@ -244,7 +244,6 @@ namespace RealismProjectSCR.SCRObjects
             // Don't forget to include TCAS, Driver System
             // Eventually add automatically created timings based on frequencies
             // Throw an exception with error message
-            bool cancelled = false;
             /*
               Notes:
              
@@ -267,7 +266,6 @@ namespace RealismProjectSCR.SCRObjects
                     // Continue leg creation with delay
                 }
             }
-
             return output;
         }
 
