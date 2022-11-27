@@ -20,6 +20,7 @@ class Program
     public static List<string> CommandHistory = new List<string>();
     public static long ProgramStartUnix;
 
+    public static string[] Options;
     public static string ProjectDirectoryPath;
     public static string ExePath;
 
@@ -41,6 +42,10 @@ class Program
             .Split('\\').Length - 1);
         exePathRaw.Add("RealismProjectSCR.exe");
         ExePath = BuildString(exePathRaw.ToArray(), "\\");
+
+        Options = File.ReadAllLines(ProjectDirectoryPath + "options.txt"); 
+        // bool Options[0] = true: Program has been set up before, false: Program has not been set up before
+        // string Options[1] = "https://discord.gg/...": Discord Invite Link to the SCR Realism Project Discord Server
 
         Console.WriteLine("Importing Station Data...");
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
