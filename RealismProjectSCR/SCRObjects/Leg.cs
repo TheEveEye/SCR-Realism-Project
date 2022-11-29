@@ -255,17 +255,82 @@ namespace RealismProjectSCR.SCRObjects
 
             bool hasPreviousLegs = output.Driver.Legs.Count > 0;
 
+            bool continueFromLastLeg = false;
+
             if (hasPreviousLegs)
             {
                 output.Driver.SortLegs(SortType.EndTime);
-                Console.WriteLine(String.Format("The last leg of this driver ended at {0}. Enter a frame number to add delay at the terminus, enter \"no\" to cancel", output.Driver.Legs[output.Driver.Legs.Count - 1].TimeFrame.EndTime));
-                string delay = Console.ReadLine();
-                bool? noPreviousLeg = Program.BoolFromInput(delay);
-                if (!noPreviousLeg.HasValue)
+                var beforeLeg = output.Driver.Legs[output.Driver.Legs.Count - 1];
+                Console.WriteLine(String.Format("The last leg of this driver ended at {0}. Enter a frame number to add delay at the terminus, enter \"no\" to continue with creation", beforeLeg.TimeFrame.EndTime));
+                bool validInput = false;
+                bool? notContinue = null;
+                while (!validInput)
                 {
-                    // Continue leg creation with delay
+                    string delay = Console.ReadLine();
+                    if (delay == "cancel")
+                    {
+                        throw new Exception("cancelled");
+                    }
+                    notContinue = Program.BoolFromInput(delay);
+                    if (!notContinue.HasValue)
+                    {
+                        try
+                        {
+                            int delayInt = Convert.ToInt32(delay);
+                            continueFromLastLeg = true;
+                            validInput = true; // The input is fine, which doesn't mean that the program will be fine after
+                            output.TimeFrame = new TimeFrame(beforeLeg.TimeFrame.End + delayInt, new int());
+                            Console.WriteLine(String.Format("Okay, continuing {0} later at {1}", Time.ScheduleFramesToDateTime(delayInt).ToLongTimeString(), output.TimeFrame.StartTime));
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Please enter \"no\" or a frame to add delay at the terminus in order to continue");
+                        }
+                    }
+                    else if (notContinue == false)
+                    {
+                        validInput = true;
+                    }
                 }
             }
+
+            if (!continueFromLastLeg)
+            {
+                Console.WriteLine("Enter Starting Time/Frame:");
+                bool validStartingTime = false;
+                int startingFrame = new int();
+
+                while (!validStartingTime)
+                {
+                    string startingTime = Console.ReadLine();
+                    if (startingTime == "cancel")
+                    {
+                        throw new Exception("cancelled");
+                    }
+                    Time.Format format = Time.GetTimeFormat(startingTime);
+
+                    switch (format)
+                    {
+                        case Time.Format.Frames:
+                            startingFrame = Convert.ToInt32(startingTime);
+                            validStartingTime = true;
+                            break;
+
+                        case Time.Format.Time:
+                            startingFrame = Time.TimeToSeconds(startingTime) / 15;
+                            validStartingTime = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("Please enter a valid Time string or Schedule Frame");
+                            break;
+                    }
+                }
+                output.TimeFrame = new TimeFrame(startingFrame, new int());
+            }
+
+
+
             return output;
         }
 

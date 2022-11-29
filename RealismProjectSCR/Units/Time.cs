@@ -116,6 +116,10 @@ namespace RealismProjectSCR.Units
         public string StartTime { get; set; } // Meassured in Time (e. g. 13:45:15)
         public string EndTime { get; set; } // Meassured in Time (e. g. 13:45:15)
 
+
+        /// <summary>
+        /// Creates a new TimeFrame Instance with the parameters being ScheduleFrames
+        /// </summary>
         public TimeFrame(int Start, int End)
         {
             this.Start = Start;
@@ -125,6 +129,9 @@ namespace RealismProjectSCR.Units
 
         }
 
+        /// <summary>
+        /// Creates a new TimeFrame Instance with the parameters being a Time String (e. g. 12:34:45)
+        /// </summary>
         public TimeFrame(string StartTime, string EndTime)
         {
             this.StartTime = StartTime;

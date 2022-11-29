@@ -990,7 +990,6 @@ class Program
             "negative",
             "-",
             "dissident",
-            "cancel",
         };
         if (String.IsNullOrEmpty(input))
         {

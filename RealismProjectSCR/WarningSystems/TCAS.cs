@@ -56,10 +56,15 @@ namespace RealismProjectSCR
         {
             List<CollisionStatus> collisionStatuses = new List<CollisionStatus>();
 
+            // Checks if the train is departing at the same station
             if ((departure1.Station.Equals(departure2.Station)) && (TimeFrame.Conflicts(departure1.Occupation, departure2.Occupation)))
             {
                 collisionStatuses.Add(CollisionStatus.SameStation);
             }
+
+            // Checks if the trains can depart at the same platform
+            // This will not work until Station Platforms are fully added to the program
+            /*
             for (int i = 0; i < departure2.PossiblePlatforms.Length; i++)
             {
                 if ((departure1.PossiblePlatforms.Contains(departure2.PossiblePlatforms[i])) && (TimeFrame.Conflicts(departure1.Occupation, departure2.Occupation)) && (!collisionStatuses.Contains(CollisionStatus.SamePlatform)))
@@ -67,9 +72,11 @@ namespace RealismProjectSCR
                     collisionStatuses.Add(CollisionStatus.SamePlatform);
                 }
             }
+            */
+
             // Add CollisionStatus.SameNextStation
-            // Add CollisionStatus.SameStationEntrance
-            // Add CollisionStatus.SameStationExit
+            // Add CollisionStatus.SameStationEntrance (This will not happen for a while)
+            // Add CollisionStatus.SameStationExit (This will not happen for a while)
 
             return collisionStatuses;
         }
