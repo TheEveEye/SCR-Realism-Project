@@ -1,12 +1,13 @@
-﻿using System;
+﻿using System; //using
+//what are these for? ↴
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RealismProjectSCR.SCRObjects
+namespace RealismProjectSCR.SCRObjects //namespace
 {
-    public class Operator
+    public class Operator //class
     {
         public static Operator Connect = new Operator("Connect", 2);
         public static Operator Express = new Operator("Express", 4);
@@ -22,8 +23,15 @@ namespace RealismProjectSCR.SCRObjects
             this.MinimumThreshold = MinimumThreshold;
         }
 
-        public static Operator FromString(string input)
+        public static Operator FromString(string input) //identifying operator from input?
         {
+        /* search the result in array instead of checking individual strings:
+        
+        object[] operators = {Connect, Express, Waterline, Airlink};
+        object operator = Array.Find(operators, input);
+        return operator;
+        
+         */
             if (input == "Connect")
             {
                 return Connect;
@@ -42,7 +50,7 @@ namespace RealismProjectSCR.SCRObjects
             }
             else
             {
-                throw new ArgumentException(String.Format("Unknown Operator \"{0}\"", input));
+                throw new ArgumentException(String.Format("Unknown Operator \"{0}\"", input)); //throws if operator is not found
             }
         }
     }
