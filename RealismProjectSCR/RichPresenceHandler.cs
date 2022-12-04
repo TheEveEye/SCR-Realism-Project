@@ -102,7 +102,7 @@ namespace RealismProjectSCR
             isDiscordClientInstalled = true;
             isDiscordClientRunning = true;
             customStatusSet = false;
-            discordActivityManager.RegisterCommand(Program.Options[1]);
+            
             var result = UpdateActivity(startupActivity);
             currentActivity = startupActivity;
             if (result == Discord.Result.Ok)
