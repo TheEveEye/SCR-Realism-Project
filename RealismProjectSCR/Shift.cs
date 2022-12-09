@@ -95,19 +95,19 @@ namespace RealismProjectSCR
 
         public static string GetPath(string Name)
         {
-            return Program.ProjectDirectoryPath + @"Shifts\" + Name + @"\";
+            return Program.ProjectDirectoryPath + @"Shifts/" + Name + @"/";
         }
 
         public static Shift Import(string Path, string Name)
         {
             Shift output = new(Name, new TimeFrame(0, 0), "", new List<Driver>(), new List<Leg>());
 
-            string[] shiftInfo = File.ReadAllLines(Path + @"\Info.shift");
+            string[] shiftInfo = File.ReadAllLines(Path + @"/Info.shift");
             output.Description = shiftInfo[1];
             string[] timeFrameRaw = shiftInfo[0].Split(';');
             output.TimeFrame = new TimeFrame(Convert.ToInt32(timeFrameRaw[0]), Convert.ToInt32(timeFrameRaw[1]));
             output.Drivers = Driver.ImportAll(output.Name);
-            string[] legsRaw = File.ReadAllLines(Path + @"\Legs.shift");
+            string[] legsRaw = File.ReadAllLines(Path + @"/Legs.shift");
             Leg[] legs = new Leg[legsRaw.Length];
             for (int i = 0; i < legs.Length; i++)
             {
@@ -193,7 +193,7 @@ namespace RealismProjectSCR
 
         public static Shift Create(Shift shift)
         {
-            string tempShiftPath = Program.ProjectDirectoryPath + @"Shifts\" + shift.Name + @"\";
+            string tempShiftPath = Program.ProjectDirectoryPath + @"Shifts/" + shift.Name + @"/";
             if (Directory.Exists(tempShiftPath))
             {
                 throw new IOException("Folder already exists.");

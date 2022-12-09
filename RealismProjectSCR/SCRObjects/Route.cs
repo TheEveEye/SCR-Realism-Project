@@ -12,7 +12,7 @@ namespace RealismProjectSCR.SCRObjects
 {
     public class Route
     {
-        public static string RoutePath = Program.ProjectDirectoryPath + @"SCRObjects\Routes.txt";
+        public static string RoutePath = Program.ProjectDirectoryPath + @"SCRObjects/Routes.txt";
 
         public int RouteNumber { get; set; }
         public Station Terminus1 { get; set; }

@@ -34,7 +34,7 @@ class Program
 
 
         Console.WriteLine("Importing Program Data...");
-        ProjectDirectoryPath = Path.GetFullPath(@"resources\");
+        ProjectDirectoryPath = Path.GetFullPath(@"resources/");
         List<string> exePathRaw = ProjectDirectoryPath
             .Split('\\')
             .ToList()
@@ -49,13 +49,13 @@ class Program
 
         Console.WriteLine("Importing Station Data...");
         List<Station> _Stations = new List<Station>(); // Creating List, then converted to array later
-        StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\StationList.txt");
+        StationNames = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects/StationList.txt");
 
-        string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects\AdjacentStations.txt");
+        string[] AdjacentStations = File.ReadAllLines(ProjectDirectoryPath + @"SCRObjects/AdjacentStations.txt");
         for (int i = 0; i < StationNames.Length; i++) // This for-loop 
         {
             _Stations.Add(new Station(StationNames[i], null, null, new List<Departure>())); // Fills in the name of the station
-            _Stations[i].GetSetShortcuts();
+            // _Stations[i].GetSetShortcuts();
         }
         Stations = _Stations.ToArray();
         for (int i = 0; i < Stations.Length; i++)
@@ -71,12 +71,13 @@ class Program
         ShiftNames = Shift.NamesFromPaths(ShiftPaths.ToArray()).ToList<string>();
 
         // Starting up Discord Rich Presence Client
-        Console.WriteLine("Connecting with Discord RPC...");
-        RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
+        // Console.WriteLine("Connecting with Discord RPC...");
+        // RichPresenceHandler.Setup(); // Sets up RichPresence, and sets the current status to Opening Project, Idle
 
         Console.WriteLine("----------------------------------------------------------------");
         Console.WriteLine("SCR Realism Project Network Planner v1.10.2 Build " + BuildNumber);
         Console.WriteLine("Developed by Eve                                                ");
+        Console.WriteLine("Ported to macOS by Kirby                                        ");
         Console.WriteLine("Enter \"help\" or \"commands\" to get a list of commands.       ");
         Console.WriteLine("----------------------------------------------------------------");
 
@@ -107,7 +108,7 @@ class Program
                     if (selectedShiftIndex == ShiftNames.Count + 1)
                     {
                         ActiveShift = Shift.Create(Shift.Collect());
-                        RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", ActiveShift.Name));
+                        // RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", ActiveShift.Name));
                         ShiftNames.Add(ActiveShift.Name);
                         ShiftPaths.Add(ActiveShift.Path);
                     }
@@ -116,7 +117,7 @@ class Program
                         try
                         {
                             ActiveShift = Shift.Import(ShiftPaths[selectedShiftIndex - 1], ShiftNames[selectedShiftIndex - 1]);
-                            RichPresenceHandler.UpdateActivity("Idle");
+                            // RichPresenceHandler.UpdateActivity("Idle");
                             ActiveShift.PredictHeadcodes();
                             selectedShift = true;
                         }
@@ -222,7 +223,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            RichPresenceHandler.UpdateActivity(String.Format("Created new driver on {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Created new driver on {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
                             Route driverRoute = Routes[Convert.ToInt32(EnteredCommand[2]) - 1];
                             int spawningFrame = Convert.ToInt32(EnteredCommand[3]);
                             string driverName = EnteredCommand[4];
@@ -254,7 +255,7 @@ class Program
                                 break;
                             }
                             Route route = Routes[Convert.ToInt32(EnteredCommand[3]) - 1];
-                            RichPresenceHandler.UpdateActivity(String.Format("Created new leg on {0}", Route.RouteNumberString(route.RouteNumber)));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Created new leg on {0}", Route.RouteNumberString(route.RouteNumber)));
                             Driver driver = ActiveShift.Drivers[Convert.ToInt32(EnteredCommand[2])];
                             int StartingFrame = Convert.ToInt32(EnteredCommand[4]);
                             Station startingStation = Station.FromArgument(EnteredCommand[5]);
@@ -272,7 +273,7 @@ class Program
                         case "shift":
 
                             Shift tempShift = Shift.Create(Shift.Collect());
-                            RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", tempShift.Name));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Created new shift named {0}", tempShift.Name));
                             ShiftNames.Add(ActiveShift.Name);
                             ShiftPaths.Add(ActiveShift.Path);
                             Console.WriteLine("Do you want to set it as your Active Shift?");
@@ -304,18 +305,18 @@ class Program
                     {
                         case "elapsedseconds": // Gets the amount of seconds that have passed today
                             Console.WriteLine(Time.ElapsedSeconds());
-                            RichPresenceHandler.UpdateActivity("Viewing the time");
+                            // RichPresenceHandler.UpdateActivity("Viewing the time");
                             break;
 
                         case "elapsedframes":
                         case "elapsedscheduleframes":
                             Console.WriteLine(Time.ElapsedFrames()); // Gets the amount of schedule frames that have passed today
-                            RichPresenceHandler.UpdateActivity("Viewing the time");
+                            // RichPresenceHandler.UpdateActivity("Viewing the time");
                             break;
 
                         case "drivers":
                             Console.WriteLine(BuildString(Driver.ToCompacts(ActiveShift.Drivers.ToArray()), "\n"));
-                            RichPresenceHandler.UpdateActivity("Looking at the Drivers List");
+                            // RichPresenceHandler.UpdateActivity("Looking at the Drivers List");
                             break;
 
                         case "commandhistory":
@@ -336,7 +337,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            RichPresenceHandler.UpdateActivity(String.Format("Looking at the timetable of {0}", searchedStation.Name));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Looking at the timetable of {0}", searchedStation.Name));
                             searchedStation.SortDepartures();
                             Console.WriteLine(searchedStation.ToStationTable());
                             /*
@@ -390,7 +391,7 @@ class Program
                                 Console.WriteLine("Invalid Argument given. Please try again...");
                                 break;
                             }
-                            RichPresenceHandler.UpdateActivity(String.Format("Looking at Route data of {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Looking at Route data of {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
                             Route.PrintData(Convert.ToInt32(EnteredCommand[2]));
                             break;
 
@@ -422,7 +423,7 @@ class Program
                                 break;
                             }
                             ActiveShift.PredictHeadcodes();
-                            RichPresenceHandler.UpdateActivity(String.Format("Looking at leg data of a {0} leg", Route.RouteNumberString(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].Route.RouteNumber)));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Looking at leg data of a {0} leg", Route.RouteNumberString(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].Route.RouteNumber)));
                             Console.WriteLine(ActiveShift.Legs[Convert.ToInt32(EnteredCommand[2]) - 1].ToDriver());
 
                             break;
@@ -431,7 +432,7 @@ class Program
                         case "leglist":
                             string[] compactLegs = ActiveShift.LegsToDebug();
                             ActiveShift.PredictHeadcodes();
-                            RichPresenceHandler.UpdateActivity(String.Format("Looking at a list of {0} legs", ActiveShift.Legs.Count));
+                            // RichPresenceHandler.UpdateActivity(String.Format("Looking at a list of {0} legs", ActiveShift.Legs.Count));
                             Console.WriteLine("----------------------------------------------------------------");
                             foreach (string item in compactLegs)
                             {
@@ -553,7 +554,7 @@ class Program
                             }
                             try
                             {
-                                RichPresenceHandler.UpdateActivity(String.Format("Editing Data for {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
+                                // RichPresenceHandler.UpdateActivity(String.Format("Editing Data for {0}", Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2]))));
                                 Routes[Convert.ToInt32(EnteredCommand[2]) - 1].EditRoute(EnteredCommand[3], EnteredCommand[4]);
                                 Console.WriteLine(String.Format("Successfully modified \"{0}\" in {1} to \"{2}\".", EnteredCommand[3], Route.RouteNumberString(Convert.ToInt32(EnteredCommand[2])), EnteredCommand[4]));
                             }
@@ -634,7 +635,7 @@ class Program
                                 hasCancelled = true;
                                 break;
                             }
-                            RichPresenceHandler.UpdateActivity("Deleting legs");
+                            // RichPresenceHandler.UpdateActivity("Deleting legs");
                             if (EnteredCommand.Length == 2) // if no index is specified, print all legs and then choose an index
                             {
                                 ActiveShift.PredictHeadcodes();
@@ -739,7 +740,7 @@ class Program
                                 _hasCancelled = true;
                                 break;
                             }
-                            RichPresenceHandler.UpdateActivity("Deleting drivers");
+                            // RichPresenceHandler.UpdateActivity("Deleting drivers");
                             if (EnteredCommand.Length == 2) // if no index is specified, print all drivers and then choose an index
                             {
                                 Console.WriteLine(BuildString(Driver.ToCompacts(ActiveShift.Drivers.ToArray()), "\n"));
@@ -840,8 +841,8 @@ class Program
     }
     static List<string> GetShiftPaths()
     {
-        string path = ProjectDirectoryPath + @"Shifts\";
-        return Directory.GetDirectories(ProjectDirectoryPath + @"Shifts\").ToList<string>();
+        string path = ProjectDirectoryPath + @"Shifts/";
+        return Directory.GetDirectories(ProjectDirectoryPath + @"Shifts/").ToList<string>();
     }
     public static int[] IndexesOf(int obj, int[] array)
     {
